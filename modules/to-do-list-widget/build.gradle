@@ -1,5 +1,11 @@
 dependencies {
 	compileOnly group: "com.liferay.portal", name: "release.portal.api"
-
 	cssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "3.1.4"
+
+	// Dependência do SLF4J (API de Logging)
+	implementation 'org.slf4j:slf4j-api:1.7.30'
+
+	//Tarefa
+	implementation project(':modules:tarefa:tarefa-api')
+	implementation project(':modules:tarefa:tarefa-service')
 }
