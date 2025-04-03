@@ -50,12 +50,12 @@
                     name="Descrição"
                     value="<%= tarefa.getDescricao() %>" />
 
-              <liferay-portlet:renderURL var="visualizarPromoURL">
+              <liferay-portlet:renderURL var="visualizarTarefaURL">
                     <%-- <liferay-portlet:param name="mvcRenderCommandName" value="<%= MVCComandKeys.TarefaVIEW %>" /> --%>
                     <liferay-portlet:param name="tarefaId" value="<%= String.valueOf(tarefa.getTarefaId()) %>" />
                 </liferay-portlet:renderURL>
-                <liferay-portlet:renderURL var="viewPremioURL">
-                    <%-- <liferay-portlet:param name="mvcRenderCommandName" value="<%= MVCComandKeys.PREMIO_LISTAR %>"   /> --%>
+                <liferay-portlet:renderURL var="editTarefaURL">
+                    <%-- <liferay-portlet:param name="mvcRenderCommandName" value="<%= MVCComandKeys.EDIT_TAREFA %>"   /> --%>
                     <liferay-portlet:param name="tarefaId" value="<%= String.valueOf(tarefa.getTarefaId()) %>" />
                 </liferay-portlet:renderURL>
 
@@ -68,11 +68,11 @@
                             <!-- Ícone para Editar -->
                             <liferay-ui:icon cssClass="item-remove last"
                                 message="Visualizar"
-                                url="<%= visualizarPromoURL %>"
+                                url="<%= visualizarTarefaURL %>"
                                 target="icon-penciled" />
                             <liferay-ui:icon cssClass="item-remove last"
-                                message="Visualizar Prêmios"
-                                url="<%= viewPremioURL %>"
+                                message="Editar"
+                                url="<%= editTarefaURL %>"
                                 target="icon-gift" />
                         </liferay-ui:icon-menu>
             </liferay-ui:search-container-column-text>
