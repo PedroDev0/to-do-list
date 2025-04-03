@@ -1,0 +1,12 @@
+dependencies {
+	api project(":modules:tarefa:tarefa-api")
+
+	compileOnly group: "com.liferay.portal", name: "release.portal.api"
+}
+
+buildService {
+	apiDir = "../tarefa-api/src/main/java"
+	testDir = "../tarefa-test/src/testIntegration/java"
+}
+
+group = "com.pedro.dev.tarefa"

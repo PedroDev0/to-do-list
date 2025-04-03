@@ -1,0 +1,10 @@
+Bundle-Name: tarefa-api
+Bundle-SymbolicName: com.pedro.dev.tarefa.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.pedro.dev.tarefa.exception,\
+	com.pedro.dev.tarefa.model,\
+	com.pedro.dev.tarefa.service,\
+	com.pedro.dev.tarefa.service.persistence
+-check: EXPORTS
+-includeresource: META-INF/service.xml=../tarefa-service/service.xml
