@@ -17,7 +17,9 @@ import java.io.IOException;
         property = {
                 "com.liferay.portlet.display-category=category.sample",
                 "com.liferay.portlet.header-portlet-css=/css/main.css",
-                "com.liferay.portlet.instanceable=true",
+                "com.liferay.portlet.instanceable=false",
+                "javax.portlet.expiration-cache=0",
+                "javax.portlet.init-param.portlet-title-based-navigation=true",
                 "javax.portlet.display-name=ToDoListWidget",
                 "javax.portlet.init-param.template-path=/",
                 "javax.portlet.init-param.view-template=/view.jsp",

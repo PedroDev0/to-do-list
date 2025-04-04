@@ -23,8 +23,7 @@ import java.util.List;
         immediate = true,
         property = {
                 "javax.portlet.name=" + ToDoListWidgetPortletKeys.TODOLISTWIDGET,
-                "mvc.command.name=" + MVCComandKeys.TAREFA_CRIAR,
-                "mvc.command.name=/"
+                "mvc.command.name=" + MVCComandKeys.TAREFA_CRIAR
         },
         service = MVCRenderCommand.class
 )

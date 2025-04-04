@@ -21,8 +21,7 @@ import javax.portlet.RenderResponse;
         immediate = true,
         property = {
                 "javax.portlet.name=" + ToDoListWidgetPortletKeys.TODOLISTWIDGET,
-                "mvc.command.name=" + MVCComandKeys.TAREFA_LISTAR,
-                "mvc.command.name=/"
+                "mvc.command.name=" + MVCComandKeys.TAREFA_LISTAR
         },
         service = MVCRenderCommand.class
 )
