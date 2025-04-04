@@ -21,7 +21,8 @@ import javax.portlet.RenderResponse;
         immediate = true,
         property = {
                 "javax.portlet.name=" + ToDoListWidgetPortletKeys.TODOLISTWIDGET,
-                "mvc.command.name=" + MVCComandKeys.TAREFA_LISTAR
+                "mvc.command.name=" + MVCComandKeys.TAREFA_LISTAR,
+                "mvc.command.name=/"
         },
         service = MVCRenderCommand.class
 )
@@ -37,7 +38,7 @@ public class ViewListTarefa implements MVCRenderCommand {
     public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
 
         criaToolbar(renderRequest, renderResponse);
-        return "/tarefa/view-list.jsp";
+        return "/view.jsp";
     }
 
     private void criaToolbar(RenderRequest renderRequest, RenderResponse renderResponse) {

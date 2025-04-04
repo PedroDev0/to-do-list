@@ -32,7 +32,4 @@ import java.io.IOException;
 )
 public class ToDoListWidgetPortlet extends MVCPortlet {
 
-    public void doView(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
-        super.doView(renderRequest, renderResponse);
-    }
 }
