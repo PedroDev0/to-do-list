@@ -59,7 +59,8 @@ public interface TarefaLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public Tarefa addTarefa(
 			long groupId, String titulo, String descricao, String urlImagem,
-			long idPai, long fileEntryId, ServiceContext serviceContext)
+			long idPai, long fileEntryId, long userId,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

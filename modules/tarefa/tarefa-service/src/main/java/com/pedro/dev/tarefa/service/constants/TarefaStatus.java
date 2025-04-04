@@ -39,7 +39,7 @@ public enum TarefaStatus {
     }
 
     public static class StatusCode {
-        public static final int PENDENTE = 0;
-        public static final int CONCLUIDO = 1;
+        public static final int PENDENTE = 1;
+        public static final int CONCLUIDO = 2;
     }
 }

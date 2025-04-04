@@ -29,12 +29,12 @@ public class TarefaLocalServiceWrapper
 	@Override
 	public com.pedro.dev.tarefa.model.Tarefa addTarefa(
 			long groupId, String titulo, String descricao, String urlImagem,
-			long idPai, long fileEntryId,
+			long idPai, long fileEntryId, long userId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _tarefaLocalService.addTarefa(
-			groupId, titulo, descricao, urlImagem, idPai, fileEntryId,
+			groupId, titulo, descricao, urlImagem, idPai, fileEntryId, userId,
 			serviceContext);
 	}
 

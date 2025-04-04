@@ -3,7 +3,7 @@
 <%
     ToolBarTarefaDisplay toolbar =  (ToolBarTarefaDisplay) request.getAttribute("toolbar");
 %>
-<c:if test="${not themeDisplay.permissionChecker.isOmniadmin()}">
+<c:if test="${not themeDisplay.getUser().isGuestUser()}">
    <!-- Mensagens de criação -->
     <liferay-ui:success key="participanteCreateSucess" message="Tarefa cadastrada com sucesso!" />
     <liferay-ui:error key="participanteCreateErr" message="Falha ao cadastrar tarefa!" />

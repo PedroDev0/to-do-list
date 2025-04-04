@@ -42,11 +42,12 @@ public class TarefaLocalServiceImpl extends TarefaLocalServiceBaseImpl {
                             String urlImagem,
                             long idPai,
                             long fileEntryId,
+                            long userId,
                             ServiceContext serviceContext) throws PortalException {
         //grupo do usuario
         Group group = GroupLocalServiceUtil.getGroup(groupId);
         //captura o usuario
-        User user = UserLocalServiceUtil.getUser(serviceContext.getUserId());
+        User user = UserLocalServiceUtil.getUser(userId);
 
         long id = counterLocalService.increment(Tarefa.class.getName());
 
@@ -75,6 +76,7 @@ public class TarefaLocalServiceImpl extends TarefaLocalServiceBaseImpl {
                                String titulo,
                                String descricao,
                                String urlImagem,
+
                                long fileEntryId,
                                ServiceContext serviceContext) throws PortalException {
 

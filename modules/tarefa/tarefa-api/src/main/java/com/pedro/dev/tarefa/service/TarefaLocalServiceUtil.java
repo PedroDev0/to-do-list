@@ -39,12 +39,12 @@ public class TarefaLocalServiceUtil {
 	 */
 	public static Tarefa addTarefa(
 			long groupId, String titulo, String descricao, String urlImagem,
-			long idPai, long fileEntryId,
+			long idPai, long fileEntryId, long userId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addTarefa(
-			groupId, titulo, descricao, urlImagem, idPai, fileEntryId,
+			groupId, titulo, descricao, urlImagem, idPai, fileEntryId, userId,
 			serviceContext);
 	}
 
