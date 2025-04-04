@@ -9,6 +9,7 @@ public class TarefaVo {
     private Tarefa tarefa;
     private List<Tarefa> subTarefas;
 
+
     public Tarefa getTarefa() {
         return tarefa;
     }

@@ -1,7 +1,8 @@
 Bundle-Name: to-do-list-widget
 Bundle-SymbolicName: com.pedro.dev.todolistwidget
 Bundle-Version: 1.0.0
-Export-Package: com.pedro.dev.todolistwidget.constants
-Provide-Capability:\
-	liferay.language.resources;\
-		resource.bundle.base.name="content.Language"
+Export-Package: com.pedro.dev.todolistwidget.constants,\
+        com.pedro.dev.todolistwidget.portlet.tarefa.vo
+Provide-Capability: \
+    	liferay.language.resources;\
+    		resource.bundle.base.name="content.Language"
