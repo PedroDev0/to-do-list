@@ -229,8 +229,10 @@ public class TarefaLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	public static long getCountTarefasByStatus(long groupId, int status) {
-		return getService().getCountTarefasByStatus(groupId, status);
+	public static long getCountTarefasByStatus(
+		long groupId, int status, long userId) {
+
+		return getService().getCountTarefasByStatus(groupId, status, userId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
@@ -266,11 +268,12 @@ public class TarefaLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static List<Tarefa> getPromocoesAtivasDynamicQuery(
-		String keywords, int start, int end) {
+	public static List<Tarefa> getSubTarefasByKeywords(
+		long groupId, String keywords, int start, int end, long userId,
+		long tarefaPaiId, OrderByComparator<Tarefa> comparator) {
 
-		return getService().getPromocoesAtivasDynamicQuery(
-			keywords, start, end);
+		return getService().getSubTarefasByKeywords(
+			groupId, keywords, start, end, userId, tarefaPaiId, comparator);
 	}
 
 	/**
@@ -325,14 +328,6 @@ public class TarefaLocalServiceUtil {
 			groupId, start, end, comparator);
 	}
 
-	public static List<Tarefa> getTarefasByKeywords(
-		long groupId, String keywords, int start, int end,
-		OrderByComparator<Tarefa> comparator) {
-
-		return getService().getTarefasByKeywords(
-			groupId, keywords, start, end, comparator);
-	}
-
 	/**
 	 * Returns all the tarefas matching the UUID and company.
 	 *
@@ -377,6 +372,14 @@ public class TarefaLocalServiceUtil {
 		long groupId, int start, int end) {
 
 		return getService().getTarefasGroupPaginator(groupId, start, end);
+	}
+
+	public static List<Tarefa> getTarefasPaiByKeywords(
+		long groupId, String keywords, int start, int end, long userId,
+		OrderByComparator<Tarefa> comparator) {
+
+		return getService().getTarefasPaiByKeywords(
+			groupId, keywords, start, end, userId, comparator);
 	}
 
 	public static Tarefa updateTarefa(

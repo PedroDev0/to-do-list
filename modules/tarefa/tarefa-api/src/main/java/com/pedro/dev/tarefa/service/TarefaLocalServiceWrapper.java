@@ -251,8 +251,9 @@ public class TarefaLocalServiceWrapper
 	}
 
 	@Override
-	public long getCountTarefasByStatus(long groupId, int status) {
-		return _tarefaLocalService.getCountTarefasByStatus(groupId, status);
+	public long getCountTarefasByStatus(long groupId, int status, long userId) {
+		return _tarefaLocalService.getCountTarefasByStatus(
+			groupId, status, userId);
 	}
 
 	@Override
@@ -295,10 +296,14 @@ public class TarefaLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.pedro.dev.tarefa.model.Tarefa>
-		getPromocoesAtivasDynamicQuery(String keywords, int start, int end) {
+		getSubTarefasByKeywords(
+			long groupId, String keywords, int start, int end, long userId,
+			long tarefaPaiId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.pedro.dev.tarefa.model.Tarefa> comparator) {
 
-		return _tarefaLocalService.getPromocoesAtivasDynamicQuery(
-			keywords, start, end);
+		return _tarefaLocalService.getSubTarefasByKeywords(
+			groupId, keywords, start, end, userId, tarefaPaiId, comparator);
 	}
 
 	/**
@@ -367,17 +372,6 @@ public class TarefaLocalServiceWrapper
 			groupId, start, end, comparator);
 	}
 
-	@Override
-	public java.util.List<com.pedro.dev.tarefa.model.Tarefa>
-		getTarefasByKeywords(
-			long groupId, String keywords, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.pedro.dev.tarefa.model.Tarefa> comparator) {
-
-		return _tarefaLocalService.getTarefasByKeywords(
-			groupId, keywords, start, end, comparator);
-	}
-
 	/**
 	 * Returns all the tarefas matching the UUID and company.
 	 *
@@ -430,6 +424,17 @@ public class TarefaLocalServiceWrapper
 
 		return _tarefaLocalService.getTarefasGroupPaginator(
 			groupId, start, end);
+	}
+
+	@Override
+	public java.util.List<com.pedro.dev.tarefa.model.Tarefa>
+		getTarefasPaiByKeywords(
+			long groupId, String keywords, int start, int end, long userId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.pedro.dev.tarefa.model.Tarefa> comparator) {
+
+		return _tarefaLocalService.getTarefasPaiByKeywords(
+			groupId, keywords, start, end, userId, comparator);
 	}
 
 	@Override

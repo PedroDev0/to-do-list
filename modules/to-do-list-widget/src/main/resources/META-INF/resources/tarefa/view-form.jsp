@@ -2,7 +2,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%
     // Verifica se a tarefa foi definida na requisição
-    Tarefa tarefa = (Tarefa) request.getAttribute("tarefa");
+    TarefaVo tarefaVo = (Tarefa) request.getAttribute("tarefaVo");
+    Tarefa tarefa = tarefaVo.getTarefa();
 %>
 
 
@@ -42,6 +43,8 @@
                 <div class="form-group">
                     <aui:input name="file" label="Imagem" type="file" accept="image/*" required="<%= tarefa == null%>" />
                 </div>
+                
+<%-- aqui --%>
                 
                 <div class="sheet-footer d-flex justify-content-end">
                     <aui:button type="submit" value="Salvar" cssClass="btn btn-primary mr-2" />

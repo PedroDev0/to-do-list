@@ -102,17 +102,23 @@ public class TarefaLocalServiceImpl extends TarefaLocalServiceBaseImpl {
         return tarefaPersistence.findBygroupId(groupId, start, end, comparator);
     }
 
-    public List<Tarefa> getTarefasByKeywords(long groupId, String keywords, int start, int end,
-                                             OrderByComparator<Tarefa> comparator) {
-        return tarefaLocalService.dynamicQuery(getKeywordDynamicQuery(groupId, keywords), start, end, comparator);
+    public List<Tarefa> getTarefasPaiByKeywords(long groupId, String keywords, int start, int end, long userId,
+                                                OrderByComparator<Tarefa> comparator) {
+        return tarefaLocalService.dynamicQuery(getKeywordDynamicQuery(groupId, keywords, userId), start, end, comparator);
     }
 
-    private DynamicQuery getKeywordDynamicQuery(long groupId, String keywords) {
+
+    private DynamicQuery getKeywordDynamicQuery(long groupId, String keywords, long userId) {
 
         DynamicQuery dynamicQuery = dynamicQuery()
-                .add(RestrictionsFactoryUtil.eq(
-                        "groupId", groupId
-                ));
+                .add(RestrictionsFactoryUtil.eq("groupId", groupId))
+                .add(RestrictionsFactoryUtil.eq("userId", userId))
+                .add(
+                        RestrictionsFactoryUtil.or(
+                                RestrictionsFactoryUtil.isNull("tarefaPaiId"),
+                                RestrictionsFactoryUtil.le("tarefaPaiId", 0)
+                        )
+                );
         if (Validator.isNotNull(keywords)) {
             Disjunction disjunctionQuery = RestrictionsFactoryUtil.disjunction();
             disjunctionQuery.add(RestrictionsFactoryUtil.like("titulo", "%" + keywords + "%"));
@@ -122,35 +128,45 @@ public class TarefaLocalServiceImpl extends TarefaLocalServiceBaseImpl {
         return dynamicQuery;
     }
 
-    public long getCountTarefasByStatus(long groupId, int status) {
-        return tarefaLocalService.dynamicQueryCount(getDynamicPend(groupId, status));
+    public List<Tarefa> getSubTarefasByKeywords(long groupId, String keywords, int start, int end, long userId, long tarefaPaiId,
+                                                OrderByComparator<Tarefa> comparator) {
+        return tarefaLocalService.dynamicQuery(getKeywordSubTarefaDynamicQuery(groupId, keywords, userId, tarefaPaiId), start, end, comparator);
     }
 
-    private DynamicQuery getDynamicPend(long groupId, int status) {
+    private DynamicQuery getKeywordSubTarefaDynamicQuery(long groupId, String keywords, long userId, long tarefaPaiId) {
 
-        return dynamicQuery()
+        DynamicQuery dynamicQuery = dynamicQuery()
                 .add(RestrictionsFactoryUtil.eq("groupId", groupId))
-                .add(RestrictionsFactoryUtil.eq("status", status));
-    }
-
-    public List<Tarefa> getPromocoesAtivasDynamicQuery(String keywords, int start, int end) {
-        return tarefaLocalService.dynamicQuery(getPromocoesAtivasDynamicQuery(keywords), start, end);
-    }
-
-    private DynamicQuery getPromocoesAtivasDynamicQuery(String keywords) {
-
-        DynamicQuery dynamicQuery = dynamicQuery().add(RestrictionsFactoryUtil.ge("dataTermino", new Date()));
-
-        dynamicQuery.add(RestrictionsFactoryUtil.le("dataInicio", new Date()));
-
+                .add(RestrictionsFactoryUtil.eq("userId", userId))
+                .add(RestrictionsFactoryUtil.eq("tarefaPaiId", tarefaPaiId)
+                );
         if (Validator.isNotNull(keywords)) {
             Disjunction disjunctionQuery = RestrictionsFactoryUtil.disjunction();
-            disjunctionQuery.add(RestrictionsFactoryUtil.like("imagem", "%" + keywords + "%"));
-            disjunctionQuery.add(RestrictionsFactoryUtil.like("nome", "%" + keywords + "%"));
+            disjunctionQuery.add(RestrictionsFactoryUtil.like("titulo", "%" + keywords + "%"));
             disjunctionQuery.add(RestrictionsFactoryUtil.like("descricao", "%" + keywords + "%"));
             dynamicQuery.add(disjunctionQuery);
         }
         return dynamicQuery;
+    }
+
+    public long getCountTarefasByStatus(long groupId, int status, long
+            userId) {
+        return tarefaLocalService.dynamicQueryCount(getDynamicStatus(groupId, status, userId));
+    }
+
+    private DynamicQuery getDynamicStatus(long groupId, int status, long userId) {
+
+        return dynamicQuery()
+                .add(RestrictionsFactoryUtil.eq("groupId", groupId))
+                .add(
+                        RestrictionsFactoryUtil.or(
+                                RestrictionsFactoryUtil.isNull("tarefaPaiId"),
+                                RestrictionsFactoryUtil.le("tarefaPaiId", 0)
+                        )
+                )
+                .add(RestrictionsFactoryUtil.eq("userId", userId))
+                .add(RestrictionsFactoryUtil.eq("status", status));
+
     }
 
 }
