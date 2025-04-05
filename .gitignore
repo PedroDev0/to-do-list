@@ -28,4 +28,4 @@ test-results
 /node_modules_cache/
 /package.json
 /.yarnrc
-/liferay_stack_local_environment/volumes/liferay/data
+/start/osgi-modules/*
