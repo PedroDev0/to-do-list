@@ -46,7 +46,7 @@ public class ToolBarTarefaDisplay extends BaseManagementToolbarDisplayContext {
                         dropdownItem -> {
                             dropdownItem.setHref(
                                     liferayPortletResponse.createRenderURL(),
-                                    "mvcRenderCommandName", MVCComandKeys.TAREFA_CRIAR, // trocar para o formulario de cadastro
+                                    "mvcRenderCommandName", MVCComandKeys.TAREFA_FORM, // trocar para o formulario de cadastro
                                     "redirect", currentURLObj.toString());
                             dropdownItem.setLabel(LanguageUtil.get(request, "add-promo"));
                         }

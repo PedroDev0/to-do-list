@@ -17,13 +17,14 @@ import org.slf4j.LoggerFactory;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component(
         immediate = true,
         property = {
                 "javax.portlet.name=" + ToDoListWidgetPortletKeys.TODOLISTWIDGET,
-                "mvc.command.name=" + MVCComandKeys.TAREFA_CRIAR
+                "mvc.command.name=" + MVCComandKeys.TAREFA_FORM
         },
         service = MVCRenderCommand.class
 )
@@ -48,12 +49,16 @@ public class ViewFormTarefa implements MVCRenderCommand {
             logger.info("Buscando tarefa no banco");
             Tarefa tarefa = TarefaLocalServiceUtil.fetchTarefa(tarefaId);
             tarefaVo.setTarefa(tarefa);
-
+            List<Tarefa> subTarefas = null;
             logger.info("buscando subTarefas...");
-            List<Tarefa> subTarefas = TarefaLocalServiceUtil.getSubTarefasByKeywords(
-                    groupId,
-                    "", -1, -1, userId,
-                    tarefa.getTarefaPaiId(), getComparetor());
+            try {
+                subTarefas = TarefaLocalServiceUtil.getSubTarefasByKeywords(
+                        groupId,
+                        "", -1, -1, userId,
+                        tarefa.getTarefaPaiId(), getComparetor());
+            } catch (Exception e) {
+                subTarefas = new ArrayList<>();
+            }
 
             tarefaVo.setSubTarefas(subTarefas);
         }

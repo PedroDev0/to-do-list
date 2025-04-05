@@ -54,6 +54,7 @@ public class TarefaLocalServiceImpl extends TarefaLocalServiceBaseImpl {
 
         Tarefa tarefa = createTarefa(id);
         tarefa.setCompanyId(group.getCompanyId());
+        tarefa.setGroupId(group.getGroupId());
         tarefa.setCreateDate(serviceContext.getCreateDate(new Date()));
         tarefa.setTitulo(titulo);
         tarefa.setDescricao(descricao);

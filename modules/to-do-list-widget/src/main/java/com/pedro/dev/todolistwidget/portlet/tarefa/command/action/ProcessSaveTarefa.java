@@ -146,6 +146,7 @@ public class ProcessSaveTarefa extends BaseMVCActionCommand {
 
     private void processUpdateTarefa(Long tarefaId, ActionRequest actionRequest) throws PortalException {
 
+
         logger.debug("Buscando Tarefa no Banco");
         Tarefa tarefa = TarefaLocalServiceUtil.getTarefa(tarefaId);
 
@@ -157,40 +158,48 @@ public class ProcessSaveTarefa extends BaseMVCActionCommand {
 
         logger.debug("Captrando arquivo");
         UploadPortletRequest uploadPortletRequest = PortalUtil.getUploadPortletRequest(actionRequest);
+
         File file = uploadPortletRequest.getFile("file");
         String originalFileName = uploadPortletRequest.getFileName("file");
 
-        // Gerando um nome único para o arquivo
-        String uniqueFileName = System.currentTimeMillis() + "_" + originalFileName;
+        // valida se tem arquivo
+        if (originalFileName != null && !originalFileName.isBlank()) {
+            // Gerando um nome único para o arquivo
+            String uniqueFileName = System.currentTimeMillis() + "_" + originalFileName;
 
-        ServiceContext serviceContext = getFileServiceContext(actionRequest);
-        long folderId = getFolderId(tarefa.getGroupId(), Folder.FOLDER_NAME_TAREFA, tarefa.getUserId(), actionRequest);
+            ServiceContext serviceContext = getFileServiceContext(actionRequest);
 
-        // remove File antigo
-        DLAppLocalServiceUtil.deleteFileEntry(tarefa.getFileEntryId());
+            long folderId = getFolderId(tarefa.getGroupId(), Folder.FOLDER_NAME_TAREFA, tarefa.getUserId(), actionRequest);
 
-        // Alterando o file
-        FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-                tarefa.getUserId(), tarefa.getGroupId(),
-                folderId,
-                uniqueFileName,
-                "image/jpeg",
-                uniqueFileName, "",
-                "", file, serviceContext);
+            // remove File antigo
+            DLAppLocalServiceUtil.deleteFileEntry(tarefa.getFileEntryId());
 
-        // Gerando o URL da imagem para exibição
-        String imagem = DLUtil.getPreviewURL(
-                DLAppServiceUtil.getFileEntry(fileEntry.getFileEntryId()),
-                DLAppServiceUtil.getFileEntry(fileEntry.getFileEntryId()).getFileVersion(),
-                serviceContext.getThemeDisplay(), "");
+            // Alterando o file
+            FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+                    tarefa.getUserId(), tarefa.getGroupId(),
+                    folderId,
+                    uniqueFileName,
+                    "image/jpeg",
+                    uniqueFileName, "",
+                    "", file, serviceContext);
+
+            // Gerando o URL da imagem para exibição
+            String imagem = DLUtil.getPreviewURL(
+                    DLAppServiceUtil.getFileEntry(fileEntry.getFileEntryId()),
+                    DLAppServiceUtil.getFileEntry(fileEntry.getFileEntryId()).getFileVersion(),
+                    serviceContext.getThemeDisplay(), "");
+
+            tarefa.setUrlImagem(imagem);
+            tarefa.setFileEntryId(fileEntry.getFileEntryId());
+        }
+
 
         // Atualizando  a tarefa
         logger.debug("Adcionando tarefa no banco");
 
         tarefa.setTitulo(titulo);
         tarefa.setDescricao(descricao);
-        tarefa.setUrlImagem(imagem);
-        tarefa.setFileEntryId(fileEntry.getFileEntryId());
+
 
         TarefaLocalServiceUtil.updateTarefa(tarefa);
 
@@ -198,6 +207,7 @@ public class ProcessSaveTarefa extends BaseMVCActionCommand {
 
 
     private ServiceContext getFileServiceContext(ActionRequest actionRequest) throws PortalException {
+
         ServiceContext serviceContext = ServiceContextFactory.getInstance(FileEntry.class.getName(), actionRequest);
         serviceContext.setAddGroupPermissions(true);
         serviceContext.setAddGuestPermissions(true);

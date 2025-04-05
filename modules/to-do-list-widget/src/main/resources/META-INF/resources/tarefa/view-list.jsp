@@ -58,7 +58,7 @@
                     <liferay-portlet:param name="tarefaId" value="<%= String.valueOf(tarefa.getTarefaId()) %>" />
                 </liferay-portlet:renderURL>
                 <liferay-portlet:renderURL var="editTarefaURL">
-                    <%-- <liferay-portlet:param name="mvcRenderCommandName" value="<%= MVCComandKeys.EDIT_TAREFA %>"   /> --%>
+                  <liferay-portlet:param name="mvcRenderCommandName" value="<%= MVCComandKeys.TAREFA_FORM %>"   />
                     <liferay-portlet:param name="tarefaId" value="<%= String.valueOf(tarefa.getTarefaId()) %>" />
                 </liferay-portlet:renderURL>
 
