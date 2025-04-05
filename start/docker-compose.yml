@@ -1,36 +1,43 @@
-version: '3.8'
+version: '3.8'  # Versão da sintaxe do Docker Compose
 
 services:
-  liferay:
-    image: liferay/portal:7.4.3.132-ga132
-    container_name: liferay-portal
-    ports:
-      - "8080:8080"   # Mapeia a porta do container para a porta da máquina local
-    environment:
-      - LIFERAY_JVM_OPTS=-Duser.timezone=America/Sao_Paulo   # Definindo o fuso horário, se necessário
-    volumes:
-      - liferay_data:/opt/liferay/data  # Persistência de dados
-      - ./deploy:/opt/liferay/deploy  # Mapeia a pasta 'deploy' local para o diretório 'deploy' do Liferay
-    networks:
-      - liferay-net
-
-  database:
-    image: mysql:5.7
+  database:  # Serviço do banco de dados MySQL
+    image: mysql:8.0.36
     container_name: liferay-db
     environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: liferay
+      MYSQL_ROOT_PASSWORD: sa  # Senha do usuário root
+      MYSQL_DATABASE: lportal  # Nome do banco de dados que será criado
+      MYSQL_ROOT_HOST: '%'  # Permite conexões remotas para o usuário root
     ports:
       - "3306:3306"
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    # Força o plugin de autenticação tradicional e configurações de charset
     volumes:
-      - liferay_db_data:/var/lib/mysql
+      - liferay_db_data:/var/lib/mysql  # Volume para persistir os dados do banco
     networks:
-      - liferay-net
+      - liferay-net  # Rede personalizada para comunicação com o Liferay
+
+  liferay:  # Serviço do Liferay Portal
+    image: liferay/portal:7.4.3.132-ga132  # Imagem do Liferay (versão específica)
+    container_name: liferay-portal  # Nome do container
+    ports:
+      - "8080:8080"  # Porta padrão do Liferay (host:container)
+    volumes:
+      - liferay_data:/opt/liferay/data  # Persistência de dados gerados pelo Liferay
+      - ./deploy:/opt/liferay/deploy  # Pasta local para deploy automático de arquivos
+      - ../portal-setup-wizard.properties:/opt/liferay/portal-setup-wizard.properties
+      # Arquivo de configuração inicial do Liferay
+    networks:
+      - liferay-net  # Mesma rede do banco de dados, permite comunicação entre os serviços
+    depends_on:
+      - database  # Garante que o container do banco suba antes do Liferay
+    entrypoint: [ "sh", "-c", "echo 'Aguardando 1 minuto antes de iniciar o Liferay...'; sleep 60; exec /opt/liferay/tomcat/bin/catalina.sh run" ]
+    # Aguarda 60 segundos antes de iniciar o Liferay (para dar tempo ao banco)
 
 networks:
   liferay-net:
-    driver: bridge
+    driver: bridge  # Rede em modo bridge (comunicação isolada entre os serviços)
 
 volumes:
-  liferay_data:
-  liferay_db_data:
+  liferay_data:  # Volume nomeado para os dados do Liferay
+  liferay_db_data:  # Volume nomeado para os dados do MySQL
