@@ -1,7 +1,7 @@
 version: '3.8'  # Versão da sintaxe do Docker Compose
 
 services:
-  database:  # Serviço do banco de dados MySQL
+  database: # Serviço do banco de dados MySQL
     image: mysql:8.0.36
     container_name: liferay-db
     environment:
@@ -17,13 +17,18 @@ services:
     networks:
       - liferay-net  # Rede personalizada para comunicação com o Liferay
 
-  liferay:  # Serviço do Liferay Portal
+  liferay: # Serviço do Liferay Portal
     image: liferay/portal:7.4.3.132-ga132  # Imagem do Liferay (versão específica)
     container_name: liferay-portal  # Nome do container
     ports:
       - "8080:8080"  # Porta padrão do Liferay (host:container)
+      - "8000:8000"  # porta do debugger
+    environment:
+      - JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000
+
     volumes:
       - liferay_data:/opt/liferay/data  # Persistência de dados gerados pelo Liferay
+      - ./osgi-modules:/opt/liferay/osgi/modules
       - ./deploy:/opt/liferay/deploy  # Pasta local para deploy automático de arquivos
       - ../portal-setup-wizard.properties:/opt/liferay/portal-setup-wizard.properties
       # Arquivo de configuração inicial do Liferay

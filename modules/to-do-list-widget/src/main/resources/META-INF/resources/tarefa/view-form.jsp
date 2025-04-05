@@ -14,7 +14,7 @@
 %>
 
 <!-- Action URL com o tarefaId -->
-<liferay-portlet:actionURL var="addPromoURL" name="<%= MVCComandKeys.TAREFA_INCLUIR_OU_ATUALIZAR %>">
+<liferay-portlet:actionURL var="addTarefaURL" name="<%= MVCComandKeys.TAREFA_INCLUIR_OU_ATUALIZAR %>">
     <liferay-portlet:param name="tarefaId" value="<%= tarefa != null ? String.valueOf(tarefa.getTarefaId()) : "" %>" />
 </liferay-portlet:actionURL>
 
@@ -25,10 +25,10 @@
         </div>
 
         <div class="sheet-section">
-            <aui:form action="${addPromoURL}" method="post" enctype="multipart/form-data">
+            <aui:form action="${addTarefaURL}" method="post" enctype="multipart/form-data">
 
                 <div class="form-group">
-                    <aui:input name="nome" label="Nome" type="text" required="true"
+                    <aui:input name="titulo" label="Título" type="text" required="true"
                                value="<%= tarefa != null ? tarefa.getTitulo() : "" %>" />
                 </div>
 

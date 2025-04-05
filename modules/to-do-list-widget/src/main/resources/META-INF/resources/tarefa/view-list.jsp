@@ -5,8 +5,11 @@
 %>
 <c:if test="${not themeDisplay.getUser().isGuestUser()}">
    <!-- Mensagens de criação -->
-    <liferay-ui:success key="participanteCreateSucess" message="Tarefa cadastrada com sucesso!" />
-    <liferay-ui:error key="participanteCreateErr" message="Falha ao cadastrar tarefa!" />
+    <liferay-ui:success key="addTarefaSucess" message="Tarefa cadastrada com sucesso!" />
+    <liferay-ui:success key="updateTarefaSucess" message="Tarefa alterada com sucesso!" />
+
+    <liferay-ui:error key="addTarefaErr" message="Falha ao cadastrar tarefa!" />
+    <liferay-ui:error key="updateTarefaErr" message="Falha ao alterar tarefa!" />
 
    <div class="container-fluid">
     <div class="sheet">
@@ -65,13 +68,25 @@
                             direction="left-side"
                             markupView="lexicon"
                             showWhenSingleIcon="true">
-                            <!-- Ícone para Editar -->
                             <liferay-ui:icon cssClass="item-remove last"
                                 message="Visualizar"
                                 url="<%= visualizarTarefaURL %>"
                                 target="icon-penciled" />
+                                
                             <liferay-ui:icon cssClass="item-remove last"
                                 message="Editar"
+                                url="<%= editTarefaURL %>"
+                                target="icon-gift" />
+                            <liferay-ui:icon cssClass="item-remove last"
+                                message="Deletar"
+                                url="<%= editTarefaURL %>"
+                                target="icon-gift" />
+                            <liferay-ui:icon cssClass="item-remove last"
+                                message="Criar Sub. Tarefa"
+                                url="<%= editTarefaURL %>"
+                                target="icon-gift" />
+                            <liferay-ui:icon cssClass="item-remove last"
+                                message="Concluir Tarefa"
                                 url="<%= editTarefaURL %>"
                                 target="icon-gift" />
                         </liferay-ui:icon-menu>

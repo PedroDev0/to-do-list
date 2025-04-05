@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.pedro.dev.tarefa.model.Tarefa;
 import com.pedro.dev.tarefa.service.base.TarefaLocalServiceBaseImpl;
+import com.pedro.dev.tarefa.service.constants.TarefaStatus;
 import org.osgi.service.component.annotations.Component;
 
 import java.util.Date;
@@ -63,7 +64,7 @@ public class TarefaLocalServiceImpl extends TarefaLocalServiceBaseImpl {
         tarefa.setModifiedDate(serviceContext.getCreateDate(new Date()));
         tarefa.setUserId(user.getUserId());
         tarefa.setUserName(user.getScreenName());
-
+        tarefa.setStatus(TarefaStatus.PENDENTE.getCodigo());
 
         tarefa = tarefaLocalService.addTarefa(tarefa);
 
