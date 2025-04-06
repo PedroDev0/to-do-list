@@ -31,5 +31,4 @@ import java.io.IOException;
         service = Portlet.class
 )
 public class ToDoListWidgetPortlet extends MVCPortlet {
-
 }

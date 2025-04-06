@@ -1,9 +1,12 @@
 <%@ include file="/init.jsp" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
 <%
     ToolBarTarefaDisplay toolbar =  (ToolBarTarefaDisplay) request.getAttribute("toolbar");
+    String loginUrl = (String) request.getAttribute("loginUrl");
 %>
-<c:if test="${not themeDisplay.getUser().isGuestUser()}">
+
+<c:if test="${themeDisplay.isSignedIn()}">
     <!-- Mensagens de sucesso -->
     <liferay-ui:success key="addTarefaSucess" message="Tarefa cadastrada com sucesso!" />
     <liferay-ui:success key="updateTarefaSucess" message="Tarefa alterada com sucesso!" />
@@ -72,7 +75,7 @@
                     <liferay-portlet:param name="tarefaId" value="<%= String.valueOf(tarefa.getTarefaId()) %>" />
                 </liferay-portlet:actionURL>
 
-        <c:if test="${not themeDisplay.getUser().isGuestUser()}">
+      <c:if test="${themeDisplay.isSignedIn()}">
             <liferay-ui:search-container-column-text name="Detalhes">
                 <liferay-ui:icon-menu
                             direction="left-side"
@@ -109,4 +112,14 @@
         </liferay-ui:search-container>
     </div>
     </div>
+</c:if>
+
+<c:if test="${!themeDisplay.isSignedIn()}">
+   
+    <div class="container-fluid">
+        <div class="sheet">
+            <a  href="<%= loginUrl %>" class="sheet-title">Faça login para continuar</a>
+       </div>
+    </div>
+
 </c:if>
