@@ -52,9 +52,12 @@
                 <liferay-ui:search-container-column-text
                     name="Descrição"
                     value="<%= tarefa.getDescricao() %>" />
+                <liferay-ui:search-container-column-text
+                    name="Status"
+                    value="<%= TarefaStatus.fromCodigo( tarefa.getStatus()).getDescricao() %>" />
 
               <liferay-portlet:renderURL var="visualizarTarefaURL">
-                    <%-- <liferay-portlet:param name="mvcRenderCommandName" value="<%= MVCComandKeys.TarefaVIEW %>" /> --%>
+                    <liferay-portlet:param name="mvcRenderCommandName" value="<%= MVCComandKeys.TAREFA_VIEW %>" /> 
                     <liferay-portlet:param name="tarefaId" value="<%= String.valueOf(tarefa.getTarefaId()) %>" />
                 </liferay-portlet:renderURL>
                 <liferay-portlet:renderURL var="editTarefaURL">

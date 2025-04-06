@@ -14,6 +14,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.pedro.dev.tarefa.model.Tarefa" %>
 <%@ page import="com.pedro.dev.todolistwidget.portlet.tarefa.vo.TarefaVo" %>
 <%@ page import="com.pedro.dev.todolistwidget.portlet.constants.MVCComandKeys" %>
+<%@ page import="com.pedro.dev.tarefa.service.constants.TarefaStatus" %>
 
 <liferay-theme:defineObjects />
 

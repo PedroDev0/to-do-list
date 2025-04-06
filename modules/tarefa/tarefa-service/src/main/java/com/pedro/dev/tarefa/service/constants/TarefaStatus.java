@@ -28,14 +28,14 @@ public enum TarefaStatus {
         return Arrays.stream(TarefaStatus.values())
                 .filter(status -> status.getCodigo() == codigo)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Código inválido: " + codigo));
+                .orElse(PENDENTE);
     }
 
     public static TarefaStatus fromDescricao(String descricao) {
         return Arrays.stream(TarefaStatus.values())
                 .filter(status -> status.getDescricao().equalsIgnoreCase(descricao))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Descrição inválida: " + descricao));
+                .orElse(PENDENTE);
     }
 
     public static class StatusCode {
