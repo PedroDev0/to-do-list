@@ -239,6 +239,9 @@ public interface TarefaLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Tarefa> getSubTarefas(long tarefaPaiId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Tarefa> getSubTarefasByKeywords(
 		long groupId, String keywords, int start, int end, long userId,
 		long tarefaPaiId, OrderByComparator<Tarefa> comparator);

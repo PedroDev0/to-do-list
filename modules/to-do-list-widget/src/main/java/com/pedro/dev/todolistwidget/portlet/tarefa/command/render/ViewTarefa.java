@@ -1,10 +1,7 @@
 package com.pedro.dev.todolistwidget.portlet.tarefa.command.render;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.pedro.dev.tarefa.model.Tarefa;
 import com.pedro.dev.tarefa.service.TarefaLocalServiceUtil;
 import com.pedro.dev.todolistwidget.constants.ToDoListWidgetPortletKeys;
@@ -17,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import java.util.ArrayList;
 import java.util.List;
 
 @Component(
@@ -36,41 +32,21 @@ public class ViewTarefa implements MVCRenderCommand {
     @Override
     public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
 
-        ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
-        long groupId = themeDisplay.getScopeGroupId();
-        long userId = themeDisplay.getUserId();
-
         logger.info("Caputrando tarefaId");
         long tarefaId = ParamUtil.getLong(renderRequest, "tarefaId");
 
         TarefaVo tarefaVo = new TarefaVo();
-
         logger.info("Buscando tarefa no banco");
         Tarefa tarefa = TarefaLocalServiceUtil.fetchTarefa(tarefaId);
         tarefaVo.setTarefa(tarefa);
         List<Tarefa> subTarefas = null;
         logger.info("buscando subTarefas...");
-        try {
-            subTarefas = TarefaLocalServiceUtil.getSubTarefasByKeywords(
-                    groupId,
-                    "", -1, -1, userId,
-                    tarefa.getTarefaPaiId(), getComparetor());
-        } catch (Exception e) {
-            subTarefas = new ArrayList<>();
-        }
+        subTarefas = TarefaLocalServiceUtil.getSubTarefas(tarefa.getTarefaId());
 
         tarefaVo.setSubTarefas(subTarefas);
         renderRequest.setAttribute("tarefaVo", tarefaVo);
         return "/tarefa/view-tarefa.jsp";
     }
 
-    private OrderByComparator<Tarefa> getComparetor() {
-        return new OrderByComparator<Tarefa>() {
-            @Override
-            public int compare(Tarefa o1, Tarefa o2) {
-                return 0;
-            }
-        };
-    }
 
 }

@@ -268,6 +268,10 @@ public class TarefaLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static List<Tarefa> getSubTarefas(long tarefaPaiId) {
+		return getService().getSubTarefas(tarefaPaiId);
+	}
+
 	public static List<Tarefa> getSubTarefasByKeywords(
 		long groupId, String keywords, int start, int end, long userId,
 		long tarefaPaiId, OrderByComparator<Tarefa> comparator) {

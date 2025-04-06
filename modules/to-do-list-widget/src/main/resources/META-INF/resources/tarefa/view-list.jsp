@@ -4,12 +4,15 @@
     ToolBarTarefaDisplay toolbar =  (ToolBarTarefaDisplay) request.getAttribute("toolbar");
 %>
 <c:if test="${not themeDisplay.getUser().isGuestUser()}">
-   <!-- Mensagens de criação -->
+    <!-- Mensagens de sucesso -->
     <liferay-ui:success key="addTarefaSucess" message="Tarefa cadastrada com sucesso!" />
     <liferay-ui:success key="updateTarefaSucess" message="Tarefa alterada com sucesso!" />
+    <liferay-ui:error key="removeTarefaSucess" message="Tarefa deletada com sucesso!!" />
 
+    <!-- Mensagens de erro -->
     <liferay-ui:error key="addTarefaErr" message="Falha ao cadastrar tarefa!" />
     <liferay-ui:error key="updateTarefaErr" message="Falha ao alterar tarefa!" />
+    <liferay-ui:error key="removeTarefaErr" message="Falha ao deletar tarefa!" />
 
    <div class="container-fluid">
     <div class="sheet">
@@ -65,33 +68,38 @@
                     <liferay-portlet:param name="tarefaId" value="<%= String.valueOf(tarefa.getTarefaId()) %>" />
                 </liferay-portlet:renderURL>
 
+                <liferay-portlet:actionURL var="removeTarefaURL" name="<%= MVCComandKeys.TAREFA_DELETE %>">
+                    <liferay-portlet:param name="tarefaId" value="<%= String.valueOf(tarefa.getTarefaId()) %>" />
+                </liferay-portlet:actionURL>
+
         <c:if test="${not themeDisplay.getUser().isGuestUser()}">
             <liferay-ui:search-container-column-text name="Detalhes">
                 <liferay-ui:icon-menu
                             direction="left-side"
                             markupView="lexicon"
                             showWhenSingleIcon="true">
-                            <liferay-ui:icon cssClass="item-remove last"
+                            <liferay-ui:icon 
                                 message="Visualizar"
                                 url="<%= visualizarTarefaURL %>"
-                                target="icon-penciled" />
+                                target="icon-view" />
                                 
-                            <liferay-ui:icon cssClass="item-remove last"
+                            <liferay-ui:icon 
                                 message="Editar"
                                 url="<%= editTarefaURL %>"
-                                target="icon-gift" />
-                            <liferay-ui:icon cssClass="item-remove last"
+                                target="icon-penciled" />
+                            <liferay-ui:icon-delete
+                                cssClass="icon-remove-sign"
                                 message="Deletar"
-                                url="<%= editTarefaURL %>"
-                                target="icon-gift" />
-                            <liferay-ui:icon cssClass="item-remove last"
-                                message="Criar Sub. Tarefa"
-                                url="<%= editTarefaURL %>"
-                                target="icon-gift" />
-                            <liferay-ui:icon cssClass="item-remove last"
+                                url="<%= removeTarefaURL %>" />
+                            <liferay-ui:icon 
                                 message="Concluir Tarefa"
                                 url="<%= editTarefaURL %>"
-                                target="icon-gift" />
+                                target="icon-check" />
+                            <liferay-ui:icon 
+                                message="Criar Sub. Tarefa"
+                                url="<%= editTarefaURL %>"
+                                target="icon-new" />
+                           
                         </liferay-ui:icon-menu>
             </liferay-ui:search-container-column-text>
             </c:if>

@@ -295,6 +295,13 @@ public class TarefaLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.pedro.dev.tarefa.model.Tarefa> getSubTarefas(
+		long tarefaPaiId) {
+
+		return _tarefaLocalService.getSubTarefas(tarefaPaiId);
+	}
+
+	@Override
 	public java.util.List<com.pedro.dev.tarefa.model.Tarefa>
 		getSubTarefasByKeywords(
 			long groupId, String keywords, int start, int end, long userId,
