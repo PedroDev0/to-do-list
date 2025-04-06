@@ -8,7 +8,7 @@
     TarefaVo tarefaVo = (TarefaVo) request.getAttribute("tarefaVo");
     Tarefa tarefa = (Tarefa) tarefaVo.getTarefa();
     List<Tarefa> subtarefas = (List<Tarefa>) tarefaVo.getSubTarefas();
-
+    String loginUrl = (String) request.getAttribute("loginUrl");
     if (subtarefas == null) {
         subtarefas = new ArrayList<>();
     }
