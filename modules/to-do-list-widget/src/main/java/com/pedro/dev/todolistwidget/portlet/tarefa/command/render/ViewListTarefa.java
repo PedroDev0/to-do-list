@@ -17,6 +17,7 @@ import com.pedro.dev.tarefa.service.TarefaLocalServiceUtil;
 import com.pedro.dev.todolistwidget.constants.ToDoListWidgetPortletKeys;
 import com.pedro.dev.todolistwidget.portlet.constants.MVCComandKeys;
 import com.pedro.dev.todolistwidget.portlet.tarefa.toolbar.ToolBarTarefaDisplay;
+import com.pedro.dev.todolistwidget.portlet.tarefa.util.UrlLoginUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
@@ -38,16 +39,16 @@ public class ViewListTarefa implements MVCRenderCommand {
     public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
 
         try {
+            UrlLoginUtil.createUrlLogin(renderRequest);
             criaToolbar(renderRequest, renderResponse);
         } catch (PortalException e) {
             throw new RuntimeException(e);
         }
 
-
         return "/view.jsp";
     }
 
-    private void criaToolbar(RenderRequest renderRequest, RenderResponse renderResponse) throws PortalException, PortletModeException, WindowStateException {
+    private void criaToolbar(RenderRequest renderRequest, RenderResponse renderResponse) {
 
         LiferayPortletRequest liferayPortletRequest = portal.getLiferayPortletRequest(renderRequest);
 
@@ -62,33 +63,8 @@ public class ViewListTarefa implements MVCRenderCommand {
         renderRequest.setAttribute("entidades", TarefaLocalServiceUtil.getTarefas(-1, -1));
         renderRequest.setAttribute("entidadeCount", TarefaLocalServiceUtil.getTarefas(-1, -1).size());
 
-        createUrlLogin(renderRequest);
     }
 
-    private void createUrlLogin(RenderRequest renderRequest) throws WindowStateException, PortletModeException, PortalException {
-        HttpServletRequest httpRequest = PortalUtil.getHttpServletRequest(renderRequest);
-        ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-        // Busca a página pelo friendly URL "/home"
-        Layout layout = LayoutLocalServiceUtil.getFriendlyURLLayout(themeDisplay.getScopeGroupId(), // grupo atual
-                false, // false = layout público
-                "/home");
-
-        // Garante que o layout tem o portlet do login
-        String portletId = PortletKeys.LOGIN;
-
-        // Cria a URL amigável
-        PortletURL loginURL = PortletURLFactoryUtil.create(httpRequest, portletId, layout.getPlid(), // usa o layout da página "/home"
-                PortletRequest.RENDER_PHASE);
-
-        loginURL.setParameter("mvcRenderCommandName", "/login/login");
-        loginURL.setParameter("saveLastPath", "false");
-        loginURL.setWindowState(LiferayWindowState.MAXIMIZED);
-        loginURL.setPortletMode(PortletMode.VIEW);
-
-        String loginUrl = loginURL.toString();
-        renderRequest.setAttribute("loginUrl", loginUrl);
-
-    }
 
 }

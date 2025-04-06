@@ -1,5 +1,6 @@
 package com.pedro.dev.todolistwidget.portlet.tarefa.command.render;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -9,6 +10,7 @@ import com.pedro.dev.tarefa.model.Tarefa;
 import com.pedro.dev.tarefa.service.TarefaLocalServiceUtil;
 import com.pedro.dev.todolistwidget.constants.ToDoListWidgetPortletKeys;
 import com.pedro.dev.todolistwidget.portlet.constants.MVCComandKeys;
+import com.pedro.dev.todolistwidget.portlet.tarefa.util.UrlLoginUtil;
 import com.pedro.dev.todolistwidget.portlet.tarefa.vo.TarefaVo;
 import org.osgi.service.component.annotations.Component;
 import org.slf4j.Logger;
@@ -35,6 +37,12 @@ public class ViewFormTarefa implements MVCRenderCommand {
 
     @Override
     public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
+
+        try {
+            UrlLoginUtil.createUrlLogin(renderRequest);
+        } catch (PortalException e) {
+            throw new RuntimeException(e);
+        }
 
         ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
         long groupId = themeDisplay.getScopeGroupId();

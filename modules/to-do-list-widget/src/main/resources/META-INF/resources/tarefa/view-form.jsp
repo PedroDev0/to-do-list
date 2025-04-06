@@ -2,6 +2,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
 <%
     // Verifica se a tarefa foi definida na requisição
     TarefaVo tarefaVo = (TarefaVo) request.getAttribute("tarefaVo");
@@ -45,7 +46,7 @@
                         height="250"
                     />
                 </div>
-                
+
                 <div class="form-group">
                     <aui:input name="file" label="Imagem" type="file" accept="image/*" required="<%= tarefa == null %>" />
                 </div>
@@ -56,10 +57,10 @@
 
                     <liferay-ui:search-container 
                         id="entidadeEntries"
-                        total="<%= subtarefas.size() %>"
-                        >
-                        <liferay-ui:search-container-results results="<%= subtarefas %>" />
+                        total="<%= subtarefas.size() %>">
                         
+                        <liferay-ui:search-container-results results="<%= subtarefas %>" />
+
                         <c:if test="<%= subtarefas.size() == 0 %>">
                             <!-- Exibe a mensagem de "nenhum resultado encontrado" -->
                             <liferay-frontend:empty-result-message />
@@ -74,9 +75,9 @@
                                 name="ID"
                                 value="<%= String.valueOf(subTarefa.getTarefaId()) %>" />
 
-                            <liferay-ui:search-container-column-image name="Imagem"
-                                src="<%= subTarefa.getUrlImagem() %>"
-                            />
+                            <liferay-ui:search-container-column-image 
+                                name="Imagem"
+                                src="<%= subTarefa.getUrlImagem() %>" />
 
                             <liferay-ui:search-container-column-text
                                 name="Título"
@@ -100,11 +101,14 @@
                                         direction="left-side"
                                         markupView="lexicon"
                                         showWhenSingleIcon="true">
-                                        <!-- Ícone para Editar -->
+                                        
+                                        <!-- Ícone para Remover -->
                                         <liferay-ui:icon cssClass="item-remove last"
                                             message="Remover"
                                             url="<%= removerTarefaURL %>"
                                             target="icon-penciled" />
+
+                                        <!-- Ícone para Editar -->
                                         <liferay-ui:icon cssClass="item-remove last"
                                             message="Editar"
                                             url="<%= editSubTarefaURL %>"
@@ -130,3 +134,11 @@
         </div>
     </div>
 </div>
+
+<c:if test="${!themeDisplay.isSignedIn()}">
+    <div class="container-fluid">
+        <div class="sheet">
+            <a href="<%= loginUrl %>" class="sheet-title">Faça login para continuar</a>
+        </div>
+    </div>
+</c:if>

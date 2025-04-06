@@ -1,11 +1,13 @@
 package com.pedro.dev.todolistwidget.portlet.tarefa.command.render;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.pedro.dev.tarefa.model.Tarefa;
 import com.pedro.dev.tarefa.service.TarefaLocalServiceUtil;
 import com.pedro.dev.todolistwidget.constants.ToDoListWidgetPortletKeys;
 import com.pedro.dev.todolistwidget.portlet.constants.MVCComandKeys;
+import com.pedro.dev.todolistwidget.portlet.tarefa.util.UrlLoginUtil;
 import com.pedro.dev.todolistwidget.portlet.tarefa.vo.TarefaVo;
 import org.osgi.service.component.annotations.Component;
 import org.slf4j.Logger;
@@ -32,6 +34,11 @@ public class ViewTarefa implements MVCRenderCommand {
     @Override
     public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
 
+        try {
+            UrlLoginUtil.createUrlLogin(renderRequest);
+        } catch (PortalException e) {
+            throw new RuntimeException(e);
+        }
         logger.info("Caputrando tarefaId");
         long tarefaId = ParamUtil.getLong(renderRequest, "tarefaId");
 
