@@ -6,11 +6,9 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.util.*;
 import com.pedro.dev.tarefa.model.Tarefa;
+import com.pedro.dev.tarefa.model.TarefaTable;
 import com.pedro.dev.tarefa.service.TarefaLocalServiceUtil;
 import com.pedro.dev.todolistwidget.constants.ToDoListWidgetPortletKeys;
 import com.pedro.dev.todolistwidget.portlet.constants.MVCComandKeys;
@@ -84,8 +82,10 @@ public class ViewListTarefa implements MVCRenderCommand {
 
         // efetua a busca ordenada das tarefas
         List<Tarefa> tarefas = null;
+
+        long count = TarefaLocalServiceUtil.getSubTarefas(0l, groupId, userId).size();
         try {
-            tarefas = TarefaLocalServiceUtil.getTarefasPaiByKeywords(groupId, keywords, start, end, userId, null);
+            tarefas = TarefaLocalServiceUtil.getTarefasPaiByKeywords(groupId, keywords, start, end, userId, getOrderBy(renderRequest));
 
         } catch (Exception e) {
             tarefas = new ArrayList<>();
@@ -93,7 +93,7 @@ public class ViewListTarefa implements MVCRenderCommand {
 
         logger.info("Buscando entidades e passando para jsp");
         renderRequest.setAttribute("entidades", tarefas);
-        renderRequest.setAttribute("entidadeCount", tarefas.size());
+        renderRequest.setAttribute("entidadeCount", count);
     }
 
     private OrderByComparator<Tarefa> getOrderBy(RenderRequest renderRequest) {
@@ -101,13 +101,13 @@ public class ViewListTarefa implements MVCRenderCommand {
         String orderByCol = ParamUtil.getString(renderRequest, "orderByCol", "titulo");
         String orderByType = ParamUtil.getString(renderRequest, "orderByType", "asc");
 
-        boolean ascending = orderByType.equalsIgnoreCase("asc");
+        // true = ASC | false = DESC
+        OrderByComparator<Tarefa> orderByTitulo = OrderByComparatorFactoryUtil.create(
+                TarefaTable.INSTANCE.getTableName(), // Nome da tabela/entidade
+                orderByCol,
+                orderByType.equalsIgnoreCase("asc")
+        );
 
-        return new OrderByComparator<Tarefa>() {
-            @Override
-            public int compare(Tarefa t1, Tarefa t2) {
-                return 0;
-            }
-        };
+        return orderByTitulo;
     }
 }

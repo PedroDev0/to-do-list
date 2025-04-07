@@ -174,4 +174,5 @@ public class TarefaLocalServiceImpl extends TarefaLocalServiceBaseImpl {
     public List<Tarefa> getSubTarefas(long tarefaPaiId, long groupId, long userId) {
         return tarefaPersistence.findBychildren(userId, groupId, tarefaPaiId);
     }
+
 }

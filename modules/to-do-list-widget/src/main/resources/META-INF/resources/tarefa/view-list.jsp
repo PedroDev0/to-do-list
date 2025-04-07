@@ -11,11 +11,13 @@
     <liferay-ui:success key="addTarefaSucess" message="Tarefa cadastrada com sucesso!" />
     <liferay-ui:success key="updateTarefaSucess" message="Tarefa alterada com sucesso!" />
     <liferay-ui:error key="removeTarefaSucess" message="Tarefa deletada com sucesso!!" />
+    <liferay-ui:error key="concluiTarefaSucess" message="Tarefa concluída com sucesso!!" />
 
     <!-- Mensagens de erro -->
     <liferay-ui:error key="addTarefaErr" message="Falha ao cadastrar tarefa!" />
     <liferay-ui:error key="updateTarefaErr" message="Falha ao alterar tarefa!" />
     <liferay-ui:error key="removeTarefaErr" message="Falha ao deletar tarefa!" />
+    <liferay-ui:error key="concluiTarefaErr" message="Falha ao deletar tarefa!" />
 
     <div class="container-fluid">
         <div class="sheet">
@@ -81,6 +83,10 @@
                         <liferay-portlet:param name="tarefaId" value="<%= String.valueOf(tarefa.getTarefaId()) %>" />
                     </liferay-portlet:actionURL>
 
+                    <liferay-portlet:actionURL var="concluiTarefaURL" name="<%= MVCComandKeys.TAREFA_CONCLUIR %>">
+                        <liferay-portlet:param name="tarefaId" value="<%= String.valueOf(tarefa.getTarefaId()) %>" />
+                    </liferay-portlet:actionURL>
+
                     <c:if test="${themeDisplay.isSignedIn()}">
                         <liferay-ui:search-container-column-text name="Detalhes">
                             <liferay-ui:icon-menu
@@ -105,7 +111,7 @@
 
                                 <liferay-ui:icon 
                                     message="Concluir Tarefa"
-                                    url="<%= editTarefaURL %>"
+                                    url="<%= concluiTarefaURL %>"
                                     target="icon-check" />
 
                                 <liferay-ui:icon 
