@@ -204,16 +204,19 @@ public class TarefaPersistenceTest {
 
 	@Test
 	public void testCountBychildren() throws Exception {
-		_persistence.countBychildren(RandomTestUtil.nextLong());
+		_persistence.countBychildren(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
-		_persistence.countBychildren(0L);
+		_persistence.countBychildren(0L, 0L, 0L);
 	}
 
 	@Test
-	public void testCountBygroupId() throws Exception {
-		_persistence.countBygroupId(RandomTestUtil.nextLong());
+	public void testCountBygroupIdUser() throws Exception {
+		_persistence.countBygroupIdUser(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		_persistence.countBygroupId(0L);
+		_persistence.countBygroupIdUser(0L, 0L);
 	}
 
 	@Test

@@ -1443,41 +1443,52 @@ public class TarefaPersistenceImpl
 	private FinderPath _finderPathCountBychildren;
 
 	/**
-	 * Returns all the tarefas where tarefaPaiId = &#63;.
+	 * Returns all the tarefas where userId = &#63; and groupId = &#63; and tarefaPaiId = &#63;.
 	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
 	 * @param tarefaPaiId the tarefa pai ID
 	 * @return the matching tarefas
 	 */
 	@Override
-	public List<Tarefa> findBychildren(long tarefaPaiId) {
+	public List<Tarefa> findBychildren(
+		long userId, long groupId, long tarefaPaiId) {
+
 		return findBychildren(
-			tarefaPaiId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+			userId, groupId, tarefaPaiId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
 	}
 
 	/**
-	 * Returns a range of all the tarefas where tarefaPaiId = &#63;.
+	 * Returns a range of all the tarefas where userId = &#63; and groupId = &#63; and tarefaPaiId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TarefaModelImpl</code>.
 	 * </p>
 	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
 	 * @param tarefaPaiId the tarefa pai ID
 	 * @param start the lower bound of the range of tarefas
 	 * @param end the upper bound of the range of tarefas (not inclusive)
 	 * @return the range of matching tarefas
 	 */
 	@Override
-	public List<Tarefa> findBychildren(long tarefaPaiId, int start, int end) {
-		return findBychildren(tarefaPaiId, start, end, null);
+	public List<Tarefa> findBychildren(
+		long userId, long groupId, long tarefaPaiId, int start, int end) {
+
+		return findBychildren(userId, groupId, tarefaPaiId, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the tarefas where tarefaPaiId = &#63;.
+	 * Returns an ordered range of all the tarefas where userId = &#63; and groupId = &#63; and tarefaPaiId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TarefaModelImpl</code>.
 	 * </p>
 	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
 	 * @param tarefaPaiId the tarefa pai ID
 	 * @param start the lower bound of the range of tarefas
 	 * @param end the upper bound of the range of tarefas (not inclusive)
@@ -1486,19 +1497,22 @@ public class TarefaPersistenceImpl
 	 */
 	@Override
 	public List<Tarefa> findBychildren(
-		long tarefaPaiId, int start, int end,
+		long userId, long groupId, long tarefaPaiId, int start, int end,
 		OrderByComparator<Tarefa> orderByComparator) {
 
-		return findBychildren(tarefaPaiId, start, end, orderByComparator, true);
+		return findBychildren(
+			userId, groupId, tarefaPaiId, start, end, orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the tarefas where tarefaPaiId = &#63;.
+	 * Returns an ordered range of all the tarefas where userId = &#63; and groupId = &#63; and tarefaPaiId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TarefaModelImpl</code>.
 	 * </p>
 	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
 	 * @param tarefaPaiId the tarefa pai ID
 	 * @param start the lower bound of the range of tarefas
 	 * @param end the upper bound of the range of tarefas (not inclusive)
@@ -1508,7 +1522,7 @@ public class TarefaPersistenceImpl
 	 */
 	@Override
 	public List<Tarefa> findBychildren(
-		long tarefaPaiId, int start, int end,
+		long userId, long groupId, long tarefaPaiId, int start, int end,
 		OrderByComparator<Tarefa> orderByComparator, boolean useFinderCache) {
 
 		FinderPath finderPath = null;
@@ -1519,13 +1533,13 @@ public class TarefaPersistenceImpl
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindBychildren;
-				finderArgs = new Object[] {tarefaPaiId};
+				finderArgs = new Object[] {userId, groupId, tarefaPaiId};
 			}
 		}
 		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindBychildren;
 			finderArgs = new Object[] {
-				tarefaPaiId, start, end, orderByComparator
+				userId, groupId, tarefaPaiId, start, end, orderByComparator
 			};
 		}
 
@@ -1537,7 +1551,10 @@ public class TarefaPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Tarefa tarefa : list) {
-					if (tarefaPaiId != tarefa.getTarefaPaiId()) {
+					if ((userId != tarefa.getUserId()) ||
+						(groupId != tarefa.getGroupId()) ||
+						(tarefaPaiId != tarefa.getTarefaPaiId())) {
+
 						list = null;
 
 						break;
@@ -1551,13 +1568,17 @@ public class TarefaPersistenceImpl
 
 			if (orderByComparator != null) {
 				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
+					5 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
-				sb = new StringBundler(3);
+				sb = new StringBundler(5);
 			}
 
 			sb.append(_SQL_SELECT_TAREFA_WHERE);
+
+			sb.append(_FINDER_COLUMN_CHILDREN_USERID_2);
+
+			sb.append(_FINDER_COLUMN_CHILDREN_GROUPID_2);
 
 			sb.append(_FINDER_COLUMN_CHILDREN_TAREFAPAIID_2);
 
@@ -1579,6 +1600,10 @@ public class TarefaPersistenceImpl
 				Query query = session.createQuery(sql);
 
 				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(userId);
+
+				queryPos.add(groupId);
 
 				queryPos.add(tarefaPaiId);
 
@@ -1603,8 +1628,10 @@ public class TarefaPersistenceImpl
 	}
 
 	/**
-	 * Returns the first tarefa in the ordered set where tarefaPaiId = &#63;.
+	 * Returns the first tarefa in the ordered set where userId = &#63; and groupId = &#63; and tarefaPaiId = &#63;.
 	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
 	 * @param tarefaPaiId the tarefa pai ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching tarefa
@@ -1612,20 +1639,28 @@ public class TarefaPersistenceImpl
 	 */
 	@Override
 	public Tarefa findBychildren_First(
-			long tarefaPaiId, OrderByComparator<Tarefa> orderByComparator)
+			long userId, long groupId, long tarefaPaiId,
+			OrderByComparator<Tarefa> orderByComparator)
 		throws NoSuchTarefaException {
 
-		Tarefa tarefa = fetchBychildren_First(tarefaPaiId, orderByComparator);
+		Tarefa tarefa = fetchBychildren_First(
+			userId, groupId, tarefaPaiId, orderByComparator);
 
 		if (tarefa != null) {
 			return tarefa;
 		}
 
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(8);
 
 		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		sb.append("tarefaPaiId=");
+		sb.append("userId=");
+		sb.append(userId);
+
+		sb.append(", groupId=");
+		sb.append(groupId);
+
+		sb.append(", tarefaPaiId=");
 		sb.append(tarefaPaiId);
 
 		sb.append("}");
@@ -1634,18 +1669,21 @@ public class TarefaPersistenceImpl
 	}
 
 	/**
-	 * Returns the first tarefa in the ordered set where tarefaPaiId = &#63;.
+	 * Returns the first tarefa in the ordered set where userId = &#63; and groupId = &#63; and tarefaPaiId = &#63;.
 	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
 	 * @param tarefaPaiId the tarefa pai ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching tarefa, or <code>null</code> if a matching tarefa could not be found
 	 */
 	@Override
 	public Tarefa fetchBychildren_First(
-		long tarefaPaiId, OrderByComparator<Tarefa> orderByComparator) {
+		long userId, long groupId, long tarefaPaiId,
+		OrderByComparator<Tarefa> orderByComparator) {
 
 		List<Tarefa> list = findBychildren(
-			tarefaPaiId, 0, 1, orderByComparator);
+			userId, groupId, tarefaPaiId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1655,8 +1693,10 @@ public class TarefaPersistenceImpl
 	}
 
 	/**
-	 * Returns the last tarefa in the ordered set where tarefaPaiId = &#63;.
+	 * Returns the last tarefa in the ordered set where userId = &#63; and groupId = &#63; and tarefaPaiId = &#63;.
 	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
 	 * @param tarefaPaiId the tarefa pai ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching tarefa
@@ -1664,20 +1704,28 @@ public class TarefaPersistenceImpl
 	 */
 	@Override
 	public Tarefa findBychildren_Last(
-			long tarefaPaiId, OrderByComparator<Tarefa> orderByComparator)
+			long userId, long groupId, long tarefaPaiId,
+			OrderByComparator<Tarefa> orderByComparator)
 		throws NoSuchTarefaException {
 
-		Tarefa tarefa = fetchBychildren_Last(tarefaPaiId, orderByComparator);
+		Tarefa tarefa = fetchBychildren_Last(
+			userId, groupId, tarefaPaiId, orderByComparator);
 
 		if (tarefa != null) {
 			return tarefa;
 		}
 
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(8);
 
 		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		sb.append("tarefaPaiId=");
+		sb.append("userId=");
+		sb.append(userId);
+
+		sb.append(", groupId=");
+		sb.append(groupId);
+
+		sb.append(", tarefaPaiId=");
 		sb.append(tarefaPaiId);
 
 		sb.append("}");
@@ -1686,24 +1734,27 @@ public class TarefaPersistenceImpl
 	}
 
 	/**
-	 * Returns the last tarefa in the ordered set where tarefaPaiId = &#63;.
+	 * Returns the last tarefa in the ordered set where userId = &#63; and groupId = &#63; and tarefaPaiId = &#63;.
 	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
 	 * @param tarefaPaiId the tarefa pai ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching tarefa, or <code>null</code> if a matching tarefa could not be found
 	 */
 	@Override
 	public Tarefa fetchBychildren_Last(
-		long tarefaPaiId, OrderByComparator<Tarefa> orderByComparator) {
+		long userId, long groupId, long tarefaPaiId,
+		OrderByComparator<Tarefa> orderByComparator) {
 
-		int count = countBychildren(tarefaPaiId);
+		int count = countBychildren(userId, groupId, tarefaPaiId);
 
 		if (count == 0) {
 			return null;
 		}
 
 		List<Tarefa> list = findBychildren(
-			tarefaPaiId, count - 1, count, orderByComparator);
+			userId, groupId, tarefaPaiId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1713,9 +1764,11 @@ public class TarefaPersistenceImpl
 	}
 
 	/**
-	 * Returns the tarefas before and after the current tarefa in the ordered set where tarefaPaiId = &#63;.
+	 * Returns the tarefas before and after the current tarefa in the ordered set where userId = &#63; and groupId = &#63; and tarefaPaiId = &#63;.
 	 *
 	 * @param tarefaId the primary key of the current tarefa
+	 * @param userId the user ID
+	 * @param groupId the group ID
 	 * @param tarefaPaiId the tarefa pai ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next tarefa
@@ -1723,7 +1776,7 @@ public class TarefaPersistenceImpl
 	 */
 	@Override
 	public Tarefa[] findBychildren_PrevAndNext(
-			long tarefaId, long tarefaPaiId,
+			long tarefaId, long userId, long groupId, long tarefaPaiId,
 			OrderByComparator<Tarefa> orderByComparator)
 		throws NoSuchTarefaException {
 
@@ -1737,12 +1790,14 @@ public class TarefaPersistenceImpl
 			Tarefa[] array = new TarefaImpl[3];
 
 			array[0] = getBychildren_PrevAndNext(
-				session, tarefa, tarefaPaiId, orderByComparator, true);
+				session, tarefa, userId, groupId, tarefaPaiId,
+				orderByComparator, true);
 
 			array[1] = tarefa;
 
 			array[2] = getBychildren_PrevAndNext(
-				session, tarefa, tarefaPaiId, orderByComparator, false);
+				session, tarefa, userId, groupId, tarefaPaiId,
+				orderByComparator, false);
 
 			return array;
 		}
@@ -1755,21 +1810,26 @@ public class TarefaPersistenceImpl
 	}
 
 	protected Tarefa getBychildren_PrevAndNext(
-		Session session, Tarefa tarefa, long tarefaPaiId,
-		OrderByComparator<Tarefa> orderByComparator, boolean previous) {
+		Session session, Tarefa tarefa, long userId, long groupId,
+		long tarefaPaiId, OrderByComparator<Tarefa> orderByComparator,
+		boolean previous) {
 
 		StringBundler sb = null;
 
 		if (orderByComparator != null) {
 			sb = new StringBundler(
-				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			sb = new StringBundler(3);
+			sb = new StringBundler(5);
 		}
 
 		sb.append(_SQL_SELECT_TAREFA_WHERE);
+
+		sb.append(_FINDER_COLUMN_CHILDREN_USERID_2);
+
+		sb.append(_FINDER_COLUMN_CHILDREN_GROUPID_2);
 
 		sb.append(_FINDER_COLUMN_CHILDREN_TAREFAPAIID_2);
 
@@ -1842,6 +1902,10 @@ public class TarefaPersistenceImpl
 
 		QueryPos queryPos = QueryPos.getInstance(query);
 
+		queryPos.add(userId);
+
+		queryPos.add(groupId);
+
 		queryPos.add(tarefaPaiId);
 
 		if (orderByComparator != null) {
@@ -1863,38 +1927,47 @@ public class TarefaPersistenceImpl
 	}
 
 	/**
-	 * Removes all the tarefas where tarefaPaiId = &#63; from the database.
+	 * Removes all the tarefas where userId = &#63; and groupId = &#63; and tarefaPaiId = &#63; from the database.
 	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
 	 * @param tarefaPaiId the tarefa pai ID
 	 */
 	@Override
-	public void removeBychildren(long tarefaPaiId) {
+	public void removeBychildren(long userId, long groupId, long tarefaPaiId) {
 		for (Tarefa tarefa :
 				findBychildren(
-					tarefaPaiId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+					userId, groupId, tarefaPaiId, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
 
 			remove(tarefa);
 		}
 	}
 
 	/**
-	 * Returns the number of tarefas where tarefaPaiId = &#63;.
+	 * Returns the number of tarefas where userId = &#63; and groupId = &#63; and tarefaPaiId = &#63;.
 	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
 	 * @param tarefaPaiId the tarefa pai ID
 	 * @return the number of matching tarefas
 	 */
 	@Override
-	public int countBychildren(long tarefaPaiId) {
+	public int countBychildren(long userId, long groupId, long tarefaPaiId) {
 		FinderPath finderPath = _finderPathCountBychildren;
 
-		Object[] finderArgs = new Object[] {tarefaPaiId};
+		Object[] finderArgs = new Object[] {userId, groupId, tarefaPaiId};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
-			StringBundler sb = new StringBundler(2);
+			StringBundler sb = new StringBundler(4);
 
 			sb.append(_SQL_COUNT_TAREFA_WHERE);
+
+			sb.append(_FINDER_COLUMN_CHILDREN_USERID_2);
+
+			sb.append(_FINDER_COLUMN_CHILDREN_GROUPID_2);
 
 			sb.append(_FINDER_COLUMN_CHILDREN_TAREFAPAIID_2);
 
@@ -1908,6 +1981,10 @@ public class TarefaPersistenceImpl
 				Query query = session.createQuery(sql);
 
 				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(userId);
+
+				queryPos.add(groupId);
 
 				queryPos.add(tarefaPaiId);
 
@@ -1926,49 +2003,60 @@ public class TarefaPersistenceImpl
 		return count.intValue();
 	}
 
+	private static final String _FINDER_COLUMN_CHILDREN_USERID_2 =
+		"tarefa.userId = ? AND ";
+
+	private static final String _FINDER_COLUMN_CHILDREN_GROUPID_2 =
+		"tarefa.groupId = ? AND ";
+
 	private static final String _FINDER_COLUMN_CHILDREN_TAREFAPAIID_2 =
 		"tarefa.tarefaPaiId = ?";
 
-	private FinderPath _finderPathWithPaginationFindBygroupId;
-	private FinderPath _finderPathWithoutPaginationFindBygroupId;
-	private FinderPath _finderPathCountBygroupId;
+	private FinderPath _finderPathWithPaginationFindBygroupIdUser;
+	private FinderPath _finderPathWithoutPaginationFindBygroupIdUser;
+	private FinderPath _finderPathCountBygroupIdUser;
 
 	/**
-	 * Returns all the tarefas where groupId = &#63;.
+	 * Returns all the tarefas where userId = &#63; and groupId = &#63;.
 	 *
+	 * @param userId the user ID
 	 * @param groupId the group ID
 	 * @return the matching tarefas
 	 */
 	@Override
-	public List<Tarefa> findBygroupId(long groupId) {
-		return findBygroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	public List<Tarefa> findBygroupIdUser(long userId, long groupId) {
+		return findBygroupIdUser(
+			userId, groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the tarefas where groupId = &#63;.
+	 * Returns a range of all the tarefas where userId = &#63; and groupId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TarefaModelImpl</code>.
 	 * </p>
 	 *
+	 * @param userId the user ID
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of tarefas
 	 * @param end the upper bound of the range of tarefas (not inclusive)
 	 * @return the range of matching tarefas
 	 */
 	@Override
-	public List<Tarefa> findBygroupId(long groupId, int start, int end) {
-		return findBygroupId(groupId, start, end, null);
+	public List<Tarefa> findBygroupIdUser(
+		long userId, long groupId, int start, int end) {
+
+		return findBygroupIdUser(userId, groupId, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the tarefas where groupId = &#63;.
+	 * Returns an ordered range of all the tarefas where userId = &#63; and groupId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TarefaModelImpl</code>.
 	 * </p>
 	 *
+	 * @param userId the user ID
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of tarefas
 	 * @param end the upper bound of the range of tarefas (not inclusive)
@@ -1976,20 +2064,22 @@ public class TarefaPersistenceImpl
 	 * @return the ordered range of matching tarefas
 	 */
 	@Override
-	public List<Tarefa> findBygroupId(
-		long groupId, int start, int end,
+	public List<Tarefa> findBygroupIdUser(
+		long userId, long groupId, int start, int end,
 		OrderByComparator<Tarefa> orderByComparator) {
 
-		return findBygroupId(groupId, start, end, orderByComparator, true);
+		return findBygroupIdUser(
+			userId, groupId, start, end, orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the tarefas where groupId = &#63;.
+	 * Returns an ordered range of all the tarefas where userId = &#63; and groupId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TarefaModelImpl</code>.
 	 * </p>
 	 *
+	 * @param userId the user ID
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of tarefas
 	 * @param end the upper bound of the range of tarefas (not inclusive)
@@ -1998,8 +2088,8 @@ public class TarefaPersistenceImpl
 	 * @return the ordered range of matching tarefas
 	 */
 	@Override
-	public List<Tarefa> findBygroupId(
-		long groupId, int start, int end,
+	public List<Tarefa> findBygroupIdUser(
+		long userId, long groupId, int start, int end,
 		OrderByComparator<Tarefa> orderByComparator, boolean useFinderCache) {
 
 		FinderPath finderPath = null;
@@ -2009,13 +2099,15 @@ public class TarefaPersistenceImpl
 			(orderByComparator == null)) {
 
 			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindBygroupId;
-				finderArgs = new Object[] {groupId};
+				finderPath = _finderPathWithoutPaginationFindBygroupIdUser;
+				finderArgs = new Object[] {userId, groupId};
 			}
 		}
 		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindBygroupId;
-			finderArgs = new Object[] {groupId, start, end, orderByComparator};
+			finderPath = _finderPathWithPaginationFindBygroupIdUser;
+			finderArgs = new Object[] {
+				userId, groupId, start, end, orderByComparator
+			};
 		}
 
 		List<Tarefa> list = null;
@@ -2026,7 +2118,9 @@ public class TarefaPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Tarefa tarefa : list) {
-					if (groupId != tarefa.getGroupId()) {
+					if ((userId != tarefa.getUserId()) ||
+						(groupId != tarefa.getGroupId())) {
+
 						list = null;
 
 						break;
@@ -2040,15 +2134,17 @@ public class TarefaPersistenceImpl
 
 			if (orderByComparator != null) {
 				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
+					4 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
-				sb = new StringBundler(3);
+				sb = new StringBundler(4);
 			}
 
 			sb.append(_SQL_SELECT_TAREFA_WHERE);
 
-			sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
+			sb.append(_FINDER_COLUMN_GROUPIDUSER_USERID_2);
+
+			sb.append(_FINDER_COLUMN_GROUPIDUSER_GROUPID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
@@ -2068,6 +2164,8 @@ public class TarefaPersistenceImpl
 				Query query = session.createQuery(sql);
 
 				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(userId);
 
 				queryPos.add(groupId);
 
@@ -2092,29 +2190,35 @@ public class TarefaPersistenceImpl
 	}
 
 	/**
-	 * Returns the first tarefa in the ordered set where groupId = &#63;.
+	 * Returns the first tarefa in the ordered set where userId = &#63; and groupId = &#63;.
 	 *
+	 * @param userId the user ID
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching tarefa
 	 * @throws NoSuchTarefaException if a matching tarefa could not be found
 	 */
 	@Override
-	public Tarefa findBygroupId_First(
-			long groupId, OrderByComparator<Tarefa> orderByComparator)
+	public Tarefa findBygroupIdUser_First(
+			long userId, long groupId,
+			OrderByComparator<Tarefa> orderByComparator)
 		throws NoSuchTarefaException {
 
-		Tarefa tarefa = fetchBygroupId_First(groupId, orderByComparator);
+		Tarefa tarefa = fetchBygroupIdUser_First(
+			userId, groupId, orderByComparator);
 
 		if (tarefa != null) {
 			return tarefa;
 		}
 
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(6);
 
 		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		sb.append("groupId=");
+		sb.append("userId=");
+		sb.append(userId);
+
+		sb.append(", groupId=");
 		sb.append(groupId);
 
 		sb.append("}");
@@ -2123,17 +2227,20 @@ public class TarefaPersistenceImpl
 	}
 
 	/**
-	 * Returns the first tarefa in the ordered set where groupId = &#63;.
+	 * Returns the first tarefa in the ordered set where userId = &#63; and groupId = &#63;.
 	 *
+	 * @param userId the user ID
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching tarefa, or <code>null</code> if a matching tarefa could not be found
 	 */
 	@Override
-	public Tarefa fetchBygroupId_First(
-		long groupId, OrderByComparator<Tarefa> orderByComparator) {
+	public Tarefa fetchBygroupIdUser_First(
+		long userId, long groupId,
+		OrderByComparator<Tarefa> orderByComparator) {
 
-		List<Tarefa> list = findBygroupId(groupId, 0, 1, orderByComparator);
+		List<Tarefa> list = findBygroupIdUser(
+			userId, groupId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2143,29 +2250,35 @@ public class TarefaPersistenceImpl
 	}
 
 	/**
-	 * Returns the last tarefa in the ordered set where groupId = &#63;.
+	 * Returns the last tarefa in the ordered set where userId = &#63; and groupId = &#63;.
 	 *
+	 * @param userId the user ID
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching tarefa
 	 * @throws NoSuchTarefaException if a matching tarefa could not be found
 	 */
 	@Override
-	public Tarefa findBygroupId_Last(
-			long groupId, OrderByComparator<Tarefa> orderByComparator)
+	public Tarefa findBygroupIdUser_Last(
+			long userId, long groupId,
+			OrderByComparator<Tarefa> orderByComparator)
 		throws NoSuchTarefaException {
 
-		Tarefa tarefa = fetchBygroupId_Last(groupId, orderByComparator);
+		Tarefa tarefa = fetchBygroupIdUser_Last(
+			userId, groupId, orderByComparator);
 
 		if (tarefa != null) {
 			return tarefa;
 		}
 
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(6);
 
 		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		sb.append("groupId=");
+		sb.append("userId=");
+		sb.append(userId);
+
+		sb.append(", groupId=");
 		sb.append(groupId);
 
 		sb.append("}");
@@ -2174,24 +2287,26 @@ public class TarefaPersistenceImpl
 	}
 
 	/**
-	 * Returns the last tarefa in the ordered set where groupId = &#63;.
+	 * Returns the last tarefa in the ordered set where userId = &#63; and groupId = &#63;.
 	 *
+	 * @param userId the user ID
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching tarefa, or <code>null</code> if a matching tarefa could not be found
 	 */
 	@Override
-	public Tarefa fetchBygroupId_Last(
-		long groupId, OrderByComparator<Tarefa> orderByComparator) {
+	public Tarefa fetchBygroupIdUser_Last(
+		long userId, long groupId,
+		OrderByComparator<Tarefa> orderByComparator) {
 
-		int count = countBygroupId(groupId);
+		int count = countBygroupIdUser(userId, groupId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<Tarefa> list = findBygroupId(
-			groupId, count - 1, count, orderByComparator);
+		List<Tarefa> list = findBygroupIdUser(
+			userId, groupId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2201,17 +2316,18 @@ public class TarefaPersistenceImpl
 	}
 
 	/**
-	 * Returns the tarefas before and after the current tarefa in the ordered set where groupId = &#63;.
+	 * Returns the tarefas before and after the current tarefa in the ordered set where userId = &#63; and groupId = &#63;.
 	 *
 	 * @param tarefaId the primary key of the current tarefa
+	 * @param userId the user ID
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next tarefa
 	 * @throws NoSuchTarefaException if a tarefa with the primary key could not be found
 	 */
 	@Override
-	public Tarefa[] findBygroupId_PrevAndNext(
-			long tarefaId, long groupId,
+	public Tarefa[] findBygroupIdUser_PrevAndNext(
+			long tarefaId, long userId, long groupId,
 			OrderByComparator<Tarefa> orderByComparator)
 		throws NoSuchTarefaException {
 
@@ -2224,13 +2340,13 @@ public class TarefaPersistenceImpl
 
 			Tarefa[] array = new TarefaImpl[3];
 
-			array[0] = getBygroupId_PrevAndNext(
-				session, tarefa, groupId, orderByComparator, true);
+			array[0] = getBygroupIdUser_PrevAndNext(
+				session, tarefa, userId, groupId, orderByComparator, true);
 
 			array[1] = tarefa;
 
-			array[2] = getBygroupId_PrevAndNext(
-				session, tarefa, groupId, orderByComparator, false);
+			array[2] = getBygroupIdUser_PrevAndNext(
+				session, tarefa, userId, groupId, orderByComparator, false);
 
 			return array;
 		}
@@ -2242,24 +2358,26 @@ public class TarefaPersistenceImpl
 		}
 	}
 
-	protected Tarefa getBygroupId_PrevAndNext(
-		Session session, Tarefa tarefa, long groupId,
+	protected Tarefa getBygroupIdUser_PrevAndNext(
+		Session session, Tarefa tarefa, long userId, long groupId,
 		OrderByComparator<Tarefa> orderByComparator, boolean previous) {
 
 		StringBundler sb = null;
 
 		if (orderByComparator != null) {
 			sb = new StringBundler(
-				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			sb = new StringBundler(3);
+			sb = new StringBundler(4);
 		}
 
 		sb.append(_SQL_SELECT_TAREFA_WHERE);
 
-		sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
+		sb.append(_FINDER_COLUMN_GROUPIDUSER_USERID_2);
+
+		sb.append(_FINDER_COLUMN_GROUPIDUSER_GROUPID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields =
@@ -2330,6 +2448,8 @@ public class TarefaPersistenceImpl
 
 		QueryPos queryPos = QueryPos.getInstance(query);
 
+		queryPos.add(userId);
+
 		queryPos.add(groupId);
 
 		if (orderByComparator != null) {
@@ -2351,40 +2471,45 @@ public class TarefaPersistenceImpl
 	}
 
 	/**
-	 * Removes all the tarefas where groupId = &#63; from the database.
+	 * Removes all the tarefas where userId = &#63; and groupId = &#63; from the database.
 	 *
+	 * @param userId the user ID
 	 * @param groupId the group ID
 	 */
 	@Override
-	public void removeBygroupId(long groupId) {
+	public void removeBygroupIdUser(long userId, long groupId) {
 		for (Tarefa tarefa :
-				findBygroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+				findBygroupIdUser(
+					userId, groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
 
 			remove(tarefa);
 		}
 	}
 
 	/**
-	 * Returns the number of tarefas where groupId = &#63;.
+	 * Returns the number of tarefas where userId = &#63; and groupId = &#63;.
 	 *
+	 * @param userId the user ID
 	 * @param groupId the group ID
 	 * @return the number of matching tarefas
 	 */
 	@Override
-	public int countBygroupId(long groupId) {
-		FinderPath finderPath = _finderPathCountBygroupId;
+	public int countBygroupIdUser(long userId, long groupId) {
+		FinderPath finderPath = _finderPathCountBygroupIdUser;
 
-		Object[] finderArgs = new Object[] {groupId};
+		Object[] finderArgs = new Object[] {userId, groupId};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
-			StringBundler sb = new StringBundler(2);
+			StringBundler sb = new StringBundler(3);
 
 			sb.append(_SQL_COUNT_TAREFA_WHERE);
 
-			sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
+			sb.append(_FINDER_COLUMN_GROUPIDUSER_USERID_2);
+
+			sb.append(_FINDER_COLUMN_GROUPIDUSER_GROUPID_2);
 
 			String sql = sb.toString();
 
@@ -2396,6 +2521,8 @@ public class TarefaPersistenceImpl
 				Query query = session.createQuery(sql);
 
 				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(userId);
 
 				queryPos.add(groupId);
 
@@ -2414,7 +2541,10 @@ public class TarefaPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 =
+	private static final String _FINDER_COLUMN_GROUPIDUSER_USERID_2 =
+		"tarefa.userId = ? AND ";
+
+	private static final String _FINDER_COLUMN_GROUPIDUSER_GROUPID_2 =
 		"tarefa.groupId = ?";
 
 	public TarefaPersistenceImpl() {
@@ -3029,38 +3159,44 @@ public class TarefaPersistenceImpl
 		_finderPathWithPaginationFindBychildren = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBychildren",
 			new String[] {
+				Long.class.getName(), Long.class.getName(),
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			},
-			new String[] {"tarefaPaiId"}, true);
+			new String[] {"userId", "groupId", "tarefaPaiId"}, true);
 
 		_finderPathWithoutPaginationFindBychildren = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBychildren",
-			new String[] {Long.class.getName()}, new String[] {"tarefaPaiId"},
-			true);
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			},
+			new String[] {"userId", "groupId", "tarefaPaiId"}, true);
 
 		_finderPathCountBychildren = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBychildren",
-			new String[] {Long.class.getName()}, new String[] {"tarefaPaiId"},
-			false);
-
-		_finderPathWithPaginationFindBygroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBygroupId",
 			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			new String[] {"groupId"}, true);
+			new String[] {"userId", "groupId", "tarefaPaiId"}, false);
 
-		_finderPathWithoutPaginationFindBygroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBygroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
+		_finderPathWithPaginationFindBygroupIdUser = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBygroupIdUser",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"userId", "groupId"}, true);
 
-		_finderPathCountBygroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBygroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
+		_finderPathWithoutPaginationFindBygroupIdUser = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBygroupIdUser",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			new String[] {"userId", "groupId"}, true);
+
+		_finderPathCountBygroupIdUser = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBygroupIdUser",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			new String[] {"userId", "groupId"}, false);
 
 		TarefaUtil.setPersistence(this);
 	}

@@ -48,7 +48,7 @@ public class ViewTarefa implements MVCRenderCommand {
         tarefaVo.setTarefa(tarefa);
         List<Tarefa> subTarefas = null;
         logger.info("buscando subTarefas...");
-        subTarefas = TarefaLocalServiceUtil.getSubTarefas(tarefa.getTarefaId());
+        subTarefas = TarefaLocalServiceUtil.getSubTarefas(tarefa.getTarefaId(), tarefa.getGroupId(), tarefa.getUserId());
 
         tarefaVo.setSubTarefas(subTarefas);
         renderRequest.setAttribute("tarefaVo", tarefaVo);

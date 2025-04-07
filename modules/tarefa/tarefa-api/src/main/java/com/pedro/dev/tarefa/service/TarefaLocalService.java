@@ -239,7 +239,8 @@ public interface TarefaLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Tarefa> getSubTarefas(long tarefaPaiId);
+	public List<Tarefa> getSubTarefas(
+		long tarefaPaiId, long groupId, long userId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Tarefa> getSubTarefasByKeywords(
@@ -283,11 +284,12 @@ public interface TarefaLocalService
 	public List<Tarefa> getTarefas(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Tarefa> getTarefasByGroupId(long groupId);
+	public List<Tarefa> getTarefasByGroupId(long groupId, long userId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Tarefa> getTarefasByGroupIdOrdenado(
-		long groupId, int start, int end, OrderByComparator<Tarefa> comparator);
+		long groupId, long userId, int start, int end,
+		OrderByComparator<Tarefa> comparator);
 
 	/**
 	 * Returns all the tarefas matching the UUID and company.
@@ -325,7 +327,7 @@ public interface TarefaLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Tarefa> getTarefasGroupPaginator(
-		long groupId, int start, int end);
+		long groupId, long userId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Tarefa> getTarefasPaiByKeywords(

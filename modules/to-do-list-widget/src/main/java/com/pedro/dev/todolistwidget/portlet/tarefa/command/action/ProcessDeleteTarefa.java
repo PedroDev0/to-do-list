@@ -1,12 +1,12 @@
 package com.pedro.dev.todolistwidget.portlet.tarefa.command.action;
 
 
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.pedro.dev.tarefa.model.Tarefa;
 import com.pedro.dev.tarefa.service.TarefaLocalServiceUtil;
 import com.pedro.dev.todolistwidget.constants.ToDoListWidgetPortletKeys;
@@ -40,6 +40,8 @@ public class ProcessDeleteTarefa extends BaseMVCActionCommand {
             Tarefa tarefa = TarefaLocalServiceUtil.getTarefa(tarefaId);
             logger.debug("Removendo sub tarefa do banco");
             deletaFilhos(tarefa);
+            // remove File
+            DLAppLocalServiceUtil.deleteFileEntry(tarefa.getFileEntryId());
             logger.debug("Removendo tarefa do banco pelo tarefaId");
             TarefaLocalServiceUtil.deleteTarefa(tarefa);
             SessionMessages.add(actionRequest, "removeTarefaSucess");
@@ -50,11 +52,12 @@ public class ProcessDeleteTarefa extends BaseMVCActionCommand {
 
     private void deletaFilhos(Tarefa tarefa) {
         try {
-            List<Tarefa> tarefas = TarefaLocalServiceUtil.getSubTarefas(tarefa.getTarefaId());
+            List<Tarefa> tarefas = TarefaLocalServiceUtil.getSubTarefas(tarefa.getTarefaId(), tarefa.getGroupId(), tarefa.getUserId());
             tarefas.forEach(e -> {
                 TarefaLocalServiceUtil.deleteTarefa(e);
             });
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

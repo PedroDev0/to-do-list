@@ -268,8 +268,10 @@ public class TarefaLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static List<Tarefa> getSubTarefas(long tarefaPaiId) {
-		return getService().getSubTarefas(tarefaPaiId);
+	public static List<Tarefa> getSubTarefas(
+		long tarefaPaiId, long groupId, long userId) {
+
+		return getService().getSubTarefas(tarefaPaiId, groupId, userId);
 	}
 
 	public static List<Tarefa> getSubTarefasByKeywords(
@@ -320,16 +322,16 @@ public class TarefaLocalServiceUtil {
 		return getService().getTarefas(start, end);
 	}
 
-	public static List<Tarefa> getTarefasByGroupId(long groupId) {
-		return getService().getTarefasByGroupId(groupId);
+	public static List<Tarefa> getTarefasByGroupId(long groupId, long userId) {
+		return getService().getTarefasByGroupId(groupId, userId);
 	}
 
 	public static List<Tarefa> getTarefasByGroupIdOrdenado(
-		long groupId, int start, int end,
+		long groupId, long userId, int start, int end,
 		OrderByComparator<Tarefa> comparator) {
 
 		return getService().getTarefasByGroupIdOrdenado(
-			groupId, start, end, comparator);
+			groupId, userId, start, end, comparator);
 	}
 
 	/**
@@ -373,9 +375,10 @@ public class TarefaLocalServiceUtil {
 	}
 
 	public static List<Tarefa> getTarefasGroupPaginator(
-		long groupId, int start, int end) {
+		long groupId, long userId, int start, int end) {
 
-		return getService().getTarefasGroupPaginator(groupId, start, end);
+		return getService().getTarefasGroupPaginator(
+			groupId, userId, start, end);
 	}
 
 	public static List<Tarefa> getTarefasPaiByKeywords(

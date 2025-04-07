@@ -296,9 +296,9 @@ public class TarefaLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.pedro.dev.tarefa.model.Tarefa> getSubTarefas(
-		long tarefaPaiId) {
+		long tarefaPaiId, long groupId, long userId) {
 
-		return _tarefaLocalService.getSubTarefas(tarefaPaiId);
+		return _tarefaLocalService.getSubTarefas(tarefaPaiId, groupId, userId);
 	}
 
 	@Override
@@ -363,20 +363,20 @@ public class TarefaLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.pedro.dev.tarefa.model.Tarefa>
-		getTarefasByGroupId(long groupId) {
+		getTarefasByGroupId(long groupId, long userId) {
 
-		return _tarefaLocalService.getTarefasByGroupId(groupId);
+		return _tarefaLocalService.getTarefasByGroupId(groupId, userId);
 	}
 
 	@Override
 	public java.util.List<com.pedro.dev.tarefa.model.Tarefa>
 		getTarefasByGroupIdOrdenado(
-			long groupId, int start, int end,
+			long groupId, long userId, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.pedro.dev.tarefa.model.Tarefa> comparator) {
 
 		return _tarefaLocalService.getTarefasByGroupIdOrdenado(
-			groupId, start, end, comparator);
+			groupId, userId, start, end, comparator);
 	}
 
 	/**
@@ -427,10 +427,11 @@ public class TarefaLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.pedro.dev.tarefa.model.Tarefa>
-		getTarefasGroupPaginator(long groupId, int start, int end) {
+		getTarefasGroupPaginator(
+			long groupId, long userId, int start, int end) {
 
 		return _tarefaLocalService.getTarefasGroupPaginator(
-			groupId, start, end);
+			groupId, userId, start, end);
 	}
 
 	@Override

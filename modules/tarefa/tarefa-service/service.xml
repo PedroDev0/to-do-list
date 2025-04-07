@@ -38,10 +38,13 @@
 		<!-- Finder methods -->
 
 		<finder name="children" return-type="Collection">
+			<finder-column name="userId"/>
+			<finder-column name="groupId"/>
 			<finder-column name="tarefaPaiId" />
 		</finder>
 
-		<finder name="groupId" return-type="Collection">
+		<finder name="groupIdUser" return-type="Collection">
+			<finder-column name="userId"/>
 			<finder-column name="groupId"/>
 		</finder>
 

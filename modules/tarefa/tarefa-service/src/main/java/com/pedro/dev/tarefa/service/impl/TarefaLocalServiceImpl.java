@@ -91,17 +91,17 @@ public class TarefaLocalServiceImpl extends TarefaLocalServiceBaseImpl {
         return super.updateTarefa(tarefa);
     }
 
-    public List<Tarefa> getTarefasByGroupId(long groupId) {
-        return tarefaPersistence.findBygroupId(groupId);
+    public List<Tarefa> getTarefasByGroupId(long groupId, long userId) {
+        return tarefaPersistence.findBygroupIdUser(userId, groupId);
     }
 
-    public List<Tarefa> getTarefasGroupPaginator(long groupId, int start, int end) {
-        return tarefaPersistence.findBygroupId(groupId, start, end);
+    public List<Tarefa> getTarefasGroupPaginator(long groupId, long userId, int start, int end) {
+        return tarefaPersistence.findBygroupIdUser(userId, groupId, start, end);
     }
 
-    public List<Tarefa> getTarefasByGroupIdOrdenado(long groupId, int start, int end,
+    public List<Tarefa> getTarefasByGroupIdOrdenado(long groupId, long userId, int start, int end,
                                                     OrderByComparator<Tarefa> comparator) {
-        return tarefaPersistence.findBygroupId(groupId, start, end, comparator);
+        return tarefaPersistence.findBygroupIdUser(userId, groupId, start, end, comparator);
     }
 
     public List<Tarefa> getTarefasPaiByKeywords(long groupId, String keywords, int start, int end, long userId,
@@ -112,16 +112,16 @@ public class TarefaLocalServiceImpl extends TarefaLocalServiceBaseImpl {
 
     private DynamicQuery getKeywordDynamicQuery(long groupId, String keywords, long userId) {
 
-        DynamicQuery dynamicQuery = dynamicQuery()
-                .add(RestrictionsFactoryUtil.eq("groupId", groupId))
-                .add(RestrictionsFactoryUtil.eq("userId", userId))
-                .add(
-                        RestrictionsFactoryUtil.or(
-                                RestrictionsFactoryUtil.isNull("tarefaPaiId"),
-                                RestrictionsFactoryUtil.le("tarefaPaiId", 0)
-                        )
-                );
-        if (Validator.isNotNull(keywords)) {
+        DynamicQuery dynamicQuery = dynamicQuery();
+
+        dynamicQuery.add(RestrictionsFactoryUtil.eq("userId", userId));
+        dynamicQuery.add(RestrictionsFactoryUtil.eq("groupId", groupId));
+        // (tarefaPaiId = 0 OR tarefaPaiId IS NULL)
+        dynamicQuery.add(RestrictionsFactoryUtil.or(
+                RestrictionsFactoryUtil.eq("tarefaPaiId", 0L),
+                RestrictionsFactoryUtil.isNull("tarefaPaiId")
+        ));
+        if ( Validator.isNotNull(keywords) && !keywords.isBlank()) {
             Disjunction disjunctionQuery = RestrictionsFactoryUtil.disjunction();
             disjunctionQuery.add(RestrictionsFactoryUtil.like("titulo", "%" + keywords + "%"));
             disjunctionQuery.add(RestrictionsFactoryUtil.like("descricao", "%" + keywords + "%"));
@@ -171,7 +171,7 @@ public class TarefaLocalServiceImpl extends TarefaLocalServiceBaseImpl {
 
     }
 
-    public List<Tarefa> getSubTarefas(long tarefaPaiId) {
-        return  tarefaPersistence.findBychildren(tarefaPaiId);
+    public List<Tarefa> getSubTarefas(long tarefaPaiId, long groupId, long userId) {
+        return tarefaPersistence.findBychildren(userId, groupId, tarefaPaiId);
     }
 }
