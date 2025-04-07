@@ -2,7 +2,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <%
-    ToolBarTarefaDisplay toolbar =  (ToolBarTarefaDisplay) request.getAttribute("toolbar");
+    ToolBarSubTarefaDisplay toolbarSubTarefa =  (ToolBarSubTarefaDisplay) request.getAttribute("toolbarSubTarefa");
     String loginUrl = (String) request.getAttribute("loginUrl");
 %>
 
@@ -21,11 +21,11 @@
 
     <div class="container-fluid">
         <div class="sheet">
-            <h2 class="sheet-title">Lista de tarefas</h2>
+            <h2 class="sheet-title">Sub. Tarefas List</h2>
 
             <clay:management-toolbar
                 disabled="${entidadeCount eq 0}"
-                displayContext="${toolbar}"
+                displayContext="${toolbarSubTarefa}"
                 searchContainerId="entidadeEntries"
                 selectable="false"
                 itemsTotal="${entidadeCount}"
@@ -33,11 +33,11 @@
 
             <liferay-ui:search-container 
                 id="entidadeEntries"
-                iteratorURL="${portletURL}"
-                total="${entidadeCount}"
+                iteratorURL="${portletSubTarefaURL}"
+                total="${entidadeSubCount}"
                 delta="${delta}">
 
-                <liferay-ui:search-container-results results="${entidades}" />
+                <liferay-ui:search-container-results results="${entidadesSub}" />
 
                 <c:if test="${(entidades.size() == 0)}">
                     <!-- Exibe a mensagem de "nenhum resultado encontrado" -->
@@ -70,28 +70,24 @@
                         value="<%= TarefaStatus.fromCodigo(tarefa.getStatus()).getDescricao() %>" />
 
                     <liferay-portlet:renderURL var="visualizarTarefaURL">
-                        <liferay-portlet:param name="mvcRenderCommandName" value="<%= MVCComandKeys.TAREFA_VIEW %>" /> 
+                        <liferay-portlet:param name="mvcRenderCommandName" value="<%= MVCComandKeys.TAREFA_SUB_VIEW %>" /> 
                         <liferay-portlet:param name="tarefaId" value="<%= String.valueOf(tarefa.getTarefaId()) %>" />
                     </liferay-portlet:renderURL>
 
                     <liferay-portlet:renderURL var="editTarefaURL">
-                        <liferay-portlet:param name="mvcRenderCommandName" value="<%= MVCComandKeys.TAREFA_FORM %>" />
-                        <liferay-portlet:param name="tarefaId" value="<%= String.valueOf(tarefa.getTarefaId()) %>" />
+                        <liferay-portlet:param name="mvcRenderCommandName" value="<%= MVCComandKeys.TAREFA_SUB_FORM %>" />
+                          <liferay-portlet:param name="tarefaId" value="<%= String.valueOf(tarefa.getTarefaPaiId()) %>" />
+                        <liferay-portlet:param name="subTarefaId" value="<%= String.valueOf(tarefa.getTarefaId()) %>" />
                     </liferay-portlet:renderURL>
 
-                    <liferay-portlet:actionURL var="removeTarefaURL" name="<%= MVCComandKeys.TAREFA_DELETE %>">
+                    <liferay-portlet:actionURL var="removeTarefaURL" name="<%= MVCComandKeys.TAREFA_SUB_DELETE %>">
                         <liferay-portlet:param name="tarefaId" value="<%= String.valueOf(tarefa.getTarefaId()) %>" />
                     </liferay-portlet:actionURL>
 
-                    <liferay-portlet:actionURL var="concluiTarefaURL" name="<%= MVCComandKeys.TAREFA_CONCLUIR %>">
+                    <liferay-portlet:actionURL var="concluiTarefaURL" name="<%= MVCComandKeys.TAREFA_SUB_CONCLUIR %>">
                         <liferay-portlet:param name="tarefaId" value="<%= String.valueOf(tarefa.getTarefaId()) %>" />
                     </liferay-portlet:actionURL>
 
-                    <liferay-portlet:renderURL var="subTarefaURL">
-                        <liferay-portlet:param name="mvcRenderCommandName" value="<%= MVCComandKeys.TAREFA_SUB_LISTAR %>" />
-                        <liferay-portlet:param name="tarefaId" value="<%= String.valueOf(tarefa.getTarefaId()) %>" />
-                    </liferay-portlet:renderURL>
-                    
                     <c:if test="${themeDisplay.isSignedIn()}">
                         <liferay-ui:search-container-column-text name="Detalhes">
                             <liferay-ui:icon-menu
@@ -118,11 +114,6 @@
                                     message="Concluir Tarefa"
                                     url="<%= concluiTarefaURL %>"
                                     target="icon-check" />
-
-                                <liferay-ui:icon 
-                                    message="Subtarefas"
-                                    url="<%= subTarefaURL %>"
-                                    target="icon-new" />
                             </liferay-ui:icon-menu>
                         </liferay-ui:search-container-column-text>
                     </c:if>

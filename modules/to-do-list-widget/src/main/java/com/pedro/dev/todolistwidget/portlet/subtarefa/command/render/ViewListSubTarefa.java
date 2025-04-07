@@ -1,4 +1,4 @@
-package com.pedro.dev.todolistwidget.portlet.tarefa.command.render;
+package com.pedro.dev.todolistwidget.portlet.subtarefa.command.render;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -12,7 +12,7 @@ import com.pedro.dev.tarefa.model.TarefaTable;
 import com.pedro.dev.tarefa.service.TarefaLocalServiceUtil;
 import com.pedro.dev.todolistwidget.constants.ToDoListWidgetPortletKeys;
 import com.pedro.dev.todolistwidget.portlet.constants.MVCComandKeys;
-import com.pedro.dev.todolistwidget.portlet.tarefa.toolbar.ToolBarTarefaDisplay;
+import com.pedro.dev.todolistwidget.portlet.tarefa.toolbar.ToolBarSubTarefaDisplay;
 import com.pedro.dev.todolistwidget.portlet.tarefa.util.UrlLoginUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -20,19 +20,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component(immediate = true, property = {"javax.portlet.name=" + ToDoListWidgetPortletKeys.TODOLISTWIDGET, "mvc.command.name=" + MVCComandKeys.TAREFA_LISTAR, "mvc.command.name=/"}, service = MVCRenderCommand.class)
+@Component(immediate = true,
+        property = {
+                "javax.portlet.name=" + ToDoListWidgetPortletKeys.TODOLISTWIDGET,
+                "mvc.command.name=" + MVCComandKeys.TAREFA_SUB_LISTAR},
+        service = MVCRenderCommand.class)
 
-public class ViewListTarefa implements MVCRenderCommand {
+public class ViewListSubTarefa implements MVCRenderCommand {
 
     @Reference
     private Portal portal;
 
-    private static final Logger logger = LoggerFactory.getLogger(ViewListTarefa.class);
+    private static final Logger logger = LoggerFactory.getLogger(ViewListSubTarefa.class);
 
     @Override
     public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
@@ -44,8 +49,7 @@ public class ViewListTarefa implements MVCRenderCommand {
         } catch (PortalException e) {
             throw new RuntimeException(e);
         }
-
-        return "/view.jsp";
+        return "/sub-tarefa/view-sub-list.jsp";
     }
 
     private void criaToolbar(RenderRequest renderRequest, RenderResponse renderResponse) {
@@ -55,9 +59,16 @@ public class ViewListTarefa implements MVCRenderCommand {
         LiferayPortletResponse liferayPortletResponse = portal.getLiferayPortletResponse(renderResponse);
 
         logger.info("Iniciando toolbar");
-        ToolBarTarefaDisplay toolbar = new ToolBarTarefaDisplay(liferayPortletRequest, liferayPortletResponse, portal.getHttpServletRequest(renderRequest));
-
-        renderRequest.setAttribute("toolbar", toolbar);
+        PortletURL portletURLPremio = liferayPortletResponse.createRenderURL();
+        long tarefaId = ParamUtil.getLong(renderRequest, "tarefaId");
+        // Parâmetro mvcRenderCommandName
+        portletURLPremio.setParameter("mvcRenderCommandName", MVCComandKeys.TAREFA_SUB_LISTAR);
+        portletURLPremio.setParameter("tarefaId", "" + tarefaId);
+        // PASSANDO A URL COM OS PARAMETROS OBRIGTORIOS
+        renderRequest.setAttribute("portletSubTarefaURL",
+                portletURLPremio);
+        ToolBarSubTarefaDisplay toolbarSubTarefa = new ToolBarSubTarefaDisplay(liferayPortletRequest, liferayPortletResponse, portal.getHttpServletRequest(renderRequest));
+        renderRequest.setAttribute("toolbarSubTarefa", toolbarSubTarefa);
     }
 
 
@@ -73,27 +84,28 @@ public class ViewListTarefa implements MVCRenderCommand {
         int start = ((currentPage > 0) ? (currentPage - 1) : 0) * delta;
         int end = start + delta;
 
-
         String keywords = ParamUtil.getString(renderRequest, "keywords");
-
 
         long groupId = themeDisplay.getScopeGroupId();
         long userId = themeDisplay.getUserId();
 
+        long tarefaId = ParamUtil.getLong(renderRequest, "tarefaId");
         // efetua a busca ordenada das tarefas
         List<Tarefa> tarefas = null;
 
-        long count = TarefaLocalServiceUtil.getSubTarefas(0l, groupId, userId).size();
+        long count = TarefaLocalServiceUtil.getSubTarefas(tarefaId, groupId, userId).size();
         try {
-            tarefas = TarefaLocalServiceUtil.getTarefasByKeywords(groupId, keywords, start, end, userId,0, getOrderBy(renderRequest));
+            tarefas = TarefaLocalServiceUtil.getTarefasByKeywords(groupId, keywords, start, end, userId, tarefaId, getOrderBy(renderRequest));
 
         } catch (Exception e) {
             tarefas = new ArrayList<>();
         }
 
         logger.info("Buscando entidades e passando para jsp");
-        renderRequest.setAttribute("entidades", tarefas);
-        renderRequest.setAttribute("entidadeCount", count);
+
+        renderRequest.setAttribute("entidadesSub", tarefas);
+        renderRequest.setAttribute("tarefaId", tarefaId);
+        renderRequest.setAttribute("entidadeSubCount", count);
     }
 
     private OrderByComparator<Tarefa> getOrderBy(RenderRequest renderRequest) {

@@ -104,13 +104,14 @@ public class TarefaLocalServiceImpl extends TarefaLocalServiceBaseImpl {
         return tarefaPersistence.findBygroupIdUser(userId, groupId, start, end, comparator);
     }
 
-    public List<Tarefa> getTarefasPaiByKeywords(long groupId, String keywords, int start, int end, long userId,
+    public List<Tarefa> getTarefasByKeywords(long groupId, String keywords, int start, int end, long userId,
+                                                long tarefaPai,
                                                 OrderByComparator<Tarefa> comparator) {
-        return tarefaLocalService.dynamicQuery(getKeywordDynamicQuery(groupId, keywords, userId), start, end, comparator);
+        return tarefaLocalService.dynamicQuery(getKeywordDynamicQuery(groupId, keywords, userId,tarefaPai), start, end, comparator);
     }
 
 
-    private DynamicQuery getKeywordDynamicQuery(long groupId, String keywords, long userId) {
+    private DynamicQuery getKeywordDynamicQuery(long groupId, String keywords, long userId, long tarefaPai) {
 
         DynamicQuery dynamicQuery = dynamicQuery();
 
@@ -118,10 +119,10 @@ public class TarefaLocalServiceImpl extends TarefaLocalServiceBaseImpl {
         dynamicQuery.add(RestrictionsFactoryUtil.eq("groupId", groupId));
         // (tarefaPaiId = 0 OR tarefaPaiId IS NULL)
         dynamicQuery.add(RestrictionsFactoryUtil.or(
-                RestrictionsFactoryUtil.eq("tarefaPaiId", 0L),
+                RestrictionsFactoryUtil.eq("tarefaPaiId", tarefaPai),
                 RestrictionsFactoryUtil.isNull("tarefaPaiId")
         ));
-        if ( Validator.isNotNull(keywords) && !keywords.isBlank()) {
+        if (Validator.isNotNull(keywords) && !keywords.isBlank()) {
             Disjunction disjunctionQuery = RestrictionsFactoryUtil.disjunction();
             disjunctionQuery.add(RestrictionsFactoryUtil.like("titulo", "%" + keywords + "%"));
             disjunctionQuery.add(RestrictionsFactoryUtil.like("descricao", "%" + keywords + "%"));
@@ -130,24 +131,18 @@ public class TarefaLocalServiceImpl extends TarefaLocalServiceBaseImpl {
         return dynamicQuery;
     }
 
-    public List<Tarefa> getSubTarefasByKeywords(long groupId, String keywords, int start, int end, long userId, long tarefaPaiId,
+    public List<Tarefa> getSubTarefasByKeywords(long groupId, int start, int end, long userId, long tarefaPaiId,
                                                 OrderByComparator<Tarefa> comparator) {
-        return tarefaLocalService.dynamicQuery(getKeywordSubTarefaDynamicQuery(groupId, keywords, userId, tarefaPaiId), start, end, comparator);
+        return tarefaLocalService.dynamicQuery(getKeywordSubTarefaDynamicQuery(groupId, userId, tarefaPaiId), start, end, comparator);
     }
 
-    private DynamicQuery getKeywordSubTarefaDynamicQuery(long groupId, String keywords, long userId, long tarefaPaiId) {
+    private DynamicQuery getKeywordSubTarefaDynamicQuery(long groupId, long userId, long tarefaPaiId) {
 
         DynamicQuery dynamicQuery = dynamicQuery()
                 .add(RestrictionsFactoryUtil.eq("groupId", groupId))
                 .add(RestrictionsFactoryUtil.eq("userId", userId))
                 .add(RestrictionsFactoryUtil.eq("tarefaPaiId", tarefaPaiId)
                 );
-        if (Validator.isNotNull(keywords)) {
-            Disjunction disjunctionQuery = RestrictionsFactoryUtil.disjunction();
-            disjunctionQuery.add(RestrictionsFactoryUtil.like("titulo", "%" + keywords + "%"));
-            disjunctionQuery.add(RestrictionsFactoryUtil.like("descricao", "%" + keywords + "%"));
-            dynamicQuery.add(disjunctionQuery);
-        }
         return dynamicQuery;
     }
 

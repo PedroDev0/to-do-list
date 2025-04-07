@@ -1,4 +1,4 @@
-package com.pedro.dev.todolistwidget.portlet.tarefa.command.action;
+package com.pedro.dev.todolistwidget.portlet.subtarefa.command.action;
 
 
 import com.liferay.document.library.kernel.model.DLFolder;
@@ -37,13 +37,13 @@ import java.io.File;
         immediate = true,
         property = {
                 "javax.portlet.name=" + ToDoListWidgetPortletKeys.TODOLISTWIDGET,
-                "mvc.command.name=" + MVCComandKeys.TAREFA_INCLUIR_OU_ATUALIZAR
+                "mvc.command.name=" + MVCComandKeys.TAREFA_SUB_INCLUIR_OU_ATUALIZAR
         },
         service = MVCActionCommand.class
 )
-public class ProcessSaveTarefa extends BaseMVCActionCommand {
+public class ProcessSaveSubTarefa extends BaseMVCActionCommand {
 
-    private static final Logger logger = LoggerFactory.getLogger(ProcessSaveTarefa.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProcessSaveSubTarefa.class);
 
     @Override
     protected void doProcessAction(ActionRequest actionRequest, ActionResponse actionResponse) throws Exception {
@@ -52,22 +52,25 @@ public class ProcessSaveTarefa extends BaseMVCActionCommand {
         // captura o theme display
         ThemeDisplay themeDisplay = (ThemeDisplay) actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
         // Processa requisição do forumalrio de tarefa
-        logger.debug("Buscando tarefaId");
+        logger.debug("Capturando tarefaId (Id do Pai)");
         Long tarefaId = ParamUtil.getLong(actionRequest, "tarefaId");
 
+        logger.debug("Capturando subTarefaId (Id da sub tarefa)");
+        Long subTarefaId = ParamUtil.getLong(actionRequest, "subTarefaId");
+
         // se o id for null cria uma nova tarefa
-        if (tarefaId == null || tarefaId <= 0) {
+        if (subTarefaId == null || subTarefaId <= 0) {
             logger.debug("Criando nova tarefa");
-            processNewTarefa(themeDisplay, actionRequest, actionResponse);
+            processNewTarefa(tarefaId, themeDisplay, actionRequest, actionResponse);
             return;
         }
 
-        processUpdateTarefa(tarefaId, actionRequest);
+        processUpdateTarefa(subTarefaId, actionRequest, actionResponse);
 
     }
 
 
-    private void processNewTarefa(ThemeDisplay themeDisplay, ActionRequest actionRequest, ActionResponse actionResponse) {
+    private void processNewTarefa(long tarefaPaiId, ThemeDisplay themeDisplay, ActionRequest actionRequest, ActionResponse actionResponse) {
 
         try {
             long groupId = themeDisplay.getScopeGroupId();
@@ -99,15 +102,22 @@ public class ProcessSaveTarefa extends BaseMVCActionCommand {
                     serviceContext.getThemeDisplay(), "");
 
             // Adicionando a tarefa no banco de dados
+
+
             logger.debug("Adcionando tarefa no banco");
-            TarefaLocalServiceUtil.addTarefa(
+            Tarefa tarefa = TarefaLocalServiceUtil.addTarefa(
                     groupId, titulo, descricao, imagem, 0l, fileEntry.getFileEntryId(), userId, serviceContext);
 
+
+            // efetua a ligação com a tarefa pai
+            tarefa.setTarefaPaiId(tarefaPaiId);
+            TarefaLocalServiceUtil.updateTarefa(tarefa);
             // Mensagem de sucesso
             SessionMessages.add(actionRequest, "addTarefaSucess");
 
             // Redireciona para a página de visualização da lista de tarefas
-            actionResponse.setRenderParameter("mvc.command.name", MVCComandKeys.TAREFA_LISTAR);
+            actionResponse.setRenderParameter("mvcRenderCommandName", MVCComandKeys.TAREFA_SUB_LISTAR);
+            actionResponse.setRenderParameter("tarefaId", tarefa.getTarefaPaiId() + "");
 
         } catch (
                 Exception e) {
@@ -144,10 +154,9 @@ public class ProcessSaveTarefa extends BaseMVCActionCommand {
         return dlFolder.getFolderId();
     }
 
-    private void processUpdateTarefa(Long tarefaId, ActionRequest actionRequest) throws PortalException {
+    private void processUpdateTarefa(Long tarefaId, ActionRequest actionRequest, ActionResponse actionResponse) throws PortalException {
 
-
-        logger.debug("Buscando Tarefa no Banco");
+        logger.debug("Buscando Sub Tarefa no Banco");
         Tarefa tarefa = TarefaLocalServiceUtil.getTarefa(tarefaId);
 
         logger.debug("Captrando titulo");
@@ -195,13 +204,13 @@ public class ProcessSaveTarefa extends BaseMVCActionCommand {
 
 
         // Atualizando  a tarefa
-        logger.debug("Adcionando tarefa no banco");
-
         tarefa.setTitulo(titulo);
         tarefa.setDescricao(descricao);
-
-
+        logger.debug("Adcionando tarefa no banco");
         TarefaLocalServiceUtil.updateTarefa(tarefa);
+        // Redireciona para a página de visualização da lista de tarefas
+        actionResponse.setRenderParameter("mvcRenderCommandName", MVCComandKeys.TAREFA_SUB_LISTAR);
+        actionResponse.setRenderParameter("tarefaId", tarefa.getTarefaPaiId() + "");
 
     }
 

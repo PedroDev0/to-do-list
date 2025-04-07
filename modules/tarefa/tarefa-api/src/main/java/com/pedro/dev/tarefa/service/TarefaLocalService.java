@@ -244,8 +244,8 @@ public interface TarefaLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Tarefa> getSubTarefasByKeywords(
-		long groupId, String keywords, int start, int end, long userId,
-		long tarefaPaiId, OrderByComparator<Tarefa> comparator);
+		long groupId, int start, int end, long userId, long tarefaPaiId,
+		OrderByComparator<Tarefa> comparator);
 
 	/**
 	 * Returns the tarefa with the primary key.
@@ -291,6 +291,11 @@ public interface TarefaLocalService
 		long groupId, long userId, int start, int end,
 		OrderByComparator<Tarefa> comparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Tarefa> getTarefasByKeywords(
+		long groupId, String keywords, int start, int end, long userId,
+		long tarefaPai, OrderByComparator<Tarefa> comparator);
+
 	/**
 	 * Returns all the tarefas matching the UUID and company.
 	 *
@@ -328,11 +333,6 @@ public interface TarefaLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Tarefa> getTarefasGroupPaginator(
 		long groupId, long userId, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Tarefa> getTarefasPaiByKeywords(
-		long groupId, String keywords, int start, int end, long userId,
-		OrderByComparator<Tarefa> comparator);
 
 	@Indexable(type = IndexableType.REINDEX)
 	public Tarefa updateTarefa(

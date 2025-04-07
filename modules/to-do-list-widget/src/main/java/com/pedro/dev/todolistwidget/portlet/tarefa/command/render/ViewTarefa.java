@@ -8,7 +8,6 @@ import com.pedro.dev.tarefa.service.TarefaLocalServiceUtil;
 import com.pedro.dev.todolistwidget.constants.ToDoListWidgetPortletKeys;
 import com.pedro.dev.todolistwidget.portlet.constants.MVCComandKeys;
 import com.pedro.dev.todolistwidget.portlet.tarefa.util.UrlLoginUtil;
-import com.pedro.dev.todolistwidget.portlet.tarefa.vo.TarefaVo;
 import org.osgi.service.component.annotations.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import java.util.List;
 
 @Component(
         immediate = true,
@@ -37,21 +35,13 @@ public class ViewTarefa implements MVCRenderCommand {
         try {
             UrlLoginUtil.createUrlLogin(renderRequest);
         } catch (PortalException e) {
-            throw new RuntimeException(e);
         }
         logger.info("Caputrando tarefaId");
         long tarefaId = ParamUtil.getLong(renderRequest, "tarefaId");
-
-        TarefaVo tarefaVo = new TarefaVo();
         logger.info("Buscando tarefa no banco");
         Tarefa tarefa = TarefaLocalServiceUtil.fetchTarefa(tarefaId);
-        tarefaVo.setTarefa(tarefa);
-        List<Tarefa> subTarefas = null;
-        logger.info("buscando subTarefas...");
-        subTarefas = TarefaLocalServiceUtil.getSubTarefas(tarefa.getTarefaId(), tarefa.getGroupId(), tarefa.getUserId());
 
-        tarefaVo.setSubTarefas(subTarefas);
-        renderRequest.setAttribute("tarefaVo", tarefaVo);
+        renderRequest.setAttribute("tarefa", tarefa);
         return "/tarefa/view-tarefa.jsp";
     }
 

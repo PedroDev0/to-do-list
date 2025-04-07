@@ -11,8 +11,8 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ taglib prefix="clay" uri="http://liferay.com/tld/clay" %>
 
 <%@ page import="com.pedro.dev.todolistwidget.portlet.tarefa.toolbar.ToolBarTarefaDisplay" %>
+<%@ page import="com.pedro.dev.todolistwidget.portlet.tarefa.toolbar.ToolBarSubTarefaDisplay" %>
 <%@ page import="com.pedro.dev.tarefa.model.Tarefa" %>
-<%@ page import="com.pedro.dev.todolistwidget.portlet.tarefa.vo.TarefaVo" %>
 <%@ page import="com.pedro.dev.todolistwidget.portlet.constants.MVCComandKeys" %>
 <%@ page import="com.pedro.dev.tarefa.service.constants.TarefaStatus" %>
 <%@ page import="com.liferay.portal.kernel.util.PortalUtil" %>

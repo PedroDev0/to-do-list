@@ -1,41 +1,33 @@
-package com.pedro.dev.todolistwidget.portlet.tarefa.command.render;
+package com.pedro.dev.todolistwidget.portlet.subtarefa.command.render;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.pedro.dev.tarefa.model.Tarefa;
 import com.pedro.dev.tarefa.service.TarefaLocalServiceUtil;
 import com.pedro.dev.todolistwidget.constants.ToDoListWidgetPortletKeys;
 import com.pedro.dev.todolistwidget.portlet.constants.MVCComandKeys;
 import com.pedro.dev.todolistwidget.portlet.tarefa.util.UrlLoginUtil;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import java.util.ArrayList;
-import java.util.List;
 
 @Component(
         immediate = true,
         property = {
                 "javax.portlet.name=" + ToDoListWidgetPortletKeys.TODOLISTWIDGET,
-                "mvc.command.name=" + MVCComandKeys.TAREFA_FORM
+                "mvc.command.name=" + MVCComandKeys.TAREFA_SUB_VIEW
         },
         service = MVCRenderCommand.class
 )
 
-public class ViewFormTarefa implements MVCRenderCommand {
+public class ViewSubTarefa implements MVCRenderCommand {
 
-    private static final Logger logger = LoggerFactory.getLogger(ViewFormTarefa.class);
-    @Reference
-    private Portal portal;
+    private static final Logger logger = LoggerFactory.getLogger(ViewSubTarefa.class);
 
     @Override
     public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
@@ -44,22 +36,13 @@ public class ViewFormTarefa implements MVCRenderCommand {
             UrlLoginUtil.createUrlLogin(renderRequest);
         } catch (PortalException e) {
         }
-
         logger.info("Caputrando tarefaId");
         long tarefaId = ParamUtil.getLong(renderRequest, "tarefaId");
-
-        Tarefa tarefa = null;
-        List<Tarefa> subTarefas = new ArrayList<>();
-        if (tarefaId > 0) {
-            logger.info("Buscando tarefa no banco");
-            tarefa = TarefaLocalServiceUtil.fetchTarefa(tarefaId);
-            logger.info("buscando subTarefas...");
-            subTarefas = TarefaLocalServiceUtil.getSubTarefas(tarefa.getTarefaId(), tarefa.getGroupId(), tarefa.getUserId());
-
-        }
+        logger.info("Buscando tarefa no banco");
+        Tarefa tarefa = TarefaLocalServiceUtil.fetchTarefa(tarefaId);
         renderRequest.setAttribute("tarefa", tarefa);
-        renderRequest.setAttribute("subTarefas", subTarefas);
-        return "/tarefa/view-form.jsp";
+        return "/sub-tarefa/view-sub-tarefa.jsp";
     }
+
 
 }

@@ -275,11 +275,11 @@ public class TarefaLocalServiceUtil {
 	}
 
 	public static List<Tarefa> getSubTarefasByKeywords(
-		long groupId, String keywords, int start, int end, long userId,
-		long tarefaPaiId, OrderByComparator<Tarefa> comparator) {
+		long groupId, int start, int end, long userId, long tarefaPaiId,
+		OrderByComparator<Tarefa> comparator) {
 
 		return getService().getSubTarefasByKeywords(
-			groupId, keywords, start, end, userId, tarefaPaiId, comparator);
+			groupId, start, end, userId, tarefaPaiId, comparator);
 	}
 
 	/**
@@ -334,6 +334,14 @@ public class TarefaLocalServiceUtil {
 			groupId, userId, start, end, comparator);
 	}
 
+	public static List<Tarefa> getTarefasByKeywords(
+		long groupId, String keywords, int start, int end, long userId,
+		long tarefaPai, OrderByComparator<Tarefa> comparator) {
+
+		return getService().getTarefasByKeywords(
+			groupId, keywords, start, end, userId, tarefaPai, comparator);
+	}
+
 	/**
 	 * Returns all the tarefas matching the UUID and company.
 	 *
@@ -379,14 +387,6 @@ public class TarefaLocalServiceUtil {
 
 		return getService().getTarefasGroupPaginator(
 			groupId, userId, start, end);
-	}
-
-	public static List<Tarefa> getTarefasPaiByKeywords(
-		long groupId, String keywords, int start, int end, long userId,
-		OrderByComparator<Tarefa> comparator) {
-
-		return getService().getTarefasPaiByKeywords(
-			groupId, keywords, start, end, userId, comparator);
 	}
 
 	public static Tarefa updateTarefa(

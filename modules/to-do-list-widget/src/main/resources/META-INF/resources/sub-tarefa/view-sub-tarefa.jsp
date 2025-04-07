@@ -6,6 +6,7 @@
     String loginUrl = (String) request.getAttribute("loginUrl");
 %>
 
+
 <c:if test="${themeDisplay.isSignedIn()}">
     <div class="container">
         <div class="sheet sheet-lg">
@@ -46,7 +47,8 @@
 
                     <div class="sheet-footer d-flex justify-content-end">
                         <liferay-portlet:renderURL var="cancelURL">
-                            <liferay-portlet:param name="mvcRenderCommandName" value="<%= MVCComandKeys.TAREFA_LISTAR %>" />
+                            <liferay-portlet:param name="mvcRenderCommandName" value="<%= MVCComandKeys.TAREFA_SUB_LISTAR %>" />
+                            <liferay-portlet:param name="tarefaId" value="<%= String.valueOf(tarefa.getTarefaPaiId()) %>" />
                         </liferay-portlet:renderURL>
                         <aui:button type="button" value="Voltar" cssClass="btn btn-secondary"
                             onClick="window.location.href='${cancelURL}'" />

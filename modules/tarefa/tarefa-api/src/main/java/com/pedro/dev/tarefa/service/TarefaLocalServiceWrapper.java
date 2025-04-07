@@ -304,13 +304,12 @@ public class TarefaLocalServiceWrapper
 	@Override
 	public java.util.List<com.pedro.dev.tarefa.model.Tarefa>
 		getSubTarefasByKeywords(
-			long groupId, String keywords, int start, int end, long userId,
-			long tarefaPaiId,
+			long groupId, int start, int end, long userId, long tarefaPaiId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.pedro.dev.tarefa.model.Tarefa> comparator) {
 
 		return _tarefaLocalService.getSubTarefasByKeywords(
-			groupId, keywords, start, end, userId, tarefaPaiId, comparator);
+			groupId, start, end, userId, tarefaPaiId, comparator);
 	}
 
 	/**
@@ -379,6 +378,18 @@ public class TarefaLocalServiceWrapper
 			groupId, userId, start, end, comparator);
 	}
 
+	@Override
+	public java.util.List<com.pedro.dev.tarefa.model.Tarefa>
+		getTarefasByKeywords(
+			long groupId, String keywords, int start, int end, long userId,
+			long tarefaPai,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.pedro.dev.tarefa.model.Tarefa> comparator) {
+
+		return _tarefaLocalService.getTarefasByKeywords(
+			groupId, keywords, start, end, userId, tarefaPai, comparator);
+	}
+
 	/**
 	 * Returns all the tarefas matching the UUID and company.
 	 *
@@ -432,17 +443,6 @@ public class TarefaLocalServiceWrapper
 
 		return _tarefaLocalService.getTarefasGroupPaginator(
 			groupId, userId, start, end);
-	}
-
-	@Override
-	public java.util.List<com.pedro.dev.tarefa.model.Tarefa>
-		getTarefasPaiByKeywords(
-			long groupId, String keywords, int start, int end, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.pedro.dev.tarefa.model.Tarefa> comparator) {
-
-		return _tarefaLocalService.getTarefasPaiByKeywords(
-			groupId, keywords, start, end, userId, comparator);
 	}
 
 	@Override
