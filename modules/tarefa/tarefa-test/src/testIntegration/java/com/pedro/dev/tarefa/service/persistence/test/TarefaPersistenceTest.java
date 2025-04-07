@@ -220,6 +220,15 @@ public class TarefaPersistenceTest {
 	}
 
 	@Test
+	public void testCountBybyStatus() throws Exception {
+		_persistence.countBybyStatus(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countBybyStatus(0L, 0L, 0);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Tarefa newTarefa = addTarefa();
 

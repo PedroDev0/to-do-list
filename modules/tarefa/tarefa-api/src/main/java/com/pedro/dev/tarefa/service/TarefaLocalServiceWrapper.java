@@ -244,16 +244,17 @@ public class TarefaLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.pedro.dev.tarefa.model.Tarefa> findBybyStatus(
+		long userId, long groupId, int status) {
+
+		return _tarefaLocalService.findBybyStatus(userId, groupId, status);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
 		return _tarefaLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public long getCountTarefasByStatus(long groupId, int status, long userId) {
-		return _tarefaLocalService.getCountTarefasByStatus(
-			groupId, status, userId);
 	}
 
 	@Override

@@ -210,11 +210,10 @@ public interface TarefaLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Tarefa fetchTarefaByUuidAndGroupId(String uuid, long groupId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
+	public List<Tarefa> findBybyStatus(long userId, long groupId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getCountTarefasByStatus(long groupId, int status, long userId);
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(

@@ -105,9 +105,9 @@ public class TarefaLocalServiceImpl extends TarefaLocalServiceBaseImpl {
     }
 
     public List<Tarefa> getTarefasByKeywords(long groupId, String keywords, int start, int end, long userId,
-                                                long tarefaPai,
-                                                OrderByComparator<Tarefa> comparator) {
-        return tarefaLocalService.dynamicQuery(getKeywordDynamicQuery(groupId, keywords, userId,tarefaPai), start, end, comparator);
+                                             long tarefaPai,
+                                             OrderByComparator<Tarefa> comparator) {
+        return tarefaLocalService.dynamicQuery(getKeywordDynamicQuery(groupId, keywords, userId, tarefaPai), start, end, comparator);
     }
 
 
@@ -146,28 +146,13 @@ public class TarefaLocalServiceImpl extends TarefaLocalServiceBaseImpl {
         return dynamicQuery;
     }
 
-    public long getCountTarefasByStatus(long groupId, int status, long
-            userId) {
-        return tarefaLocalService.dynamicQueryCount(getDynamicStatus(groupId, status, userId));
-    }
-
-    private DynamicQuery getDynamicStatus(long groupId, int status, long userId) {
-
-        return dynamicQuery()
-                .add(RestrictionsFactoryUtil.eq("groupId", groupId))
-                .add(
-                        RestrictionsFactoryUtil.or(
-                                RestrictionsFactoryUtil.isNull("tarefaPaiId"),
-                                RestrictionsFactoryUtil.le("tarefaPaiId", 0)
-                        )
-                )
-                .add(RestrictionsFactoryUtil.eq("userId", userId))
-                .add(RestrictionsFactoryUtil.eq("status", status));
-
-    }
 
     public List<Tarefa> getSubTarefas(long tarefaPaiId, long groupId, long userId) {
         return tarefaPersistence.findBychildren(userId, groupId, tarefaPaiId);
+    }
+
+    public List<Tarefa> findBybyStatus(long userId, long groupId, int status) {
+        return tarefaPersistence.findBybyStatus(userId, groupId, status);
     }
 
 }

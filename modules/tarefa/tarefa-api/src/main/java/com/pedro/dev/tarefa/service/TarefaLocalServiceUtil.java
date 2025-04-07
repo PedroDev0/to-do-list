@@ -223,16 +223,16 @@ public class TarefaLocalServiceUtil {
 		return getService().fetchTarefaByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static List<Tarefa> findBybyStatus(
+		long userId, long groupId, int status) {
+
+		return getService().findBybyStatus(userId, groupId, status);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
 		return getService().getActionableDynamicQuery();
-	}
-
-	public static long getCountTarefasByStatus(
-		long groupId, int status, long userId) {
-
-		return getService().getCountTarefasByStatus(groupId, status, userId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery

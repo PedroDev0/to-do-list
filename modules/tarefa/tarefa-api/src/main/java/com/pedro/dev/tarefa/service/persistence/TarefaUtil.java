@@ -900,6 +900,204 @@ public class TarefaUtil {
 	}
 
 	/**
+	 * Returns all the tarefas where userId = &#63; and groupId = &#63; and status = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @return the matching tarefas
+	 */
+	public static List<Tarefa> findBybyStatus(
+		long userId, long groupId, int status) {
+
+		return getPersistence().findBybyStatus(userId, groupId, status);
+	}
+
+	/**
+	 * Returns a range of all the tarefas where userId = &#63; and groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TarefaModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of tarefas
+	 * @param end the upper bound of the range of tarefas (not inclusive)
+	 * @return the range of matching tarefas
+	 */
+	public static List<Tarefa> findBybyStatus(
+		long userId, long groupId, int status, int start, int end) {
+
+		return getPersistence().findBybyStatus(
+			userId, groupId, status, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the tarefas where userId = &#63; and groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TarefaModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of tarefas
+	 * @param end the upper bound of the range of tarefas (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching tarefas
+	 */
+	public static List<Tarefa> findBybyStatus(
+		long userId, long groupId, int status, int start, int end,
+		OrderByComparator<Tarefa> orderByComparator) {
+
+		return getPersistence().findBybyStatus(
+			userId, groupId, status, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the tarefas where userId = &#63; and groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TarefaModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of tarefas
+	 * @param end the upper bound of the range of tarefas (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching tarefas
+	 */
+	public static List<Tarefa> findBybyStatus(
+		long userId, long groupId, int status, int start, int end,
+		OrderByComparator<Tarefa> orderByComparator, boolean useFinderCache) {
+
+		return getPersistence().findBybyStatus(
+			userId, groupId, status, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first tarefa in the ordered set where userId = &#63; and groupId = &#63; and status = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching tarefa
+	 * @throws NoSuchTarefaException if a matching tarefa could not be found
+	 */
+	public static Tarefa findBybyStatus_First(
+			long userId, long groupId, int status,
+			OrderByComparator<Tarefa> orderByComparator)
+		throws com.pedro.dev.tarefa.exception.NoSuchTarefaException {
+
+		return getPersistence().findBybyStatus_First(
+			userId, groupId, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the first tarefa in the ordered set where userId = &#63; and groupId = &#63; and status = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching tarefa, or <code>null</code> if a matching tarefa could not be found
+	 */
+	public static Tarefa fetchBybyStatus_First(
+		long userId, long groupId, int status,
+		OrderByComparator<Tarefa> orderByComparator) {
+
+		return getPersistence().fetchBybyStatus_First(
+			userId, groupId, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the last tarefa in the ordered set where userId = &#63; and groupId = &#63; and status = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching tarefa
+	 * @throws NoSuchTarefaException if a matching tarefa could not be found
+	 */
+	public static Tarefa findBybyStatus_Last(
+			long userId, long groupId, int status,
+			OrderByComparator<Tarefa> orderByComparator)
+		throws com.pedro.dev.tarefa.exception.NoSuchTarefaException {
+
+		return getPersistence().findBybyStatus_Last(
+			userId, groupId, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the last tarefa in the ordered set where userId = &#63; and groupId = &#63; and status = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching tarefa, or <code>null</code> if a matching tarefa could not be found
+	 */
+	public static Tarefa fetchBybyStatus_Last(
+		long userId, long groupId, int status,
+		OrderByComparator<Tarefa> orderByComparator) {
+
+		return getPersistence().fetchBybyStatus_Last(
+			userId, groupId, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the tarefas before and after the current tarefa in the ordered set where userId = &#63; and groupId = &#63; and status = &#63;.
+	 *
+	 * @param tarefaId the primary key of the current tarefa
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next tarefa
+	 * @throws NoSuchTarefaException if a tarefa with the primary key could not be found
+	 */
+	public static Tarefa[] findBybyStatus_PrevAndNext(
+			long tarefaId, long userId, long groupId, int status,
+			OrderByComparator<Tarefa> orderByComparator)
+		throws com.pedro.dev.tarefa.exception.NoSuchTarefaException {
+
+		return getPersistence().findBybyStatus_PrevAndNext(
+			tarefaId, userId, groupId, status, orderByComparator);
+	}
+
+	/**
+	 * Removes all the tarefas where userId = &#63; and groupId = &#63; and status = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param status the status
+	 */
+	public static void removeBybyStatus(long userId, long groupId, int status) {
+		getPersistence().removeBybyStatus(userId, groupId, status);
+	}
+
+	/**
+	 * Returns the number of tarefas where userId = &#63; and groupId = &#63; and status = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @return the number of matching tarefas
+	 */
+	public static int countBybyStatus(long userId, long groupId, int status) {
+		return getPersistence().countBybyStatus(userId, groupId, status);
+	}
+
+	/**
 	 * Caches the tarefa in the entity cache if it is enabled.
 	 *
 	 * @param tarefa the tarefa

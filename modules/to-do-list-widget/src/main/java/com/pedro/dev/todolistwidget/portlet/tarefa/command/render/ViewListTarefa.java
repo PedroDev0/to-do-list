@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.util.*;
 import com.pedro.dev.tarefa.model.Tarefa;
 import com.pedro.dev.tarefa.model.TarefaTable;
 import com.pedro.dev.tarefa.service.TarefaLocalServiceUtil;
+import com.pedro.dev.tarefa.service.constants.TarefaStatus;
 import com.pedro.dev.todolistwidget.constants.ToDoListWidgetPortletKeys;
 import com.pedro.dev.todolistwidget.portlet.constants.MVCComandKeys;
 import com.pedro.dev.todolistwidget.portlet.tarefa.toolbar.ToolBarTarefaDisplay;
@@ -82,18 +83,31 @@ public class ViewListTarefa implements MVCRenderCommand {
 
         // efetua a busca ordenada das tarefas
         List<Tarefa> tarefas = null;
-
         long count = TarefaLocalServiceUtil.getSubTarefas(0l, groupId, userId).size();
         try {
-            tarefas = TarefaLocalServiceUtil.getTarefasByKeywords(groupId, keywords, start, end, userId,0, getOrderBy(renderRequest));
+            tarefas = TarefaLocalServiceUtil.getTarefasByKeywords(groupId, keywords, start, end, userId, 0, getOrderBy(renderRequest));
 
         } catch (Exception e) {
             tarefas = new ArrayList<>();
         }
 
+        // PEGA OS TOTAIS DE TAREFAS PENDENTES E CONCLUIDAS
+        getCoutTarefas(renderRequest,groupId,userId);
         logger.info("Buscando entidades e passando para jsp");
         renderRequest.setAttribute("entidades", tarefas);
         renderRequest.setAttribute("entidadeCount", count);
+    }
+
+    private void getCoutTarefas(RenderRequest renderRequest, long groupId, long userId) {
+
+
+        // captura total tarefas pendentes
+        long tarefasPendentes = TarefaLocalServiceUtil.findBybyStatus(userId, groupId, TarefaStatus.StatusCode.PENDENTE).size();
+        // captura total tarefas concluidas
+        long tarefasConcluidas = TarefaLocalServiceUtil.findBybyStatus(userId, groupId, TarefaStatus.StatusCode.CONCLUIDO).size();
+
+        renderRequest.setAttribute("tarefasPendentes", tarefasPendentes);
+        renderRequest.setAttribute("tarefasConcluidas", tarefasConcluidas);
     }
 
     private OrderByComparator<Tarefa> getOrderBy(RenderRequest renderRequest) {

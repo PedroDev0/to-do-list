@@ -4,6 +4,9 @@
 <%
     ToolBarTarefaDisplay toolbar = (ToolBarTarefaDisplay) request.getAttribute("toolbar");
     String loginUrl = (String) request.getAttribute("loginUrl");
+
+    Long tarefasConcluidas =(Long) request.getAttribute("tarefasConcluidas");
+    Long tarefasPendentes = (Long) request.getAttribute("tarefasPendentes");
 %>
 
 <c:if test="${themeDisplay.isSignedIn()}">
@@ -21,6 +24,7 @@
 
     <div class="container-fluid">
         <liferay-ui:tabs names="Lista de Tarefas,Pendentes,Concluídas" refresh="<%= false %>">
+            
             <!-- Aba da Lista -->
             <liferay-ui:section>
                 <div class="sheet">
@@ -29,8 +33,7 @@
                         displayContext="${toolbar}"
                         searchContainerId="entidadeEntries"
                         selectable="false"
-                        itemsTotal="${entidadeCount}"
-                    />
+                        itemsTotal="${entidadeCount}" />
 
                     <liferay-ui:search-container 
                         id="entidadeEntries"
@@ -41,7 +44,6 @@
                         <liferay-ui:search-container-results results="${entidades}" />
 
                         <c:if test="${(entidades.size() == 0)}">
-                            <!-- Exibe a mensagem de "nenhum resultado encontrado" -->
                             <liferay-frontend:empty-result-message />
                         </c:if>
 
@@ -145,13 +147,35 @@
                     </liferay-ui:search-container>
                 </div>
             </liferay-ui:section>
+
             <!-- Aba da Pendentes count -->
             <liferay-ui:section>
-                div
+                <div class="sheet">
+                    <div class="card text-white bg-warning mb-3" style="max-width: 18rem;">
+                        <div class="card-header">Resumo</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Tarefas Pendentes</h5>
+                            <p class="card-text">
+                                Você tem <strong>${tarefasPendentes}</strong> tarefas pendentes.
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </liferay-ui:section>
+
             <!-- Aba da Concluido count -->
             <liferay-ui:section>
-                div
+                <div class="sheet">
+                    <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+                        <div class="card-header">Resumo</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Tarefas Concluídas</h5>
+                            <p class="card-text">
+                                Você tem <strong>${tarefasConcluidas}</strong> tarefas concluídas.
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </liferay-ui:section>
         </liferay-ui:tabs>
     </div>
