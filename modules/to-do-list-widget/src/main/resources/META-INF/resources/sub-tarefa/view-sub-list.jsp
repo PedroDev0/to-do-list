@@ -81,7 +81,8 @@
                     </liferay-portlet:renderURL>
 
                     <liferay-portlet:actionURL var="removeTarefaURL" name="<%= MVCComandKeys.TAREFA_SUB_DELETE %>">
-                        <liferay-portlet:param name="tarefaId" value="<%= String.valueOf(tarefa.getTarefaId()) %>" />
+                        <liferay-portlet:param name="tarefaId" value="<%= String.valueOf(tarefa.getTarefaPaiId()) %>" />
+                        <liferay-portlet:param name="subTarefaId" value="<%= String.valueOf(tarefa.getTarefaId()) %>" />
                     </liferay-portlet:actionURL>
 
                     <liferay-portlet:actionURL var="concluiTarefaURL" name="<%= MVCComandKeys.TAREFA_SUB_CONCLUIR %>">
