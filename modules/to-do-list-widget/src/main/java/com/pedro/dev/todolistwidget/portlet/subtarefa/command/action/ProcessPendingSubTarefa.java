@@ -17,19 +17,18 @@ import org.slf4j.LoggerFactory;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import java.util.List;
 
 @Component(
         immediate = true,
         property = {
                 "javax.portlet.name=" + ToDoListWidgetPortletKeys.TODOLISTWIDGET,
-                "mvc.command.name=" + MVCComandKeys.TAREFA_SUB_CONCLUIR
+                "mvc.command.name=" + MVCComandKeys.TAREFA_SUB_PENDING
         },
         service = MVCActionCommand.class
 )
-public class ProcessConclusionSubTarefa extends BaseMVCActionCommand {
+public class ProcessPendingSubTarefa extends BaseMVCActionCommand {
 
-    private static final Logger logger = LoggerFactory.getLogger(ProcessConclusionSubTarefa.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProcessPendingSubTarefa.class);
 
     @Override
     protected void doProcessAction(ActionRequest actionRequest, ActionResponse actionResponse) throws Exception {
@@ -39,7 +38,7 @@ public class ProcessConclusionSubTarefa extends BaseMVCActionCommand {
         try {
             Tarefa tarefa = TarefaLocalServiceUtil.getTarefa(tarefaId);
             logger.debug("Seta status concluido na tarefa");
-            tarefa.setStatus(TarefaStatus.CONCLUIDO.getCodigo());
+            tarefa.setStatus(TarefaStatus.PENDENTE.getCodigo());
             TarefaLocalServiceUtil.updateTarefa(tarefa);
 
             // Redireciona para a página de visualização da lista sub de tarefas

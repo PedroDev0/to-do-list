@@ -89,6 +89,10 @@
                        <liferay-portlet:param name="tarefaId" value="<%= String.valueOf(tarefa.getTarefaPaiId()) %>" />
                        <liferay-portlet:param name="subTarefaId" value="<%= String.valueOf(tarefa.getTarefaId()) %>" />
                     </liferay-portlet:actionURL>
+                    <liferay-portlet:actionURL var="pendenteTarefaURL" name="<%= MVCComandKeys.TAREFA_SUB_PENDING %>">
+                       <liferay-portlet:param name="tarefaId" value="<%= String.valueOf(tarefa.getTarefaPaiId()) %>" />
+                       <liferay-portlet:param name="subTarefaId" value="<%= String.valueOf(tarefa.getTarefaId()) %>" />
+                    </liferay-portlet:actionURL>
 
                     <c:if test="${themeDisplay.isSignedIn()}">
                         <liferay-ui:search-container-column-text name="Detalhes">
@@ -113,8 +117,12 @@
                                     url="<%= removeTarefaURL %>" />
 
                                 <liferay-ui:icon 
-                                    message="Concluir Tarefa"
+                                    message="Concluir"
                                     url="<%= concluiTarefaURL %>"
+                                    target="icon-check" />
+                                <liferay-ui:icon 
+                                    message="Pendente"
+                                    url="<%= pendenteTarefaURL %>"
                                     target="icon-check" />
                             </liferay-ui:icon-menu>
                         </liferay-ui:search-container-column-text>

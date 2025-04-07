@@ -86,6 +86,9 @@
                     <liferay-portlet:actionURL var="concluiTarefaURL" name="<%= MVCComandKeys.TAREFA_CONCLUIR %>">
                         <liferay-portlet:param name="tarefaId" value="<%= String.valueOf(tarefa.getTarefaId()) %>" />
                     </liferay-portlet:actionURL>
+                    <liferay-portlet:actionURL var="pendentTarefaURL" name="<%= MVCComandKeys.TAREFA_PENDING %>">
+                        <liferay-portlet:param name="tarefaId" value="<%= String.valueOf(tarefa.getTarefaId()) %>" />
+                    </liferay-portlet:actionURL>
 
                     <liferay-portlet:renderURL var="subTarefaURL">
                         <liferay-portlet:param name="mvcRenderCommandName" value="<%= MVCComandKeys.TAREFA_SUB_LISTAR %>" />
@@ -115,10 +118,13 @@
                                     url="<%= removeTarefaURL %>" />
 
                                 <liferay-ui:icon 
-                                    message="Concluir Tarefa"
+                                    message="Concluída"
                                     url="<%= concluiTarefaURL %>"
                                     target="icon-check" />
-
+                                <liferay-ui:icon 
+                                    message="Pendente"
+                                    url="<%= pendentTarefaURL %>"
+                                    target="icon-check" />
                                 <liferay-ui:icon 
                                     message="Subtarefas"
                                     url="<%= subTarefaURL %>"

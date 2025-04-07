@@ -1,4 +1,4 @@
-package com.pedro.dev.todolistwidget.portlet.subtarefa.command.action;
+package com.pedro.dev.todolistwidget.portlet.tarefa.command.action;
 
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -23,33 +23,45 @@ import java.util.List;
         immediate = true,
         property = {
                 "javax.portlet.name=" + ToDoListWidgetPortletKeys.TODOLISTWIDGET,
-                "mvc.command.name=" + MVCComandKeys.TAREFA_SUB_CONCLUIR
+                "mvc.command.name=" + MVCComandKeys.TAREFA_PENDING
         },
         service = MVCActionCommand.class
 )
-public class ProcessConclusionSubTarefa extends BaseMVCActionCommand {
+public class ProcessPendingTarefa extends BaseMVCActionCommand {
 
-    private static final Logger logger = LoggerFactory.getLogger(ProcessConclusionSubTarefa.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProcessPendingTarefa.class);
 
     @Override
     protected void doProcessAction(ActionRequest actionRequest, ActionResponse actionResponse) throws Exception {
 
         logger.debug("Buscando tarefaId");
-        Long tarefaId = ParamUtil.getLong(actionRequest, "subTarefaId");
+        Long tarefaId = ParamUtil.getLong(actionRequest, "tarefaId");
         try {
             Tarefa tarefa = TarefaLocalServiceUtil.getTarefa(tarefaId);
-            logger.debug("Seta status concluido na tarefa");
-            tarefa.setStatus(TarefaStatus.CONCLUIDO.getCodigo());
+            logger.debug("Seta status PENDENTE na tarefa");
+            tarefa.setStatus(TarefaStatus.PENDENTE.getCodigo());
+
+            logger.debug("Seta status PENDENTE nos filhos");
+            concluiFilhos(tarefa);
             TarefaLocalServiceUtil.updateTarefa(tarefa);
 
-            // Redireciona para a página de visualização da lista sub de tarefas
-            actionResponse.setRenderParameter("mvcRenderCommandName", MVCComandKeys.TAREFA_SUB_LISTAR);
-            actionResponse.setRenderParameter("tarefaId", tarefa.getTarefaPaiId() + "");
+            logger.debug("Removendo tarefa do banco pelo tarefaId");
             SessionMessages.add(actionRequest, "concluiTarefaSucess");
         } catch (PortalException e) {
             SessionMessages.add(actionRequest, "concluiTarefaErr");
         }
     }
 
+    private void concluiFilhos(Tarefa tarefa) {
+        try {
+            List<Tarefa> tarefas = TarefaLocalServiceUtil.getSubTarefas(tarefa.getTarefaId(), tarefa.getGroupId(), tarefa.getUserId());
+            tarefas.forEach(e -> {
+                e.setStatus(TarefaStatus.PENDENTE.getCodigo());
+                TarefaLocalServiceUtil.updateTarefa(e);
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }
