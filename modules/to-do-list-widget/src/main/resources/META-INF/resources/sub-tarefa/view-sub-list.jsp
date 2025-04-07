@@ -86,7 +86,8 @@
                     </liferay-portlet:actionURL>
 
                     <liferay-portlet:actionURL var="concluiTarefaURL" name="<%= MVCComandKeys.TAREFA_SUB_CONCLUIR %>">
-                        <liferay-portlet:param name="tarefaId" value="<%= String.valueOf(tarefa.getTarefaId()) %>" />
+                       <liferay-portlet:param name="tarefaId" value="<%= String.valueOf(tarefa.getTarefaPaiId()) %>" />
+                       <liferay-portlet:param name="subTarefaId" value="<%= String.valueOf(tarefa.getTarefaId()) %>" />
                     </liferay-portlet:actionURL>
 
                     <c:if test="${themeDisplay.isSignedIn()}">
