@@ -7,7 +7,6 @@ Este projeto é um ambiente de desenvolvimento que integra **Liferay Portal** e 
 ## 📋 Requisitos Necessários
 
 - **Java 17+**
-- **Gradle**
 - **Docker** e **Docker Compose**
 
 ---
@@ -15,7 +14,7 @@ Este projeto é um ambiente de desenvolvimento que integra **Liferay Portal** e 
 ## 🚀 Como Iniciar o Ambiente
 
 1. **Preparação:**
-   - Certifique-se de ter o Docker, Docker Compose, Java 17+ e Gradle instalados.
+   - Certifique-se de ter o Docker, Docker Compose e Java 17+  instalados.
 
 2. **Subir os Containers:**
    - Na raiz do projeto, navegue até a pasta `start` e execute o script adequado para seu sistema:
