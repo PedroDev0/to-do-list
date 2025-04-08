@@ -14,15 +14,17 @@ cd "$BASEDIR"
 # Caminhos dos arquivos JAR
 TAREFA_SERVICE_ORIGEM="$BASEDIR/modules/tarefa/tarefa-service/build/libs/com.pedro.dev.tarefa.service-1.0.0.jar"
 TAREFA_API_ORIGEM="$BASEDIR/modules/tarefa/tarefa-api/build/libs/com.pedro.dev.tarefa.api-1.0.0.jar"
-TO_DO_LIST="$BASEDIR/modules/to-do-list-widget/build/libs/com.pedro.dev.todolistwidget-1.0.0.jar"
+TO_DO_LIST_ORIGEM="$BASEDIR/modules/to-do-list-widget/build/libs/com.pedro.dev.todolistwidget-1.0.0.jar"
 
 # Diretório de destino
 DESTINO="$SCRIPT_DIR/deploy"
+
+# Verifica se o diretório de destino existe; se não, cria-o com as permissões desejadas
 if [ ! -d "$DESTINO" ]; then
-  mkdir -p "$DESTINO"
+  mkdir -p -m 755 "$DESTINO"
 fi
 
 # Move os arquivos JAR para o diretório de destino
 mv "$TAREFA_SERVICE_ORIGEM" "$DESTINO"
 mv "$TAREFA_API_ORIGEM" "$DESTINO"
-mv "$TO_DO_LIST" "$DESTINO"
+mv "$TO_DO_LIST_ORIGEM" "$DESTINO"
