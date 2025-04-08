@@ -18,6 +18,9 @@ TO_DO_LIST="$BASEDIR/modules/to-do-list-widget/build/libs/com.pedro.dev.todolist
 
 # Diretório de destino
 DESTINO="$SCRIPT_DIR/deploy"
+if [ ! -d "$DESTINO" ]; then
+  mkdir -p "$DESTINO"
+fi
 
 # Move os arquivos JAR para o diretório de destino
 mv "$TAREFA_SERVICE_ORIGEM" "$DESTINO"

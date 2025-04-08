@@ -18,6 +18,8 @@ set "TO_DO_LIST=%BASEDIR%\modules\to-do-list-widget\build\libs\com.pedro.dev.tod
 
 
 set "DESTINO=%SCRIPT_DIR%deploy"
+:: Cria o diretório de destino se ele não existir
+if not exist "%DESTINO%" mkdir "%DESTINO%"
 
 move "%TAREFA_SERVICE_ORIGEM%" "%DESTINO%"
 move "%TAREFA_API_ORIGEM%" "%DESTINO%"
