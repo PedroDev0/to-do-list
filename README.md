@@ -12,7 +12,29 @@ Este projeto fornece um ambiente de desenvolvimento completo que integra **Lifer
 > 💡 No **Windows**, apenas o Docker Desktop e o Java 17+ são necessários.
 
 ---
+## ⚙️ Compilando e Fazendo Deploy dos Módulos
 
+Após o Liferay estar em execução:
+
+1. **Compilar os Módulos**
+ - Acesse a pasta `modulos`:
+   ```bash
+   cd /to-do-list-workspace/modulos
+   ```
+ - Compile utilizando Gradle:
+   ```bash
+   gradle build
+   ```
+ - Se utilizar o IntelliJ IDEA, você também pode usar as tasks do Gradle disponíveis na interface.
+ - ![Build dos módulos pelo IntelliJ](assets/buildModulos.gif)
+
+2. **Fazer o Deploy**
+ - Após a compilação, copie os arquivos `.jar`/`.war` gerados (geralmente localizados na pasta `build/libs` de cada módulo).
+ - Coloque-os na pasta `/to-do-list-workspace/start/deploy`.
+ - O Liferay detectará automaticamente os novos módulos e realizará o deploy.
+ - ![Deploy dos módulos pelo IntelliJ](assets/deployModulos.gif)
+
+---
 ## 🚀 Iniciando o Ambiente
 
 1. **Preparação**
@@ -92,29 +114,7 @@ Aguarda 60 segundos e inicia o servidor Tomcat do Liferay com uma mensagem de lo
 
 ---
 
-## ⚙️ Compilando e Fazendo Deploy dos Módulos
 
-Após o Liferay estar em execução:
-
-1. **Compilar os Módulos**
- - Acesse a pasta `modulos`:
-   ```bash
-   cd /to-do-list-workspace/modulos
-   ```
- - Compile utilizando Gradle:
-   ```bash
-   gradle build
-   ```
- - Se utilizar o IntelliJ IDEA, você também pode usar as tasks do Gradle disponíveis na interface.
- - ![Build dos módulos pelo IntelliJ](assets/buildModulos.gif)
-
-2. **Fazer o Deploy**
- - Após a compilação, copie os arquivos `.jar`/`.war` gerados (geralmente localizados na pasta `build/libs` de cada módulo).
- - Coloque-os na pasta `/to-do-list-workspace/start/deploy`.
- - O Liferay detectará automaticamente os novos módulos e realizará o deploy.
- - ![Deploy dos módulos pelo IntelliJ](assets/deployModulos.gif)
-
----
 
 ## 🔧 Personalizações e Dicas
 
