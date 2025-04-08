@@ -81,11 +81,13 @@ Após a instância do Liferay estar em execução:
      ```bash
      gradle build
      ```
-  - Ou se estiver utilizando o Itelij idea ele pode compilar utilizando a task do gradle que fica no canto superior direito
+  - Ou se estiver utilizando o Intellij idea ele pode compilar utilizando as tasks do gradle que fica no canto superior direito
+   - ![Build modulos pelo Intellij](assets/buildModulos.gif)
 2. **Deploy dos Módulos:**
    - Após a compilação, para cada módulo, localize os arquivos gerados na pasta `/to-do-list-workspace/modulos/tarefa/build/lib`.
    - Arraste (ou copie) os arquivos `.jar`/`.war` para a pasta `/to-do-list-workspace/start/deploy`.
    - O Liferay detectará automaticamente os novos módulos e fará o deploy.
+   - ![Deploy dos modulos pelo Intellij](assets/deployModulos.gif)
 
 ---
 
