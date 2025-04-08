@@ -17,13 +17,13 @@ Este projeto fornece um ambiente de desenvolvimento completo que integra **Lifer
 Após o Liferay estar em execução:
 
 1. **Compilar os Módulos**
- - Acesse a pasta `modulos`:
+ - Acesse a pasta `to-do-list-workspace`:
    ```bash
-   cd /to-do-list-workspace/modulos
+   cd /to-do-list-workspace
    ```
  - Compile utilizando Gradle:
    ```bash
-   gradle build
+   .\gradlew.bat build
    ```
  - Se utilizar o IntelliJ IDEA, você também pode usar as tasks do Gradle disponíveis na interface.
  - ![Build dos módulos pelo IntelliJ](assets/buildModulos.gif)
