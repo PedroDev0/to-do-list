@@ -17,14 +17,25 @@ Este projeto fornece um ambiente de desenvolvimento completo que integra **Lifer
 Após o Liferay estar em execução:
 
 1. **Compilar os Módulos**
- - Acesse a pasta `to-do-list-workspace`:
-   ```bash
-   cd /to-do-list-workspace
-   ```
- - Compile utilizando Gradle:
-   ```bash
-   .\gradlew.bat build
-   ```
+ - **Build Automático**
+  - Acesse a pasta `to-do-list-workspace/start`:
+    - **Linux:**
+       ```bash
+       ./build-modulos.sh
+       ```
+     - **Windows:**
+        ```bash
+       build-modulos.bat
+       ````
+ - **Build Manual**
+  - Acesse a pasta `to-do-list-workspace`:
+    ```bash
+    cd /to-do-list-workspace
+    ```
+  - Compile utilizando Gradle:
+    ```bash
+    .\gradlew.bat build
+    ```
  - Se utilizar o IntelliJ IDEA, você também pode usar as tasks do Gradle disponíveis na interface.
  - ![Build dos módulos pelo IntelliJ](assets/buildModulos.gif)
 
@@ -44,12 +55,15 @@ Após o Liferay estar em execução:
    - Navegue até a pasta `start` na raiz do projeto e execute o script correspondente ao seu sistema operacional:
      - **Linux:**
        ```bash
-       ./start/start.sh
+       ./start.sh
        ```
      - **Windows:**
-       Execute o arquivo `start/start.bat`.
+         ```bash
+        start.bat
+       ```
 
    - Esses scripts utilizam o arquivo `docker-compose.yml` para iniciar os containers.
+   -  **Observação: Acidionei no `start` o script `build-modulos` ele ja faz o build dos modulos e o deploy automaticamente utilizando caminho relativo**
    - ![Iniciando o projeto](assets/startProjetect.gif)
 
 3. **Aguardando o Liferay**
