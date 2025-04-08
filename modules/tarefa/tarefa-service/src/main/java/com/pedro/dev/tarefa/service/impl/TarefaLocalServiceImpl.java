@@ -78,7 +78,6 @@ public class TarefaLocalServiceImpl extends TarefaLocalServiceBaseImpl {
                                String titulo,
                                String descricao,
                                String urlImagem,
-
                                long fileEntryId,
                                ServiceContext serviceContext) throws PortalException {
 
@@ -145,7 +144,6 @@ public class TarefaLocalServiceImpl extends TarefaLocalServiceBaseImpl {
                 );
         return dynamicQuery;
     }
-
 
     public List<Tarefa> getSubTarefas(long tarefaPaiId, long groupId, long userId) {
         return tarefaPersistence.findBychildren(userId, groupId, tarefaPaiId);
