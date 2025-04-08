@@ -26,13 +26,21 @@ Este projeto é um ambiente de desenvolvimento que integra **Liferay Portal** e 
        Execute o arquivo `/to-do-list-workspace/start/start.bat`
 
    - Esses scripts iniciarão o ambiente utilizando o arquivo `docker-compose.yml`.
-   - ![Build modulos pelo Intellij](assets/startProjetect.gif)
+   - ![Inciando o projeto](assets/startProjetect.gif)
 3. **Aguardando o Liferay:**
    - O container do Liferay aguarda 60 segundos antes de iniciar, garantindo que o banco de dados esteja pronto.
 
 4. **Acessar o Liferay:**
    - Abra seu navegador e acesse: [http://localhost:8080](http://localhost:8080)
-   - As credenciais de acesso ficam definidas no arquivo `portal-setup-wizard.properties`.
+   - Credenciais de acesso padrão:
+      - `Usuário: test@liferay.com`.
+      -  `Senha: test`. 
+5. **Configurações do Portal**
+   - Para poder se cadastrar no portal precisamos remover a verificação de e-mail.
+      - Entre no portal como o user admin descritos no passo anterior.
+      - Vá em `Control Panel -> Instance Settings -> User Authentication -> General `.
+      - E desmarque a opção `Require strangers to verify their email address?`.
+      - ![Configuração do portal](assets/configPortal.gif)
 
 ---
 
