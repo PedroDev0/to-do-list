@@ -41,6 +41,16 @@ Este projeto é um ambiente de desenvolvimento que integra **Liferay Portal** e 
       - Vá em `Control Panel -> Instance Settings -> User Authentication -> General `.
       - E desmarque a opção `Require strangers to verify their email address?`.
       - ![Configuração do portal](assets/configPortal.gif)
+6. **Exibir do portlet**
+      - Para poder visualizar o que contém o ToDoList precisamos fazer alguns ajustes na página.
+         - Vá até a home page  [http://localhost:8080/home](http://localhost:8080/home).
+         - Clique no `Edit` no canto superior direito.
+         - Clique no `Browser` no canto superior esquerdo.
+         - Remova a Grid.
+         - Clique em fragmentos e widgets, navegue para widgets.
+         - Vá em Sample e arraste o ToDoListWidget para dentro do container.
+         - Por fim clique em `Publish`.
+      - - ![Exibindo portlet na Home](assets/exibirPortlet.gif)
 
 ---
 
