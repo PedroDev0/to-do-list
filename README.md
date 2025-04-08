@@ -15,7 +15,7 @@ Este projeto é um ambiente de desenvolvimento que integra **Liferay Portal** e 
 
 1. **Preparação:**
    - Certifique-se de ter o Docker, Docker Compose  e Java 17+  instalados.
-   -   **Se estiver utilizando o Windows apenas o Docker desktop e o Java 17+ será necessário**
+   -   **Se estiver utilizando o Windows apenas o Docker desktop e o Java 17+ serão necessários**
 2. **Subir os Containers:**
    - Na raiz do projeto, navegue até a pasta `start` e execute o script adequado para seu sistema:
      - Em **Linux**:  
