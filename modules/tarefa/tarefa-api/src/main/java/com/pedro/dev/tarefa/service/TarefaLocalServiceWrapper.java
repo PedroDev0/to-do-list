@@ -251,6 +251,15 @@ public class TarefaLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.pedro.dev.tarefa.model.Tarefa>
+		findSubTarefasByStatus(
+			long userId, long groupId, int status, long tarefaPaiId) {
+
+		return _tarefaLocalService.findSubTarefasByStatus(
+			userId, groupId, status, tarefaPaiId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

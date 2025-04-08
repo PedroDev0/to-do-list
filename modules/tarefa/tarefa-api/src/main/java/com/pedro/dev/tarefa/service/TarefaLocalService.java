@@ -212,6 +212,9 @@ public interface TarefaLocalService
 
 	public List<Tarefa> findBybyStatus(long userId, long groupId, int status);
 
+	public List<Tarefa> findSubTarefasByStatus(
+		long userId, long groupId, int status, long tarefaPaiId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 

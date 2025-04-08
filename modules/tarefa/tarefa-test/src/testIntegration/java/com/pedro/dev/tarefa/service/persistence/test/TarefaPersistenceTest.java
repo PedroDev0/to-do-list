@@ -229,6 +229,15 @@ public class TarefaPersistenceTest {
 	}
 
 	@Test
+	public void testCountBysubTarefasByStatus() throws Exception {
+		_persistence.countBysubTarefasByStatus(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt(), RandomTestUtil.nextLong());
+
+		_persistence.countBysubTarefasByStatus(0L, 0L, 0, 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Tarefa newTarefa = addTarefa();
 

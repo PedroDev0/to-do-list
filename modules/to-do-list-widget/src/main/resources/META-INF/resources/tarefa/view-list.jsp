@@ -48,7 +48,7 @@
                         </c:if>
 
                         <liferay-ui:search-container-row
-                            className="com.pedro.dev.tarefa.model.Tarefa"
+                            className="com.pedro.dev.todolistwidget.portlet.tarefa.vo.TarefaVo"
                             keyProperty="tarefaId"
                             modelVar="tarefa">
 
@@ -58,19 +58,25 @@
 
                             <liferay-ui:search-container-column-image
                                 name="Imagem"
-                                src="<%= tarefa.getUrlImagem() %>" />
+                                src="<%= tarefa.getTarefa().getUrlImagem() %>" />
 
                             <liferay-ui:search-container-column-text
                                 name="Título"
-                                value="<%= tarefa.getTitulo() %>" />
+                                value="<%= tarefa.getTarefa().getTitulo() %>" />
 
                             <liferay-ui:search-container-column-text
                                 name="Descrição"
-                                value="<%= tarefa.getDescricao() %>" />
+                                value="<%= tarefa.getTarefa().getDescricao() %>" />
 
                             <liferay-ui:search-container-column-text
                                 name="Status"
-                                value="<%= TarefaStatus.fromCodigo(tarefa.getStatus()).getDescricao() %>" />
+                                value="<%= TarefaStatus.fromCodigo(tarefa.getTarefa().getStatus()).getDescricao() %>" />
+                            <liferay-ui:search-container-column-text
+                                name="Total Sub. Concluídas"
+                                value="<%= String.valueOf(tarefa.getGetTotalSubTarefaConcluida()) %>" />
+                            <liferay-ui:search-container-column-text
+                                name="Total Sub. Pendentes"
+                                value="<%= String.valueOf(tarefa.getTotalSubTarefaPendente()) %>" />
 
                             <liferay-portlet:renderURL var="visualizarTarefaURL">
                                 <liferay-portlet:param name="mvcRenderCommandName" value="<%= MVCComandKeys.TAREFA_VIEW %>" />

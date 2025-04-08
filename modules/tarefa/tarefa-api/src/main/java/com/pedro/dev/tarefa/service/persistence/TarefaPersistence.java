@@ -865,6 +865,189 @@ public interface TarefaPersistence extends BasePersistence<Tarefa> {
 	public int countBybyStatus(long userId, long groupId, int status);
 
 	/**
+	 * Returns all the tarefas where userId = &#63; and groupId = &#63; and status = &#63; and tarefaPaiId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param tarefaPaiId the tarefa pai ID
+	 * @return the matching tarefas
+	 */
+	public java.util.List<Tarefa> findBysubTarefasByStatus(
+		long userId, long groupId, int status, long tarefaPaiId);
+
+	/**
+	 * Returns a range of all the tarefas where userId = &#63; and groupId = &#63; and status = &#63; and tarefaPaiId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TarefaModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param tarefaPaiId the tarefa pai ID
+	 * @param start the lower bound of the range of tarefas
+	 * @param end the upper bound of the range of tarefas (not inclusive)
+	 * @return the range of matching tarefas
+	 */
+	public java.util.List<Tarefa> findBysubTarefasByStatus(
+		long userId, long groupId, int status, long tarefaPaiId, int start,
+		int end);
+
+	/**
+	 * Returns an ordered range of all the tarefas where userId = &#63; and groupId = &#63; and status = &#63; and tarefaPaiId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TarefaModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param tarefaPaiId the tarefa pai ID
+	 * @param start the lower bound of the range of tarefas
+	 * @param end the upper bound of the range of tarefas (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching tarefas
+	 */
+	public java.util.List<Tarefa> findBysubTarefasByStatus(
+		long userId, long groupId, int status, long tarefaPaiId, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Tarefa>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the tarefas where userId = &#63; and groupId = &#63; and status = &#63; and tarefaPaiId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TarefaModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param tarefaPaiId the tarefa pai ID
+	 * @param start the lower bound of the range of tarefas
+	 * @param end the upper bound of the range of tarefas (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching tarefas
+	 */
+	public java.util.List<Tarefa> findBysubTarefasByStatus(
+		long userId, long groupId, int status, long tarefaPaiId, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Tarefa>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first tarefa in the ordered set where userId = &#63; and groupId = &#63; and status = &#63; and tarefaPaiId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param tarefaPaiId the tarefa pai ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching tarefa
+	 * @throws NoSuchTarefaException if a matching tarefa could not be found
+	 */
+	public Tarefa findBysubTarefasByStatus_First(
+			long userId, long groupId, int status, long tarefaPaiId,
+			com.liferay.portal.kernel.util.OrderByComparator<Tarefa>
+				orderByComparator)
+		throws NoSuchTarefaException;
+
+	/**
+	 * Returns the first tarefa in the ordered set where userId = &#63; and groupId = &#63; and status = &#63; and tarefaPaiId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param tarefaPaiId the tarefa pai ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching tarefa, or <code>null</code> if a matching tarefa could not be found
+	 */
+	public Tarefa fetchBysubTarefasByStatus_First(
+		long userId, long groupId, int status, long tarefaPaiId,
+		com.liferay.portal.kernel.util.OrderByComparator<Tarefa>
+			orderByComparator);
+
+	/**
+	 * Returns the last tarefa in the ordered set where userId = &#63; and groupId = &#63; and status = &#63; and tarefaPaiId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param tarefaPaiId the tarefa pai ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching tarefa
+	 * @throws NoSuchTarefaException if a matching tarefa could not be found
+	 */
+	public Tarefa findBysubTarefasByStatus_Last(
+			long userId, long groupId, int status, long tarefaPaiId,
+			com.liferay.portal.kernel.util.OrderByComparator<Tarefa>
+				orderByComparator)
+		throws NoSuchTarefaException;
+
+	/**
+	 * Returns the last tarefa in the ordered set where userId = &#63; and groupId = &#63; and status = &#63; and tarefaPaiId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param tarefaPaiId the tarefa pai ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching tarefa, or <code>null</code> if a matching tarefa could not be found
+	 */
+	public Tarefa fetchBysubTarefasByStatus_Last(
+		long userId, long groupId, int status, long tarefaPaiId,
+		com.liferay.portal.kernel.util.OrderByComparator<Tarefa>
+			orderByComparator);
+
+	/**
+	 * Returns the tarefas before and after the current tarefa in the ordered set where userId = &#63; and groupId = &#63; and status = &#63; and tarefaPaiId = &#63;.
+	 *
+	 * @param tarefaId the primary key of the current tarefa
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param tarefaPaiId the tarefa pai ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next tarefa
+	 * @throws NoSuchTarefaException if a tarefa with the primary key could not be found
+	 */
+	public Tarefa[] findBysubTarefasByStatus_PrevAndNext(
+			long tarefaId, long userId, long groupId, int status,
+			long tarefaPaiId,
+			com.liferay.portal.kernel.util.OrderByComparator<Tarefa>
+				orderByComparator)
+		throws NoSuchTarefaException;
+
+	/**
+	 * Removes all the tarefas where userId = &#63; and groupId = &#63; and status = &#63; and tarefaPaiId = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param tarefaPaiId the tarefa pai ID
+	 */
+	public void removeBysubTarefasByStatus(
+		long userId, long groupId, int status, long tarefaPaiId);
+
+	/**
+	 * Returns the number of tarefas where userId = &#63; and groupId = &#63; and status = &#63; and tarefaPaiId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param tarefaPaiId the tarefa pai ID
+	 * @return the number of matching tarefas
+	 */
+	public int countBysubTarefasByStatus(
+		long userId, long groupId, int status, long tarefaPaiId);
+
+	/**
 	 * Caches the tarefa in the entity cache if it is enabled.
 	 *
 	 * @param tarefa the tarefa

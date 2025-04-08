@@ -3118,6 +3118,630 @@ public class TarefaPersistenceImpl
 	private static final String _FINDER_COLUMN_BYSTATUS_STATUS_2 =
 		"tarefa.status = ?";
 
+	private FinderPath _finderPathWithPaginationFindBysubTarefasByStatus;
+	private FinderPath _finderPathWithoutPaginationFindBysubTarefasByStatus;
+	private FinderPath _finderPathCountBysubTarefasByStatus;
+
+	/**
+	 * Returns all the tarefas where userId = &#63; and groupId = &#63; and status = &#63; and tarefaPaiId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param tarefaPaiId the tarefa pai ID
+	 * @return the matching tarefas
+	 */
+	@Override
+	public List<Tarefa> findBysubTarefasByStatus(
+		long userId, long groupId, int status, long tarefaPaiId) {
+
+		return findBysubTarefasByStatus(
+			userId, groupId, status, tarefaPaiId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the tarefas where userId = &#63; and groupId = &#63; and status = &#63; and tarefaPaiId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TarefaModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param tarefaPaiId the tarefa pai ID
+	 * @param start the lower bound of the range of tarefas
+	 * @param end the upper bound of the range of tarefas (not inclusive)
+	 * @return the range of matching tarefas
+	 */
+	@Override
+	public List<Tarefa> findBysubTarefasByStatus(
+		long userId, long groupId, int status, long tarefaPaiId, int start,
+		int end) {
+
+		return findBysubTarefasByStatus(
+			userId, groupId, status, tarefaPaiId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the tarefas where userId = &#63; and groupId = &#63; and status = &#63; and tarefaPaiId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TarefaModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param tarefaPaiId the tarefa pai ID
+	 * @param start the lower bound of the range of tarefas
+	 * @param end the upper bound of the range of tarefas (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching tarefas
+	 */
+	@Override
+	public List<Tarefa> findBysubTarefasByStatus(
+		long userId, long groupId, int status, long tarefaPaiId, int start,
+		int end, OrderByComparator<Tarefa> orderByComparator) {
+
+		return findBysubTarefasByStatus(
+			userId, groupId, status, tarefaPaiId, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the tarefas where userId = &#63; and groupId = &#63; and status = &#63; and tarefaPaiId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TarefaModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param tarefaPaiId the tarefa pai ID
+	 * @param start the lower bound of the range of tarefas
+	 * @param end the upper bound of the range of tarefas (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching tarefas
+	 */
+	@Override
+	public List<Tarefa> findBysubTarefasByStatus(
+		long userId, long groupId, int status, long tarefaPaiId, int start,
+		int end, OrderByComparator<Tarefa> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath =
+					_finderPathWithoutPaginationFindBysubTarefasByStatus;
+				finderArgs = new Object[] {
+					userId, groupId, status, tarefaPaiId
+				};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindBysubTarefasByStatus;
+			finderArgs = new Object[] {
+				userId, groupId, status, tarefaPaiId, start, end,
+				orderByComparator
+			};
+		}
+
+		List<Tarefa> list = null;
+
+		if (useFinderCache) {
+			list = (List<Tarefa>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Tarefa tarefa : list) {
+					if ((userId != tarefa.getUserId()) ||
+						(groupId != tarefa.getGroupId()) ||
+						(status != tarefa.getStatus()) ||
+						(tarefaPaiId != tarefa.getTarefaPaiId())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					6 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(6);
+			}
+
+			sb.append(_SQL_SELECT_TAREFA_WHERE);
+
+			sb.append(_FINDER_COLUMN_SUBTAREFASBYSTATUS_USERID_2);
+
+			sb.append(_FINDER_COLUMN_SUBTAREFASBYSTATUS_GROUPID_2);
+
+			sb.append(_FINDER_COLUMN_SUBTAREFASBYSTATUS_STATUS_2);
+
+			sb.append(_FINDER_COLUMN_SUBTAREFASBYSTATUS_TAREFAPAIID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(TarefaModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(userId);
+
+				queryPos.add(groupId);
+
+				queryPos.add(status);
+
+				queryPos.add(tarefaPaiId);
+
+				list = (List<Tarefa>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first tarefa in the ordered set where userId = &#63; and groupId = &#63; and status = &#63; and tarefaPaiId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param tarefaPaiId the tarefa pai ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching tarefa
+	 * @throws NoSuchTarefaException if a matching tarefa could not be found
+	 */
+	@Override
+	public Tarefa findBysubTarefasByStatus_First(
+			long userId, long groupId, int status, long tarefaPaiId,
+			OrderByComparator<Tarefa> orderByComparator)
+		throws NoSuchTarefaException {
+
+		Tarefa tarefa = fetchBysubTarefasByStatus_First(
+			userId, groupId, status, tarefaPaiId, orderByComparator);
+
+		if (tarefa != null) {
+			return tarefa;
+		}
+
+		StringBundler sb = new StringBundler(10);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("userId=");
+		sb.append(userId);
+
+		sb.append(", groupId=");
+		sb.append(groupId);
+
+		sb.append(", status=");
+		sb.append(status);
+
+		sb.append(", tarefaPaiId=");
+		sb.append(tarefaPaiId);
+
+		sb.append("}");
+
+		throw new NoSuchTarefaException(sb.toString());
+	}
+
+	/**
+	 * Returns the first tarefa in the ordered set where userId = &#63; and groupId = &#63; and status = &#63; and tarefaPaiId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param tarefaPaiId the tarefa pai ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching tarefa, or <code>null</code> if a matching tarefa could not be found
+	 */
+	@Override
+	public Tarefa fetchBysubTarefasByStatus_First(
+		long userId, long groupId, int status, long tarefaPaiId,
+		OrderByComparator<Tarefa> orderByComparator) {
+
+		List<Tarefa> list = findBysubTarefasByStatus(
+			userId, groupId, status, tarefaPaiId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last tarefa in the ordered set where userId = &#63; and groupId = &#63; and status = &#63; and tarefaPaiId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param tarefaPaiId the tarefa pai ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching tarefa
+	 * @throws NoSuchTarefaException if a matching tarefa could not be found
+	 */
+	@Override
+	public Tarefa findBysubTarefasByStatus_Last(
+			long userId, long groupId, int status, long tarefaPaiId,
+			OrderByComparator<Tarefa> orderByComparator)
+		throws NoSuchTarefaException {
+
+		Tarefa tarefa = fetchBysubTarefasByStatus_Last(
+			userId, groupId, status, tarefaPaiId, orderByComparator);
+
+		if (tarefa != null) {
+			return tarefa;
+		}
+
+		StringBundler sb = new StringBundler(10);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("userId=");
+		sb.append(userId);
+
+		sb.append(", groupId=");
+		sb.append(groupId);
+
+		sb.append(", status=");
+		sb.append(status);
+
+		sb.append(", tarefaPaiId=");
+		sb.append(tarefaPaiId);
+
+		sb.append("}");
+
+		throw new NoSuchTarefaException(sb.toString());
+	}
+
+	/**
+	 * Returns the last tarefa in the ordered set where userId = &#63; and groupId = &#63; and status = &#63; and tarefaPaiId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param tarefaPaiId the tarefa pai ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching tarefa, or <code>null</code> if a matching tarefa could not be found
+	 */
+	@Override
+	public Tarefa fetchBysubTarefasByStatus_Last(
+		long userId, long groupId, int status, long tarefaPaiId,
+		OrderByComparator<Tarefa> orderByComparator) {
+
+		int count = countBysubTarefasByStatus(
+			userId, groupId, status, tarefaPaiId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Tarefa> list = findBysubTarefasByStatus(
+			userId, groupId, status, tarefaPaiId, count - 1, count,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the tarefas before and after the current tarefa in the ordered set where userId = &#63; and groupId = &#63; and status = &#63; and tarefaPaiId = &#63;.
+	 *
+	 * @param tarefaId the primary key of the current tarefa
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param tarefaPaiId the tarefa pai ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next tarefa
+	 * @throws NoSuchTarefaException if a tarefa with the primary key could not be found
+	 */
+	@Override
+	public Tarefa[] findBysubTarefasByStatus_PrevAndNext(
+			long tarefaId, long userId, long groupId, int status,
+			long tarefaPaiId, OrderByComparator<Tarefa> orderByComparator)
+		throws NoSuchTarefaException {
+
+		Tarefa tarefa = findByPrimaryKey(tarefaId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Tarefa[] array = new TarefaImpl[3];
+
+			array[0] = getBysubTarefasByStatus_PrevAndNext(
+				session, tarefa, userId, groupId, status, tarefaPaiId,
+				orderByComparator, true);
+
+			array[1] = tarefa;
+
+			array[2] = getBysubTarefasByStatus_PrevAndNext(
+				session, tarefa, userId, groupId, status, tarefaPaiId,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Tarefa getBysubTarefasByStatus_PrevAndNext(
+		Session session, Tarefa tarefa, long userId, long groupId, int status,
+		long tarefaPaiId, OrderByComparator<Tarefa> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				7 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(6);
+		}
+
+		sb.append(_SQL_SELECT_TAREFA_WHERE);
+
+		sb.append(_FINDER_COLUMN_SUBTAREFASBYSTATUS_USERID_2);
+
+		sb.append(_FINDER_COLUMN_SUBTAREFASBYSTATUS_GROUPID_2);
+
+		sb.append(_FINDER_COLUMN_SUBTAREFASBYSTATUS_STATUS_2);
+
+		sb.append(_FINDER_COLUMN_SUBTAREFASBYSTATUS_TAREFAPAIID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(TarefaModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(userId);
+
+		queryPos.add(groupId);
+
+		queryPos.add(status);
+
+		queryPos.add(tarefaPaiId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(tarefa)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Tarefa> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the tarefas where userId = &#63; and groupId = &#63; and status = &#63; and tarefaPaiId = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param tarefaPaiId the tarefa pai ID
+	 */
+	@Override
+	public void removeBysubTarefasByStatus(
+		long userId, long groupId, int status, long tarefaPaiId) {
+
+		for (Tarefa tarefa :
+				findBysubTarefasByStatus(
+					userId, groupId, status, tarefaPaiId, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(tarefa);
+		}
+	}
+
+	/**
+	 * Returns the number of tarefas where userId = &#63; and groupId = &#63; and status = &#63; and tarefaPaiId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param tarefaPaiId the tarefa pai ID
+	 * @return the number of matching tarefas
+	 */
+	@Override
+	public int countBysubTarefasByStatus(
+		long userId, long groupId, int status, long tarefaPaiId) {
+
+		FinderPath finderPath = _finderPathCountBysubTarefasByStatus;
+
+		Object[] finderArgs = new Object[] {
+			userId, groupId, status, tarefaPaiId
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(_SQL_COUNT_TAREFA_WHERE);
+
+			sb.append(_FINDER_COLUMN_SUBTAREFASBYSTATUS_USERID_2);
+
+			sb.append(_FINDER_COLUMN_SUBTAREFASBYSTATUS_GROUPID_2);
+
+			sb.append(_FINDER_COLUMN_SUBTAREFASBYSTATUS_STATUS_2);
+
+			sb.append(_FINDER_COLUMN_SUBTAREFASBYSTATUS_TAREFAPAIID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(userId);
+
+				queryPos.add(groupId);
+
+				queryPos.add(status);
+
+				queryPos.add(tarefaPaiId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_SUBTAREFASBYSTATUS_USERID_2 =
+		"tarefa.userId = ? AND ";
+
+	private static final String _FINDER_COLUMN_SUBTAREFASBYSTATUS_GROUPID_2 =
+		"tarefa.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_SUBTAREFASBYSTATUS_STATUS_2 =
+		"tarefa.status = ? AND ";
+
+	private static final String
+		_FINDER_COLUMN_SUBTAREFASBYSTATUS_TAREFAPAIID_2 =
+			"tarefa.tarefaPaiId = ?";
+
 	public TarefaPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -3793,6 +4417,34 @@ public class TarefaPersistenceImpl
 				Integer.class.getName()
 			},
 			new String[] {"userId", "groupId", "status"}, false);
+
+		_finderPathWithPaginationFindBysubTarefasByStatus = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBysubTarefasByStatus",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"userId", "groupId", "status", "tarefaPaiId"}, true);
+
+		_finderPathWithoutPaginationFindBysubTarefasByStatus = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findBysubTarefasByStatus",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Long.class.getName()
+			},
+			new String[] {"userId", "groupId", "status", "tarefaPaiId"}, true);
+
+		_finderPathCountBysubTarefasByStatus = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countBysubTarefasByStatus",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Long.class.getName()
+			},
+			new String[] {"userId", "groupId", "status", "tarefaPaiId"}, false);
 
 		TarefaUtil.setPersistence(this);
 	}

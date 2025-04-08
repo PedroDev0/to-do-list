@@ -229,6 +229,13 @@ public class TarefaLocalServiceUtil {
 		return getService().findBybyStatus(userId, groupId, status);
 	}
 
+	public static List<Tarefa> findSubTarefasByStatus(
+		long userId, long groupId, int status, long tarefaPaiId) {
+
+		return getService().findSubTarefasByStatus(
+			userId, groupId, status, tarefaPaiId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

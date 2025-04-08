@@ -15,6 +15,7 @@ import com.pedro.dev.todolistwidget.constants.ToDoListWidgetPortletKeys;
 import com.pedro.dev.todolistwidget.portlet.constants.MVCComandKeys;
 import com.pedro.dev.todolistwidget.portlet.tarefa.toolbar.ToolBarTarefaDisplay;
 import com.pedro.dev.todolistwidget.portlet.tarefa.util.UrlLoginUtil;
+import com.pedro.dev.todolistwidget.portlet.tarefa.vo.TarefaVo;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
@@ -90,11 +91,21 @@ public class ViewListTarefa implements MVCRenderCommand {
         } catch (Exception e) {
             tarefas = new ArrayList<>();
         }
+        // Transformando fluxo em TarefaVo para inserir a quantidade de sub tarefas por status
+        List<TarefaVo> tarefaVos = tarefas.stream().map(e-> {
+            // BUSCA TOTAL DE SUB TAREFAS PENDENTES
+            long totalSubTarefaPendente = TarefaLocalServiceUtil.findSubTarefasByStatus(e.getUserId(),
+                    e.getGroupId(),TarefaStatus.PENDENTE.getCodigo(), e.getTarefaId()).size();
+            // BUSCA TOTAL DE SUB TAREFAS CONCLUIDAS
+            long getTotalSubTarefaConcluida = TarefaLocalServiceUtil.findSubTarefasByStatus(e.getUserId(),
+                    e.getGroupId(),TarefaStatus.CONCLUIDO.getCodigo(), e.getTarefaId()).size();
+            return new TarefaVo(e,totalSubTarefaPendente, getTotalSubTarefaConcluida);
+        }).toList();
 
         // PEGA OS TOTAIS DE TAREFAS PENDENTES E CONCLUIDAS
         getCoutTarefas(renderRequest,groupId,userId);
         logger.info("Buscando entidades e passando para jsp");
-        renderRequest.setAttribute("entidades", tarefas);
+        renderRequest.setAttribute("entidades", tarefaVos);
         renderRequest.setAttribute("entidadeCount", count);
     }
 
