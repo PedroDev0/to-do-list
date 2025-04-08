@@ -127,8 +127,8 @@ Coloque os módulos compilados na pasta `./deploy` para que o Liferay os implant
 - **Compatibilidade com MySQL:**  
 A opção `--default-authentication-plugin=mysql_native_password` é utilizada para manter compatibilidade com clientes que ainda usam este método de autenticação.
 
-- **Gifs de Apoio**
- - Separei alguns gifs em /assest para poder auxiliar na inicialização do ambiente.
+- **Gifs de Apoio**  
+Separei alguns gifs em /assest para poder auxiliar na inicialização do ambiente.
 ---
 
 
