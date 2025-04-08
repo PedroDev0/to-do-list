@@ -26,7 +26,7 @@ Este projeto é um ambiente de desenvolvimento que integra **Liferay Portal** e 
        Execute o arquivo `/to-do-list-workspace/start/start.bat`
 
    - Esses scripts iniciarão o ambiente utilizando o arquivo `docker-compose.yml`.
-
+   - ![Build modulos pelo Intellij](assets/startProjetect.gif)
 3. **Aguardando o Liferay:**
    - O container do Liferay aguarda 60 segundos antes de iniciar, garantindo que o banco de dados esteja pronto.
 
