@@ -1,124 +1,133 @@
 # 📝 To-Do List Workspace
 
-Este projeto é um ambiente de desenvolvimento que integra **Liferay Portal** e **MySQL** utilizando **Docker Compose**. Ele serve como base para o desenvolvimento de aplicações e portlets no Liferay.
+Este projeto fornece um ambiente de desenvolvimento completo que integra **Liferay Portal** e **MySQL**, utilizando **Docker Compose**. Ele serve como base para o desenvolvimento de aplicações e portlets no Liferay.
 
 ---
 
-## 📋 Requisitos Necessários
+## 📋 Requisitos
 
-- **Java 17+**
+- **Java 17 ou superior**
 - **Docker** e **Docker Compose**
 
+> 💡 No **Windows**, apenas o Docker Desktop e o Java 17+ são necessários.
+
 ---
 
-## 🚀 Como Iniciar o Ambiente
+## 🚀 Iniciando o Ambiente
 
-1. **Preparação:**
-   - Certifique-se de ter o Docker, Docker Compose  e Java 17+  instalados.
-   -   **Se estiver utilizando o Windows apenas o Docker desktop e o Java 17+ serão necessários**
-2. **Subir os Containers:**
-   - Na raiz do projeto, navegue até a pasta `start` e execute o script adequado para seu sistema:
-     - Em **Linux**:  
+1. **Preparação**
+   - Certifique-se de que o Docker, Docker Compose e o Java 17+ estejam instalados.
+
+2. **Subindo os Containers**
+   - Navegue até a pasta `start` na raiz do projeto e execute o script correspondente ao seu sistema operacional:
+     - **Linux:**
        ```bash
-       /to-do-list-workspace/start/start.sh
+       ./start/start.sh
        ```
-     - Em **Windows**:  
-       Execute o arquivo `/to-do-list-workspace/start/start.bat`
+     - **Windows:**
+       Execute o arquivo `start/start.bat`.
 
-   - Esses scripts iniciarão o ambiente utilizando o arquivo `docker-compose.yml`.
-   - ![Inciando o projeto](assets/startProjetect.gif)
-3. **Aguardando o Liferay:**
+   - Esses scripts utilizam o arquivo `docker-compose.yml` para iniciar os containers.
+   - ![Iniciando o projeto](assets/startProjetect.gif)
+
+3. **Aguardando o Liferay**
    - O container do Liferay aguarda 60 segundos antes de iniciar, garantindo que o banco de dados esteja pronto.
 
-4. **Acessar o Liferay:**
-   - Abra seu navegador e acesse: [http://localhost:8080](http://localhost:8080)
-   - Credenciais de acesso padrão:
-      - `Usuário: test@liferay.com`.
-      -  `Senha: test`. 
-5. **Configurações do Portal**
-   - Para poder se cadastrar no portal precisamos remover a verificação de e-mail.
-      - Entre no portal como o user admin descritos no passo anterior.
-      - Vá em `Control Panel -> Instance Settings -> User Authentication -> General `.
-      - E desmarque a opção `Require strangers to verify their email address?`.
-      - ![Configuração do portal](assets/configPortal.gif)
-6. **Exibir do portlet**
-      - Para poder visualizar o que contém o ToDoList precisamos fazer alguns ajustes na página.
-         - Vá até a home page  [http://localhost:8080/home](http://localhost:8080/home).
-         - Clique no `Edit` no canto superior direito.
-         - Clique no `Browser` no canto superior esquerdo.
-         - Remova a Grid.
-         - Clique em fragmentos e widgets, navegue para widgets.
-         - Vá em Sample e arraste o ToDoListWidget para dentro do container.
-         - Por fim clique em `Publish`.
-      - - ![Exibindo portlet na Home](assets/exibirPortlet.gif)
+4. **Acessando o Liferay**
+   - Acesse [http://localhost:8080](http://localhost:8080) em seu navegador.
+   - Use as credenciais padrão:
+     - **Usuário:** `test@liferay.com`
+     - **Senha:** `test`
+
+5. **Configurações Iniciais do Portal**
+   - Para permitir o cadastro de novos usuários, desative a verificação de e-mail:
+     - Acesse o painel administrativo com o usuário padrão.
+     - Vá para:  
+       `Control Panel → Instance Settings → User Authentication → General`
+     - Desmarque a opção:  
+       `Require strangers to verify their email address?`
+   - ![Configuração do portal](assets/configPortal.gif)
+
+6. **Exibindo o Portlet**
+   - Para visualizar o ToDoList na página inicial:
+     - Acesse: [http://localhost:8080/home](http://localhost:8080/home)
+     - Clique em `Edit` (canto superior direito)
+     - Clique em `Browser` (canto superior esquerdo)
+     - Remova a `Grid` existente
+     - Vá em **Fragmentos e Widgets** → **Widgets** → **Sample**
+     - Arraste o `ToDoListWidget` para dentro do container da página
+     - Clique em `Publish` para salvar
+   - ![Exibindo o portlet na Home](assets/exibirPortlet.gif)
 
 ---
 
-## 🐳 Serviços e Configurações dos Containers
+## 🐳 Containers e Serviços
 
-### MySQL (Banco de Dados)
+### MySQL
+
 - **Imagem:** `mysql:8.0.36`
 - **Container Name:** `liferay-db`
+- **Porta:** `3306`
 - **Configurações:**
-  - `MYSQL_ROOT_PASSWORD: sa`
-  - `MYSQL_DATABASE: lportal`
-  - `MYSQL_ROOT_HOST: '%'`
-- **Porta:** 3306 (mapeada para a mesma porta no host)
-- **Comando Adicional:**
-  - Força o uso do `mysql_native_password` e define o charset e collation:
-    ```
-    --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-    ```
-- **Volume:** `liferay_db_data` (para persistência dos dados)
+  - `MYSQL_ROOT_PASSWORD=sa`
+  - `MYSQL_DATABASE=lportal`
+  - `MYSQL_ROOT_HOST=%`
+- **Comando Extra:**  
+  Garante compatibilidade com clientes antigos e define charset/collation: `--default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci`
+- **Volume:** `liferay_db_data`
 - **Rede:** `liferay-net`
 
 ### Liferay Portal
+
 - **Imagem:** `liferay/portal:7.4.3.132-ga132`
 - **Container Name:** `liferay-portal`
-- **Porta:** 8080 (mapeada para a mesma porta no host)
+- **Porta:** `8080`
 - **Volumes:**
-  - `liferay_data` para dados persistentes
-  - `./deploy` para hot deploy de plugins/portlets
-  - `../portal-setup-wizard.properties` para configuração inicial
-- **Dependência:** Inicia somente após o container do banco estar ativo (`depends_on: database`)
-- **Entrypoint:**
-  - Exibe a mensagem "Aguardando 1 minuto antes de iniciar o Liferay...", aguarda 60 segundos e, em seguida, inicia o servidor Tomcat do Liferay.
+- `liferay_data` (dados persistentes)
+- `./deploy` (hot deploy de módulos)
+- `../portal-setup-wizard.properties` (configuração inicial)
+- **Dependência:** Inicia somente após o banco de dados estar ativo (`depends_on`)
+- **Entrypoint Personalizado:**  
+Aguarda 60 segundos e inicia o servidor Tomcat do Liferay com uma mensagem de log.
 
 ---
 
-## ⚙️ Compilação e Deploy dos Módulos
+## ⚙️ Compilando e Fazendo Deploy dos Módulos
 
-Após a instância do Liferay estar em execução:
+Após o Liferay estar em execução:
 
-1. **Compilar os Módulos:**
-   - Navegue até a pasta `módulos`:
-     ```bash
-     cd /to-do-list-workspace/modulos
-     ```
-   - Execute o comando de build utilizando Gradle:
-     ```bash
-     gradle build
-     ```
-  - Ou se estiver utilizando o Intellij idea ele pode compilar utilizando as tasks do gradle que fica no canto superior direito
-   - ![Build modulos pelo Intellij](assets/buildModulos.gif)
-2. **Deploy dos Módulos:**
-   - Após a compilação, para cada módulo, localize os arquivos gerados na pasta `/to-do-list-workspace/modulos/tarefa/build/lib`.
-   - Arraste (ou copie) os arquivos `.jar`/`.war` para a pasta `/to-do-list-workspace/start/deploy`.
-   - O Liferay detectará automaticamente os novos módulos e fará o deploy.
-   - ![Deploy dos modulos pelo Intellij](assets/deployModulos.gif)
+1. **Compilar os Módulos**
+ - Acesse a pasta `modulos`:
+   ```bash
+   cd /to-do-list-workspace/modulos
+   ```
+ - Compile utilizando Gradle:
+   ```bash
+   gradle build
+   ```
+ - Se utilizar o IntelliJ IDEA, você também pode usar as tasks do Gradle disponíveis na interface.
+ - ![Build dos módulos pelo IntelliJ](assets/buildModulos.gif)
+
+2. **Fazer o Deploy**
+ - Após a compilação, copie os arquivos `.jar`/`.war` gerados (geralmente localizados na pasta `build/libs` de cada módulo).
+ - Coloque-os na pasta `/to-do-list-workspace/start/deploy`.
+ - O Liferay detectará automaticamente os novos módulos e realizará o deploy.
+ - ![Deploy dos módulos pelo IntelliJ](assets/deployModulos.gif)
 
 ---
 
-## 🔧 Personalizações e Considerações
+## 🔧 Personalizações e Dicas
 
 - **Configurações do Liferay:**  
-  As configurações iniciais podem ser ajustadas no arquivo `portal-setup-wizard.properties`.
+Personalize o arquivo `portal-setup-wizard.properties` conforme necessário para ajustes iniciais no portal.
 
 - **Hot Deploy:**  
-  Coloque seus módulos na pasta `./deploy` para que o Liferay faça o deploy automaticamente.
+Coloque os módulos compilados na pasta `./deploy` para que o Liferay os implante automaticamente.
 
-- **Compatibilidade MySQL:**  
-  A opção `--default-authentication-plugin=mysql_native_password` é usada para manter compatibilidade com clientes que ainda utilizam este método de autenticação.
+- **Compatibilidade com MySQL:**  
+A opção `--default-authentication-plugin=mysql_native_password` é utilizada para manter compatibilidade com clientes que ainda usam este método de autenticação.
+
+---
 
 
 
