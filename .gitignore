@@ -29,3 +29,4 @@ test-results
 /package.json
 /.yarnrc
 /start/osgi-modules/*
+/start/deploy/*
