@@ -1,4 +1,4 @@
-# 📝 To-Do List Workspace
+# 📝 To-Do List
 
 Este projeto fornece um ambiente de desenvolvimento completo que integra **Liferay Portal** e **MySQL**, utilizando **Docker Compose**. Ele serve como base para o desenvolvimento de aplicações e portlets no Liferay.
 
